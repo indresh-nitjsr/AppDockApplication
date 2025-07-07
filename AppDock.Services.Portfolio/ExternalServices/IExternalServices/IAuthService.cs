@@ -4,6 +4,6 @@ namespace AppDock.Services.PortfolioAPI.ExternalServices.IExternalServices
 {
     public interface IAuthService
     {
-        Task<UserDto> GetUserByIdAsync(string userId);
+        Task<UserDto> GetUserByEmailAsync(string userId);
     }
 }

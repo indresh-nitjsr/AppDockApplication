@@ -44,6 +44,7 @@ namespace AppDock.Services.PortfolioAPI.Data
             base.OnModelCreating(modelBuilder);
         }
 
+        public DbSet<User> users {  get; set; }
         public DbSet<UserPortfolio> portfolios {  get; set; }
         public DbSet<About> about {  get; set; }
         public DbSet<Contact> contact {  get; set; }
