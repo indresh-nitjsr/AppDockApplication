@@ -24,26 +24,12 @@ namespace AppDock.Services.PortfolioAPI.Controllers
 
         //Portfolio CRUD start
 
-        
-        // Get all portfolio
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var portfolios = await _portfolioService.GetAllPortfolioAsync();
-            if (!portfolios.Any())
-            {
-                return NotFound("No portfolios found.");
-            }
-            return Ok(portfolios);
-        }
-
         //create portfolio
         [HttpPost]
         public async Task<IActionResult> CreatePortfolio([FromBody] PortfolioDto portfolio)
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
-            var user = _authService.GetUserByIdAsync(email);
-            var message = await _portfolioService.CreatePortfolioAsync(portfolio);
+            var message = await _portfolioService.CreatePortfolioAsync(portfolio, email);
 
             if (string.IsNullOrEmpty(message) || message.StartsWith("Failed"))
             {
@@ -59,7 +45,8 @@ namespace AppDock.Services.PortfolioAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdatePortfolio([FromBody] PortfolioDto user)
         {
-            var message = await _portfolioService.UpdatePortfolioAsync(user);
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var message = await _portfolioService.UpdatePortfolioAsync(user, email);
 
             if (string.IsNullOrEmpty(message) || message.StartsWith("Failed"))
             {
@@ -71,6 +58,22 @@ namespace AppDock.Services.PortfolioAPI.Controllers
             _responseDto.Message = message;
             return Ok(_responseDto);
         }
+
+        [HttpGet("{userId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetPortfolioDetailsAsync(string userId)
+        {
+            //var email = User.FindFirstValue(ClaimTypes.Email);
+            PortfolioDetailsDto portfolioDetails = await _portfolioService.GetPortfolioDetailsAsync(userId);
+            if (portfolioDetails == null)
+            {
+                _responseDto.isSuccess = false;
+                _responseDto.Message = "No portfolios found.";
+                return NotFound(_responseDto);
+            }
+            //_responseDto.Results = portfolios;
+            return Ok(portfolioDetails);
+        }   
 
     }
 }

@@ -8,9 +8,7 @@
 
         public DateTime DOB { get; set; }
 
-        // These fields are fetched from Auth service
-        public string UserName { get; set; }
-
-        public string UserEmail { get; set; }
+        public UserDto user { get; set; }
+        public AboutDto About { get; set; }
     }
 }

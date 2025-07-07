@@ -14,6 +14,17 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
 {
@@ -22,8 +33,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
 
 builder.Services.AddScoped<IPortfolioService, PortfolioService>();
 builder.Services.AddScoped<IAboutService, AboutService>();
+builder.Services.AddScoped<AboutService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-//builder.Services.AddHttpClient<AuthService>();
 builder.Services.AddHttpClient<AuthService>(client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["ApplicationUrls:BaseAuthAPI"]);
@@ -65,6 +76,7 @@ builder.Services.AddSwaggerGen(option =>
 builder.AddAuthenticationBuilder();
 
 builder.Services.AddAuthorization();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -74,6 +86,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Use CORS
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

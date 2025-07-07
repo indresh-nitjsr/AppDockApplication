@@ -63,7 +63,7 @@ namespace AppDock.Services.AuthAPI.Services
             var userDto = new AppDockUserDto
             {
                 Email = user.Email,
-                Id = user.Id,
+                userId = user.Id,
                 Name = user.Name,
                 PhoneNumber = user.PhoneNumber
             };

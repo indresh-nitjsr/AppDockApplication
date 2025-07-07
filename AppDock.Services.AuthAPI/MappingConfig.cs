@@ -12,6 +12,7 @@ namespace AppDock.Services.AuthAPI
             {
                 config.CreateMap<RegistrationRequestDto, AppDockUser>();
                 config.CreateMap<AppDockUser, RegistrationRequestDto>();
+                config.CreateMap<AppDockUser, AppDockUserDto>();
             });
             return MappingConfig;
         }

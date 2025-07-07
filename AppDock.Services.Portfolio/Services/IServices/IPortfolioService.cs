@@ -5,10 +5,11 @@ namespace AppDock.Services.PortfolioAPI.Services.IServices
 {
     public interface IPortfolioService
     {
-        Task<string> CreatePortfolioAsync(PortfolioDto portfolioDto);
-        Task<string> UpdatePortfolioAsync(PortfolioDto portfolioDto);
-        Task<IEnumerable<PortfolioDto>> GetAllPortfolioAsync();
-        public Task<PortfolioDetailsDto> GetPortfolioDetailsAsync(int portfolioId);
+        Task<string> CreatePortfolioAsync(PortfolioDto portfolioDto, string email);
+        Task<string> UpdatePortfolioAsync(PortfolioDto portfolioDto, string email);
+        //Task<IEnumerable<PortfolioDto>> GetAllPortfolioAsync();
+        public Task<PortfolioDetailsDto> GetPortfolioDetailsAsync(string userId);
+        //public UserDto getUserById(string userId);
 
     }
 }
