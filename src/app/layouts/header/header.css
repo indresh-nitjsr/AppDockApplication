@@ -1,0 +1,6 @@
+/* Simple and clean active link style */
+.active {
+  color: #2563eb !important;           /* Tailwind blue-700 */
+  font-weight: 600;                    /* Semi-bold */
+  border-bottom: 2px solid #2563eb;    /* Underline to indicate active */
+}

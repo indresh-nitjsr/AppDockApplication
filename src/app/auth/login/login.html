@@ -1,0 +1,160 @@
+<div class="w-full min-h-screen flex items-center justify-center bg-gray-100">
+  <div
+    class="w-full md:w-2/3 lg:w-1/2 bg-white rounded-lg shadow-xl overflow-hidden flex flex-col md:flex-row h-[500px]"
+  >
+    <!-- Left toggle section -->
+    <div
+      class="w-full md:w-1/2 flex flex-col items-center justify-center p-8 bg-gray-900 text-white"
+    >
+      <h2 id="toggle-title" class="text-3xl font-bold mb-4">
+        {{ isLogin ? 'Welcome Back!' : 'Join Us!' }}
+      </h2>
+      <p class="mb-6 text-center">
+        {{ isLogin ? "If you don't have an account, click below to sign up!" :
+        "Already have an account? Click below to login!" }}
+      </p>
+      <button
+        class="bg-white text-blue-600 font-semibold px-6 py-2 rounded hover:bg-gray-200 transition"
+        (click)="toggleForm()"
+        id="toggle-button"
+      >
+        {{ isLogin ? 'Sign Up' : 'Login' }}
+      </button>
+    </div>
+
+    <!-- Right form section -->
+    <div class="w-full md:w-1/2 flex items-center justify-center p-8">
+      <!-- Login Form -->
+      <form
+        *ngIf="isLogin"
+        #form="ngForm"
+        id="login-form"
+        class="w-full max-w-xs space-y-4"
+      >
+        <h2 class="text-2xl font-bold text-center mb-4">Login</h2>
+        <div class="mb-">
+          <input
+            type="email"
+            placeholder="Email"
+            [(ngModel)]="loginObj.email"
+            name="email"
+            required
+            #emailInput="ngModel"
+            class="w-full px-4 py-2 border rounded placeholder-gray-400"
+          />
+          <div class="validation-message">
+            @if (emailInput.errors?.['required'] && emailInput.touched) {
+            <p class="text-red-500 text-sm">Email is required.</p>
+            }
+          </div>
+        </div>
+        <div class="mb-4">
+          <input
+            type="password"
+            [(ngModel)]="loginObj.password"
+            name="password"
+            required
+            #passwordInput="ngModel"
+            placeholder="Password"
+            class="w-full px-4 py-2 border rounded placeholder-gray-400"
+          />
+          <div class="validation-message">
+            @if (passwordInput.errors?.['required'] && passwordInput.touched) {
+            <p class="text-red-500 text-sm">Password is required.</p>
+            }
+          </div>
+        </div>
+        <button
+          type="button"
+          [disabled]="form.invalid"
+          (click)="userLogin()"
+          class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition disabled:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-500"
+        >
+          Login
+        </button>
+      </form>
+
+      <!-- Signup Form -->
+      <form
+        *ngIf="!isLogin"
+        #form="ngForm"
+        id="signup-form"
+        class="w-full max-w-xs space-y-4"
+      >
+        <h2 class="text-2xl font-bold text-center mb-4">Sign Up</h2>
+        <div class="mb-4">
+          <input
+            type="text"
+            [(ngModel)]="registerObj.userName"
+            name="name"
+            required
+            #nameInput="ngModel"
+            placeholder="Name"
+            class="w-full px-4 py-2 border rounded placeholder-gray-400"
+          />
+          <div class="validation-message">
+            @if (nameInput.errors?.['required'] && nameInput.touched) {
+            <p class="text-red-500 text-sm">Name is required.</p>
+            }
+          </div>
+        </div>
+        <div class="mb-4">
+          <input
+            type="email"
+            [(ngModel)]="registerObj.email"
+            name="email"
+            required
+            #emailInput="ngModel"
+            placeholder="Email"
+            class="w-full px-4 py-2 border rounded placeholder-gray-400"
+          />
+          <div class="validation-message">
+            @if (emailInput.errors?.['required'] && emailInput.touched) {
+            <p class="text-red-500 text-sm">Email is required.</p>
+            }
+          </div>
+        </div>
+        <div class="mb-4">
+          <input
+            type="text"
+            [(ngModel)]="registerObj.phoneNumber"
+            name="phoneNumber"
+            required
+            #phoneInput="ngModel"
+            placeholder="Contact No."
+            class="w-full px-4 py-2 border rounded placeholder-gray-400"
+          />
+          <div class="validation-message">
+            @if (phoneInput.errors?.['required'] && phoneInput.touched) {
+            <p class="text-red-500 text-sm">Phone Number is required.</p>
+            }
+          </div>
+        </div>
+        <div class="mb-4">
+          <input
+            type="password"
+            [(ngModel)]="registerObj.password"
+            name="password"
+            required
+            #passwordInput="ngModel"
+            placeholder="Password"
+            class="w-full px-4 py-2 border rounded placeholder-gray-400"
+          />
+          <div class="validation-message">
+            @if (passwordInput.errors?.['required'] && passwordInput.touched) {
+            <p class="text-red-500 text-sm">Password is required.</p>
+            }
+          </div>
+        </div>
+        <button
+          type="button"
+          [disabled]="form.invalid"
+          (click)="userRegister()"
+          class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition disabled:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-500"
+        >
+          Sign Up
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="relative h-screen w-full overflow-hidden">
+  <!-- Background image -->
+  <img
+    src="images/laptop-portfolio-preview.jpg"
+    alt="Portfolio Preview"
+    class="absolute inset-0 object-cover w-full h-full"
+  />
+
+  <!-- Stronger overlay layer -->
+  <div class="absolute inset-0 bg-black/70"></div>
+
+  <!-- Text content -->
+  <div
+    class="relative z-10 flex flex-col items-center justify-start h-full text-center px-6 mt-20"
+  >
+    <h1 class="text-4xl sm:text-5xl font-bold text-white leading-tight mb-2">
+      Welcome to <span class="text-blue-400">Portfolio</span>
+    </h1>
+    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+      Create Your Stunning Portfolio
+    </h1>
+    <p class="text-gray-200 max-w-2xl mb-6">
+      Showcase your skills, projects, and experiences beautifully. Build your
+      personal brand and share it with the world — all in a few simple steps.
+    </p>
+    <button
+      (click)="handleGetStarted()"
+      class="bg-blue-600 text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:bg-blue-700 transition duration-300"
+    >
+      Get Started
+    </button>
+  </div>
+</div>

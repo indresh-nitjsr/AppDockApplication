@@ -1,0 +1,61 @@
+<div class="min-h-screen bg-gray-50 flex flex-col px-4 py-8 sm:px-8">
+  <!-- Hero Section -->
+  <section class="text-center max-w-3xl mx-auto mb-10">
+    <h1 class="text-4xl sm:text-5xl font-bold text-gray-800 leading-tight mb-4">
+      Welcome to <span class="text-blue-600">AppDock</span>
+    </h1>
+    <p class="text-gray-600 text-base sm:text-lg">
+      Your central hub for powerful, modular web tools. Launch smart apps like
+      calculators, contact managers, and more — from one simple dashboard.
+    </p>
+  </section>
+
+  <!-- Search Input -->
+  <div class="w-full max-w-xl mx-auto mb-10">
+    <input
+      type="text"
+      placeholder="Search applications..."
+      class="w-full px-5 py-3 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+    />
+  </div>
+
+  <!-- Application Cards -->
+  <section
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto w-full px-2 sm:px-0"
+  >
+    <!-- App Card 1 -->
+    <a
+      routerLink="/smart-calculator"
+      class="block p-6 bg-white rounded-xl shadow hover:shadow-md transition border border-gray-200 hover:border-blue-400"
+    >
+      <h3 class="text-lg font-semibold text-blue-600 mb-2">Smart Calculator</h3>
+      <p class="text-sm text-gray-500">
+        Perform advanced calculations with ease and speed.
+      </p>
+    </a>
+
+    <!-- App Card 2 -->
+    <a
+      routerLink="/smart-contact"
+      class="block p-6 bg-white rounded-xl shadow hover:shadow-md transition border border-gray-200 hover:border-blue-400"
+    >
+      <h3 class="text-lg font-semibold text-blue-600 mb-2">Smart Contact</h3>
+      <p class="text-sm text-gray-500">
+        Manage your contacts with clean, intuitive tools.
+      </p>
+    </a>
+
+    <!-- App Card 3 -->
+    <a
+      routerLink="/resume-builder"
+      class="block p-6 bg-white rounded-xl shadow hover:shadow-md transition border border-gray-200 hover:border-blue-400"
+    >
+      <h3 class="text-lg font-semibold text-blue-600 mb-2">Resume Builder</h3>
+      <p class="text-sm text-gray-500">
+        Create professional resumes in just a few clicks.
+      </p>
+    </a>
+
+    <!-- More cards can go here -->
+  </section>
+</div>
