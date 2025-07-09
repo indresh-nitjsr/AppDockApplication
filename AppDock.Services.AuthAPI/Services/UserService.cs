@@ -28,7 +28,8 @@ namespace AppDock.Services.AuthAPI.Services
                     userId = string.Empty,
                     Email = string.Empty,
                     Name = string.Empty,
-                    PhoneNumber = string.Empty
+                    PhoneNumber = string.Empty,
+                    isPortfolio = false
                 };
             }
 
@@ -37,7 +38,8 @@ namespace AppDock.Services.AuthAPI.Services
                 userId = user.Id,
                 Email = user.Email,
                 Name = user.Name,
-                PhoneNumber = user.PhoneNumber
+                PhoneNumber = user.PhoneNumber,
+                isPortfolio = user.isportfolio
             };
         }
     }

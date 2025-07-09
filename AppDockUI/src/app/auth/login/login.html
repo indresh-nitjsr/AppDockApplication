@@ -27,7 +27,7 @@
       <!-- Login Form -->
       <form
         *ngIf="isLogin"
-        #form="ngForm"
+        #loginForm="ngForm"
         id="login-form"
         class="w-full max-w-xs space-y-4"
       >
@@ -66,7 +66,7 @@
         </div>
         <button
           type="button"
-          [disabled]="form.invalid"
+          [disabled]="loginForm.invalid"
           (click)="userLogin()"
           class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition disabled:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-500"
         >
@@ -77,7 +77,7 @@
       <!-- Signup Form -->
       <form
         *ngIf="!isLogin"
-        #form="ngForm"
+        #signupForm="ngForm"
         id="signup-form"
         class="w-full max-w-xs space-y-4"
       >
@@ -148,7 +148,7 @@
         </div>
         <button
           type="button"
-          [disabled]="form.invalid"
+          [disabled]="signupForm.invalid"
           (click)="userRegister()"
           class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition disabled:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-500"
         >

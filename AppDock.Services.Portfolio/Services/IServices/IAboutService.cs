@@ -5,6 +5,6 @@ namespace AppDock.Services.PortfolioAPI.Services.IServices
     public interface IAboutService
     {
         Task<string> AddOrUpdateAboutAsync(AboutDto aboutDto);
-        Task<AboutDto> GetAboutAsync(int portfolioId);
+        Task<AboutDto> GetAboutAsync(string userId);
     }
 }

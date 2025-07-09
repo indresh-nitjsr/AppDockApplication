@@ -30,6 +30,10 @@ namespace AppDock.Services.PortfolioAPI.Services
                 {
                     // Create new About
                     about = _mapper.Map<About>(aboutDto);
+                    if (string.IsNullOrEmpty(about.Id))
+                    {
+                        about.Id = Guid.NewGuid().ToString();
+                    }
                     await _context.about.AddAsync(about);
                     await _context.SaveChangesAsync();
                     return "About section created successfully!";
@@ -56,15 +60,15 @@ namespace AppDock.Services.PortfolioAPI.Services
             }
         }
 
-        public async Task<AboutDto> GetAboutAsync(int portfolioId)
+        public async Task<AboutDto> GetAboutAsync(string userId)
         {
-            var about = await _context.about
-                .FirstOrDefaultAsync(a => a.PortfolioId == portfolioId);
-
-            if (about == null)
+            if (string.IsNullOrWhiteSpace(userId))
             {
-                return null;
+                throw new ArgumentException("Portfolio ID cannot be null or empty.", nameof(userId));
             }
+
+            var about = await _context.about
+                .FirstOrDefaultAsync(a => a.UserId == userId);
 
             var aboutDto = _mapper.Map<AboutDto>(about);
             return aboutDto;

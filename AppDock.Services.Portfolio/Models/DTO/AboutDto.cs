@@ -10,6 +10,6 @@ namespace AppDock.Services.PortfolioAPI.Models.DTO
 
         //Foreign Key
         public string UserId { get; set; }
-        public int PortfolioId { get; set; }
+        public string PortfolioId { get; set; }
     }
 }

@@ -12,6 +12,7 @@ export class AuthService {
   BaseUrl = 'http://localhost:5064/api/auth';
 
   loginUser(obj: LoginModel) {
+    console.log('Payload sent to backend:', obj); // Debugging line
     return this.http.post(`${this.BaseUrl}/login`, obj);
   }
 

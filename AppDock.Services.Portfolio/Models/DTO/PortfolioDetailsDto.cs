@@ -2,7 +2,7 @@
 {
     public class PortfolioDetailsDto
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public string Role { get; set; }
 
@@ -10,5 +10,7 @@
 
         public UserDto user { get; set; }
         public AboutDto About { get; set; }
+
+        public IEnumerable<ProjectDto> Projects { get; set; }
     }
 }

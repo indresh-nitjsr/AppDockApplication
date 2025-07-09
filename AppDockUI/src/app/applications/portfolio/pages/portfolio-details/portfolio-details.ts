@@ -1,9 +1,47 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { PortfolioService } from '../../services/portfolioService';
+import { PortfolioDetails as PortfolioDetailsModel } from '../../models/portfolioDetails';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-portfolio-details',
-  imports: [],
   templateUrl: './portfolio-details.html',
-  styleUrl: './portfolio-details.css',
+  styleUrls: ['./portfolio-details.css'],
+  standalone: true,
+  imports: [CommonModule], // add CommonModule etc. if needed
 })
-export class PortfolioDetails {}
+export class PortfolioDetails implements OnInit {
+  portfolioDetails: PortfolioDetailsModel = new PortfolioDetailsModel();
+
+  constructor(
+    private portfolioService: PortfolioService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit() {
+    this.getPortfolioDetails();
+  }
+
+  getPortfolioDetails() {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const userId = JSON.parse(user).userId;
+      if (userId) {
+        this.portfolioService.getUserPortfolio(userId).subscribe(
+          (portfolio) => {
+            this.portfolioDetails = PortfolioDetailsModel.fromJson(portfolio);
+            console.log('Portfolio details loaded:', this.portfolioDetails);
+            this.cdr.detectChanges();
+          },
+          (error) => {
+            console.error('Error fetching portfolio details:', error);
+          }
+        );
+      } else {
+        console.error('User ID not found in local storage');
+      }
+    } else {
+      console.error('User not found in local storage');
+    }
+  }
+}

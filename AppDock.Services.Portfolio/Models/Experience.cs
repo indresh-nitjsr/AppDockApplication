@@ -4,8 +4,8 @@ namespace AppDock.Services.PortfolioAPI.Models
 {
     public class Experience
     {
-        public int Id { get; set; }
-        public int PortfolioId { get; set; }
+        public string Id { get; set; }
+        public string PortfolioId { get; set; }
         public string Title { get; set; } = "";
         public string CompanyName { get; set; } = "";
         public DateTime StartDate { get; set; }

@@ -11,11 +11,17 @@ namespace AppDock.Services.PortfolioAPI
         {
             var MappingConfig = new MapperConfiguration(config =>
             {
+                //portfolio mapper
                 config.CreateMap<PortfolioDto, UserPortfolio>();
                 config.CreateMap<UserPortfolio, PortfolioDto>();
 
+                //About mapper
                 config.CreateMap<AboutDto, About>();
                 config.CreateMap<About, AboutDto>();
+
+                //project mapper
+                config.CreateMap<ProjectDto, Projects>();
+                config.CreateMap<Projects, ProjectDto>();
             });
             return MappingConfig;
         }

@@ -12,28 +12,40 @@ namespace AppDock.Services.PortfolioAPI.Services
     public class PortfolioService : IPortfolioService
     {
         private readonly ApplicationDbContext _context;
-        private readonly IMapper _mapper;
         private readonly AuthService _authService;
         private readonly AboutService _aboutService;
+        //private readonly Mapper _mapper;
+        private readonly IProjectService _projectService;
 
-        public PortfolioService(ApplicationDbContext context, IMapper mapper, AuthService authService, AboutService aboutService)
+        public PortfolioService(
+            ApplicationDbContext context, 
+            IMapper mapper, 
+            AuthService authService, 
+            AboutService aboutService, 
+            IProjectService projectService
+           )
         {
             _context = context;
-            _mapper = mapper;
             _authService = authService;
             _aboutService = aboutService;
+            _projectService = projectService;
+            //_mapper = mapper;
         }
 
 
 
         public async Task<string> CreatePortfolioAsync(PortfolioDto portfolioDto, string email)
         {
+            // Check if user exists
             UserDto user = await _authService.GetUserByEmailAsync(email);
-            if (user == null)
+            if (user == null || string.IsNullOrEmpty(user.userId))
             {
-                return "User not found.";
+                return "Failed : User not found or user ID missing.";
             }
-            else
+
+            // Check if user already exists in users table
+            var existingUser = await _context.users.FindAsync(user.userId);
+            if (existingUser == null)
             {
                 await _context.users.AddAsync(new User
                 {
@@ -43,9 +55,32 @@ namespace AppDock.Services.PortfolioAPI.Services
                     PhoneNumber = user.PhoneNumber
                 });
             }
+
+            // Check if portfolio already exists for user
+            var existingPortfolio = await _context.portfolios
+                .FirstOrDefaultAsync(p => p.UserId == user.userId);
+
+            if (existingPortfolio != null)
+            {
+                return "Failed : Portfolio already exists for this user.";
+            }
+
+            // Validate portfolio data
+            if (string.IsNullOrEmpty(portfolioDto.Role))
+            {
+                return "Failed : Role is required.";
+            }
+
+            if (portfolioDto.DOB == default || portfolioDto.DOB > DateTime.Now)
+            {
+                return "Failed : Invalid date of birth.";
+            }
+
+            // Create new portfolio
             UserPortfolio userPortfolio = new()
             {
-                UserId = user.userId, // Here, you should set actual user ID dynamically!
+                Id = Guid.NewGuid().ToString(),
+                UserId = user.userId,
                 Role = portfolioDto.Role,
                 DOB = portfolioDto.DOB,
             };
@@ -80,8 +115,6 @@ namespace AppDock.Services.PortfolioAPI.Services
                 userPortfolio.Role = portfolioDto.Role;
                 userPortfolio.DOB = portfolioDto.DOB.Date; // Keep only date part
 
-                // You can update other fields as needed
-
                 _context.portfolios.Update(userPortfolio);
                 await _context.SaveChangesAsync();
 
@@ -92,14 +125,6 @@ namespace AppDock.Services.PortfolioAPI.Services
                 return $"Failed to update portfolio: {ex.Message}";
             }
         }
-
-
-        //public async Task<IEnumerable<PortfolioDto>> GetAllPortfolioAsync()
-        //{
-        //    var userPortfolios = await _context.portfolios.ToListAsync();
-        //    var portfolioDtos = _mapper.Map<IEnumerable<PortfolioDto>>(userPortfolios);
-        //    return portfolioDtos;
-        //}
 
         public async Task<PortfolioDetailsDto> GetPortfolioDetailsAsync(string userId)
         {
@@ -116,15 +141,17 @@ namespace AppDock.Services.PortfolioAPI.Services
             if (portfolio == null)
                 return null;
 
-            var portfolioMapper = _mapper.Map<PortfolioDto>(portfolio);
-            var about = await _aboutService.GetAboutAsync(portfolio.Id);
+            var about = await _aboutService.GetAboutAsync(user.userId);
+            var projects = await _projectService.GetAllProjectsAsync(portfolio.Id);
 
             PortfolioDetailsDto portfolioDetails = new PortfolioDetailsDto();
+            portfolioDetails.Id = portfolio.Id;
             portfolioDetails.user = user;
-            portfolioDetails.Role = portfolioMapper.Role;
-            portfolioDetails.DOB = portfolioMapper.DOB;
+            portfolioDetails.Role = portfolio.Role;
+            portfolioDetails.DOB = portfolio.DOB;
             portfolioDetails.About = about;
-           
+            portfolioDetails.Projects = projects;
+
             return portfolioDetails;
         }
 

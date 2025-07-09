@@ -4,8 +4,8 @@ namespace AppDock.Services.PortfolioAPI.Models
 {
     public class Contact
     {
-        public int Id { get; set; }
-        public int PortfolioId { get; set; }
+        public string Id { get; set; }
+        public string PortfolioId { get; set; }
         public string UserId { get; set; }
         public string Address { get; set; } = "";
         public string LinkedInUrl { get; set; } = "";

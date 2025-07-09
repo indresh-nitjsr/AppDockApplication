@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { LoginModel, User } from '../../core/models/user.model';
 import { AuthService } from '../../core/services/auth-service';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { RedirectCommand, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,15 +12,20 @@ import { Router } from '@angular/router';
   styleUrl: './login.css',
 })
 export class Login {
-  isLogin = true;
+  isLogin: boolean = true; // true for login, false for register
   registerObj: User = new User();
   loginObj: LoginModel = new LoginModel();
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   //toggle register and login forms
   toggleForm() {
     this.isLogin = !this.isLogin;
   }
-  constructor(private authService: AuthService, private router: Router) {}
 
   //register user
   userRegister() {
@@ -28,6 +33,7 @@ export class Login {
     this.authService.registerUser(this.registerObj).subscribe({
       next: (response) => {
         this.toggleForm();
+        this.cdr.detectChanges();
       },
       error: (error) => {
         alert(
@@ -58,6 +64,7 @@ export class Login {
         const returnUrl = localStorage.getItem('returnUrl') || '/';
         localStorage.removeItem('returnUrl');
         this.router.navigate([returnUrl]);
+        this.cdr.detectChanges();
       },
       error: (error) => {
         alert('Login failed: ' + (error.error.message || 'Unknown error'));

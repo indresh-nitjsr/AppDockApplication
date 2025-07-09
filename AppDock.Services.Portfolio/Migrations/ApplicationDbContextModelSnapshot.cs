@@ -24,11 +24,8 @@ namespace AppDock.Services.PortfolioAPI.Migrations
 
             modelBuilder.Entity("AppDock.PortfolioService.Models.UserPortfolio", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DOB")
                         .HasColumnType("datetime2");
@@ -48,11 +45,8 @@ namespace AppDock.Services.PortfolioAPI.Migrations
 
             modelBuilder.Entity("AppDock.Services.PortfolioAPI.Models.About", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -62,8 +56,9 @@ namespace AppDock.Services.PortfolioAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PortfolioId")
-                        .HasColumnType("int");
+                    b.Property<string>("PortfolioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProfileImageUrl")
                         .IsRequired()
@@ -83,11 +78,8 @@ namespace AppDock.Services.PortfolioAPI.Migrations
 
             modelBuilder.Entity("AppDock.Services.PortfolioAPI.Models.Contact", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -101,8 +93,9 @@ namespace AppDock.Services.PortfolioAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PortfolioId")
-                        .HasColumnType("int");
+                    b.Property<string>("PortfolioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("TwitterUrl")
                         .IsRequired()
@@ -122,11 +115,8 @@ namespace AppDock.Services.PortfolioAPI.Migrations
 
             modelBuilder.Entity("AppDock.Services.PortfolioAPI.Models.Experience", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CompanyName")
                         .IsRequired()
@@ -139,8 +129,9 @@ namespace AppDock.Services.PortfolioAPI.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PortfolioId")
-                        .HasColumnType("int");
+                    b.Property<string>("PortfolioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -158,28 +149,36 @@ namespace AppDock.Services.PortfolioAPI.Migrations
 
             modelBuilder.Entity("AppDock.Services.PortfolioAPI.Models.Projects", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("GithubProjectUrl")
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LiveLink")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PortfolioId")
-                        .HasColumnType("int");
+                    b.Property<string>("PortfolioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ProjectUrl")
+                    b.Property<string>("RepoLink")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Technologies")
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TechStack")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -196,14 +195,12 @@ namespace AppDock.Services.PortfolioAPI.Migrations
 
             modelBuilder.Entity("AppDock.Services.PortfolioAPI.Models.Skill", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PortfolioId")
-                        .HasColumnType("int");
+                    b.Property<string>("PortfolioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProficiencyLevel")
                         .IsRequired()

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserPortfolio } from '../models/userPortfolio';
 import { Observable } from 'rxjs';
+import { PortfolioDetails } from '../models/portfolioDetails';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +16,8 @@ export class PortfolioService {
     return this.http.post<UserPortfolio>(`${this.BaseUrl}`, obj);
   }
 
-  getUserPortfolio(userId: string): Observable<UserPortfolio> {
-    console.log('Fetching user portfolio for userId:', userId);
-    return this.http.get<UserPortfolio>(`${this.BaseUrl}/${userId}`);
+  getUserPortfolio(userId: string): Observable<PortfolioDetails> {
+    console.log('Fetching portfolio for user ID:', userId);
+    return this.http.get<PortfolioDetails>(`${this.BaseUrl}/${userId}`);
   }
 }

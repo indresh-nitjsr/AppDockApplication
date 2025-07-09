@@ -43,10 +43,10 @@ namespace AppDock.Services.PortfolioAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdatePortfolio([FromBody] PortfolioDto user)
+        public async Task<IActionResult> UpdatePortfolio([FromBody] PortfolioDto portfolioDto)
         {
             var email = User.FindFirstValue(ClaimTypes.Email);
-            var message = await _portfolioService.UpdatePortfolioAsync(user, email);
+            var message = await _portfolioService.UpdatePortfolioAsync(portfolioDto, email);
 
             if (string.IsNullOrEmpty(message) || message.StartsWith("Failed"))
             {
@@ -63,17 +63,23 @@ namespace AppDock.Services.PortfolioAPI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GetPortfolioDetailsAsync(string userId)
         {
-            //var email = User.FindFirstValue(ClaimTypes.Email);
             PortfolioDetailsDto portfolioDetails = await _portfolioService.GetPortfolioDetailsAsync(userId);
+
             if (portfolioDetails == null)
             {
                 _responseDto.isSuccess = false;
                 _responseDto.Message = "No portfolios found.";
                 return NotFound(_responseDto);
             }
-            //_responseDto.Results = portfolios;
-            return Ok(portfolioDetails);
-        }   
 
+            if (portfolioDetails.Id == null)
+            {
+                _responseDto.isSuccess = false;
+                _responseDto.Message = "Portfolio ID is missing.";
+                return NotFound(_responseDto);
+            }
+
+            return Ok(portfolioDetails);
+        }
     }
 }

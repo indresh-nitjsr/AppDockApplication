@@ -17,11 +17,10 @@ export class Header {
   }
 
   onAuthButtonClick() {
-    const currentUrl = this.router.url; // 👈 capture current URL
-    localStorage.setItem('returnUrl', currentUrl);
-
+    localStorage.setItem('returnUrl', this.router.url); // Clear returnUrl on logout
+    console.log('returnUrl: ', this.router.url);
     if (this.isLoggedIn()) {
-      localStorage.removeItem('token');
+      localStorage.clear();
       this.router.navigate(['/auth/login']);
     } else {
       this.router.navigate(['/auth/login']);
