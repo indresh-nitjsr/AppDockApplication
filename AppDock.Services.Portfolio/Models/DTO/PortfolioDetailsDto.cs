@@ -12,5 +12,7 @@
         public AboutDto About { get; set; }
 
         public IEnumerable<ProjectDto> Projects { get; set; }
+
+        public IEnumerable<SkillDto> Skills { get; set; }
     }
 }

@@ -7,6 +7,6 @@ namespace AppDock.Services.AuthAPI.Models
     {
         [Required]
         public string Name { get; set; }
-        public bool isportfolio { get; set; } = false;
+       
     }
 }

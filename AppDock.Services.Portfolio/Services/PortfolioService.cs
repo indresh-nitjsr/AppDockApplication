@@ -14,6 +14,7 @@ namespace AppDock.Services.PortfolioAPI.Services
         private readonly ApplicationDbContext _context;
         private readonly AuthService _authService;
         private readonly AboutService _aboutService;
+        private readonly ISkillService _skillService;
         //private readonly Mapper _mapper;
         private readonly IProjectService _projectService;
 
@@ -22,13 +23,14 @@ namespace AppDock.Services.PortfolioAPI.Services
             IMapper mapper, 
             AuthService authService, 
             AboutService aboutService, 
-            IProjectService projectService
+            IProjectService projectService, ISkillService skillService
            )
         {
             _context = context;
             _authService = authService;
             _aboutService = aboutService;
             _projectService = projectService;
+            _skillService = skillService;
             //_mapper = mapper;
         }
 
@@ -143,6 +145,7 @@ namespace AppDock.Services.PortfolioAPI.Services
 
             var about = await _aboutService.GetAboutAsync(user.userId);
             var projects = await _projectService.GetAllProjectsAsync(portfolio.Id);
+            var skills = await _skillService.GetAllSkillAsync(portfolio.Id);
 
             PortfolioDetailsDto portfolioDetails = new PortfolioDetailsDto();
             portfolioDetails.Id = portfolio.Id;
@@ -151,6 +154,7 @@ namespace AppDock.Services.PortfolioAPI.Services
             portfolioDetails.DOB = portfolio.DOB;
             portfolioDetails.About = about;
             portfolioDetails.Projects = projects;
+            portfolioDetails.Skills = skills;
 
             return portfolioDetails;
         }

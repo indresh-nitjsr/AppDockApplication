@@ -1,5 +1,6 @@
 ﻿using AppDock.PortfolioService.Models;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppDock.Services.PortfolioAPI.Models
 {
@@ -7,11 +8,9 @@ namespace AppDock.Services.PortfolioAPI.Models
     {
         [Key]
         public string Id { get; set; }
-        [Required]
+        [ForeignKey("Portfolio")]
         public string PortfolioId { get; set; }
-        public string SkillName { get; set; } = "";
-        public string ProficiencyLevel { get; set; } = "";
-        public string SkillType { get; set; } = "";
+        public string Skills{ get; set; } = "";
 
         // Navigation
         public UserPortfolio Portfolio { get; set; }
