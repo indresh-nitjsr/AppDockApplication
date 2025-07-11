@@ -10,8 +10,8 @@ namespace AppDock.Services.PortfolioAPI.Models
         public string Id { get; set; }
         [ForeignKey("Portfolio")]
         public string PortfolioId { get; set; }
-        public string Skills{ get; set; } = "";
 
+        public string Skills { get; set; } = "";
         // Navigation
         public UserPortfolio Portfolio { get; set; }
     }

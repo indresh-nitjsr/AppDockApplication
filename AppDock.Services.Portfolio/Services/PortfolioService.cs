@@ -1,6 +1,7 @@
 ﻿using AppDock.PortfolioService.Models;
 using AppDock.Services.PortfolioAPI.Data;
 using AppDock.Services.PortfolioAPI.ExternalServices;
+using AppDock.Services.PortfolioAPI.ExternalServices.IExternalServices;
 using AppDock.Services.PortfolioAPI.Models;
 using AppDock.Services.PortfolioAPI.Models.DTO;
 using AppDock.Services.PortfolioAPI.Services.IServices;
@@ -12,26 +13,34 @@ namespace AppDock.Services.PortfolioAPI.Services
     public class PortfolioService : IPortfolioService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IAuthService _authService;
+        private readonly IAboutService _aboutService;
         private readonly AuthService _authService;
         private readonly AboutService _aboutService;
         private readonly ISkillService _skillService;
         //private readonly Mapper _mapper;
         private readonly IProjectService _projectService;
+        private readonly ICertificateService _certificateService;
 
         public PortfolioService(
             ApplicationDbContext context, 
+            IAuthService authService, 
+            IAboutService aboutService, 
+            IProjectService projectService,
+            ICertificateService certificateService
             IMapper mapper, 
             AuthService authService, 
             AboutService aboutService, 
-            IProjectService projectService, ISkillService skillService
+            IProjectService projectService, 
+            ISkillService skillService
            )
         {
             _context = context;
             _authService = authService;
             _aboutService = aboutService;
             _projectService = projectService;
+            _certificateService = certificateService;
             _skillService = skillService;
-            //_mapper = mapper;
         }
 
 
@@ -145,6 +154,7 @@ namespace AppDock.Services.PortfolioAPI.Services
 
             var about = await _aboutService.GetAboutAsync(user.userId);
             var projects = await _projectService.GetAllProjectsAsync(portfolio.Id);
+            var certificates = await _certificateService.GetCertificatesAsync(portfolio.Id);
             var skills = await _skillService.GetAllSkillAsync(portfolio.Id);
 
             PortfolioDetailsDto portfolioDetails = new PortfolioDetailsDto();
@@ -154,8 +164,8 @@ namespace AppDock.Services.PortfolioAPI.Services
             portfolioDetails.DOB = portfolio.DOB;
             portfolioDetails.About = about;
             portfolioDetails.Projects = projects;
+            portfolioDetails.Certificates = certificates;
             portfolioDetails.Skills = skills;
-
             return portfolioDetails;
         }
 

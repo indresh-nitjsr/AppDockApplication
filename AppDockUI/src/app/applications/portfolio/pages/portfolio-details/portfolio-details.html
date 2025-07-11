@@ -193,14 +193,15 @@
     </h3>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Project Card -->
+      <!-- Loop through projects -->
       <div
+        *ngFor="let project of portfolioDetails.projects"
         class="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover:scale-[1.02] transition transform shadow-lg"
       >
         <div class="relative">
           <img
             src="images/1st_project.PNG"
-            alt="Project 1"
+            [alt]="project.title"
             class="w-full h-56 object-cover"
           />
           <div
@@ -208,89 +209,30 @@
           ></div>
         </div>
         <div class="p-6">
-          <h4 class="text-xl font-bold text-white mb-2">Project One</h4>
-          <p class="text-gray-400 mb-2 text-sm">
-            A powerful application showcasing modern design and functionality.
-          </p>
+          <h4 class="text-xl font-bold text-white mb-2">{{ project.title }}</h4>
+          <p class="text-gray-400 mb-2 text-sm">{{ project.description }}</p>
           <p class="text-gray-500 text-xs mb-1">
-            <strong>Tech Stack:</strong> Angular, .NET, Tailwind CSS
+            <strong>Tech Stack:</strong> {{ project.techStack }}
           </p>
           <p class="text-gray-500 text-xs mb-4">
-            <strong>Duration:</strong> Jan 2022 - May 2022
+            <strong>Duration:</strong> {{ formatDate(project.startDate) }} - {{
+            formatDate(project.endDate) }}
           </p>
           <a
-            href="#"
+            *ngIf="project.repoLink && project.repoLink !== 'string'"
+            [href]="project.repoLink"
+            target="_blank"
             class="inline-block mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
           >
-            View Project
+            Source Code
           </a>
-        </div>
-      </div>
-
-      <!-- Project Card -->
-      <div
-        class="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover:scale-[1.02] transition transform shadow-lg"
-      >
-        <div class="relative">
-          <img
-            src="images/1st_project.PNG"
-            alt="Project 2"
-            class="w-full h-56 object-cover"
-          />
-          <div
-            class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
-          ></div>
-        </div>
-        <div class="p-6">
-          <h4 class="text-xl font-bold text-white mb-2">Project Two</h4>
-          <p class="text-gray-400 mb-2 text-sm">
-            A creative platform designed with high performance and scalability.
-          </p>
-          <p class="text-gray-500 text-xs mb-1">
-            <strong>Tech Stack:</strong> React, Node.js, MongoDB
-          </p>
-          <p class="text-gray-500 text-xs mb-4">
-            <strong>Duration:</strong> Mar 2021 - Aug 2021
-          </p>
           <a
-            href="#"
-            class="inline-block mt-2 bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700 transition"
+            *ngIf="project.repoLink && project.repoLink !== 'string'"
+            [href]="project.repoLink"
+            target="_blank"
+            class="inline-block mt-2 ml-2 bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800 transition"
           >
-            View Project
-          </a>
-        </div>
-      </div>
-
-      <!-- Project Card -->
-      <div
-        class="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover:scale-[1.02] transition transform shadow-lg"
-      >
-        <div class="relative">
-          <img
-            src="images/1st_project.PNG"
-            alt="Project 3"
-            class="w-full h-56 object-cover"
-          />
-          <div
-            class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
-          ></div>
-        </div>
-        <div class="p-6">
-          <h4 class="text-xl font-bold text-white mb-2">Project Three</h4>
-          <p class="text-gray-400 mb-2 text-sm">
-            A beautifully crafted project focused on user experience and design.
-          </p>
-          <p class="text-gray-500 text-xs mb-1">
-            <strong>Tech Stack:</strong> Vue, Firebase, Tailwind CSS
-          </p>
-          <p class="text-gray-500 text-xs mb-4">
-            <strong>Duration:</strong> Sep 2020 - Feb 2021
-          </p>
-          <a
-            href="#"
-            class="inline-block mt-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
-          >
-            View Project
+            Live Project
           </a>
         </div>
       </div>
@@ -304,85 +246,66 @@
     </h3>
 
     <!-- Certificate 1 -->
-    <div class="flex flex-col md:flex-row items-center">
+    <div
+      *ngFor="let certificate of portfolioDetails.certificates; let i = index"
+      class="flex flex-col md:flex-row"
+      [ngClass]="{'md:flex-row-reverse': i % 2 !== 0, 'items-center': true}"
+    >
       <!-- Image -->
       <div
         class="relative w-full md:w-1/2 overflow-hidden rounded-xl shadow-lg p-10"
       >
-        <!-- Certificate Number Badge -->
-        <div
-          class="absolute top-4 left-4 bg-blue-600 text-white text-lg font-bold w-15 h-15 flex items-center justify-center rounded-full shadow-lg"
-        >
-          1
-        </div>
-
+        <!-- Image -->
         <img
           src="images/1st_project.PNG"
-          alt="Certificate 1"
+          alt="{{ certificate.title }}"
           class="object-cover w-full h-full transform hover:scale-105 transition duration-500 rounded-xl"
         />
 
-        <!-- Glow overlay -->
+        <!-- Strong solid overlay -->
         <div
-          class="absolute inset-0 bg-gradient-to-tr from-blue-500/30 to-purple-500/20 rounded-xl"
+          class="absolute inset-0 rounded-xl"
+          [ngClass]="{
+            'bg-gradient-to-bl from-blue-600/40 to-purple-500/30': i % 2 === 0,
+            'bg-gradient-to-tr from-pink-500/40 to-yellow-400/30': i % 2 !== 0
+          }"
+          style="opacity: 5"
         ></div>
+
+        <!-- Badge -->
+        <div
+          class="absolute top-4 left-4 text-white text-lg font-bold w-15 h-15 flex items-center justify-center rounded-full shadow-lg z-20"
+          [ngClass]="{
+            'bg-blue-600': i % 2 === 0,
+            'bg-pink-600': i % 2 !== 0
+          }"
+        >
+          {{ i + 1 }}
+        </div>
       </div>
 
       <!-- Content -->
       <div class="w-full md:w-1/2 mt-8 md:mt-0 md:pl-12">
         <h3 class="text-3xl font-bold text-white mb-4">
-          Awesome Certificate One
+          {{ certificate.title }}
         </h3>
+        <p class="text-gray-400 mb-4">{{ certificate.description }}</p>
         <p class="text-gray-400 mb-4">
-          Description: A visually striking project that combines stunning design
-          with powerful functionality. Created to inspire and engage.
+          <strong>Issued By:</strong> {{ certificate.issuer }}
+        </p>
+        <p class="text-gray-400 mb-4">
+          <strong>Issued on:</strong>
+          {{ formatDate(certificate.issueDate) }}
         </p>
         <a
-          href="#"
-          class="inline-block mt-6 bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition"
-        >
-          View
-        </a>
-      </div>
-    </div>
-
-    <!-- Certificate 2 -->
-    <div class="flex flex-col md:flex-row-reverse items-center">
-      <!-- Image -->
-      <div
-        class="relative w-full md:w-1/2 overflow-hidden rounded-xl shadow-lg p-10"
-      >
-        <!-- Certificate Number Badge -->
-        <div
-          class="absolute top-4 left-4 bg-pink-600 text-white text-lg font-bold w-15 h-15 flex items-center justify-center rounded-full shadow-lg"
-        >
-          2
-        </div>
-
-        <img
-          src="images/1st_project.PNG"
-          alt="Certificate 2"
-          class="object-cover w-full h-auto transform hover:scale-105 transition duration-500 rounded-xl"
-        />
-
-        <!-- Glow overlay -->
-        <div
-          class="absolute inset-0 bg-gradient-to-tr from-pink-500/30 to-yellow-500/20 rounded-xl"
-        ></div>
-      </div>
-
-      <!-- Content -->
-      <div class="w-full md:w-1/2 mt-8 md:mt-0 md:pr-12">
-        <h3 class="text-3xl font-bold text-white mb-4">
-          Creative Certificate Two
-        </h3>
-        <p class="text-gray-400 mb-4">
-          An elegant blend of creativity and performance. Built to showcase
-          high-end design and modern frontend engineering.
-        </p>
-        <a
-          href="#"
-          class="inline-block mt-6 bg-pink-600 text-white px-6 py-3 rounded hover:bg-pink-700 transition"
+          *ngIf="certificate.certificateUrl"
+          [href]="certificate.certificateUrl"
+          target="_blank"
+          class="inline-block mt-6 px-6 py-3 rounded text-white transition"
+          [ngClass]="{
+          'bg-blue-600 hover:bg-blue-700': i % 2 === 0,
+          'bg-pink-600 hover:bg-pink-700': i % 2 !== 0
+        }"
         >
           View
         </a>

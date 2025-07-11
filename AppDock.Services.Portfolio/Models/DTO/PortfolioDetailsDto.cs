@@ -9,9 +9,12 @@
         public DateTime DOB { get; set; }
 
         public UserDto user { get; set; }
+
         public AboutDto About { get; set; }
 
         public IEnumerable<ProjectDto> Projects { get; set; }
+      
+        public IEnumerable<CertificateDto> Certificates { get; set; }
 
         public IEnumerable<SkillDto> Skills { get; set; }
     }
