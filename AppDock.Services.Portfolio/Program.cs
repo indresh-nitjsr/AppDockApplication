@@ -36,9 +36,10 @@ builder.Services.AddScoped<IAboutService, AboutService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<ICertificateService, CertificateService>();
 builder.Services.AddScoped<ISkillService, SkillService>();
+builder.Services.AddScoped<IExperienceService, ExperienceService>();
 builder.Services.AddScoped<AboutService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddHttpClient<AuthService>(client =>
+builder.Services.AddHttpClient<IAuthService, AuthService>(client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["ApplicationUrls:BaseAuthAPI"]);
 });

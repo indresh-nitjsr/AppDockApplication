@@ -395,6 +395,7 @@ yarn-error.log
 
 # Miscellaneous
 /.angular/cache
+Migrations
 .tsbuildinfo
 .sass-cache/
 /connect.lock
