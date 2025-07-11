@@ -76,6 +76,44 @@ namespace AppDock.Services.PortfolioAPI.Migrations
                     b.ToTable("about");
                 });
 
+            modelBuilder.Entity("AppDock.Services.PortfolioAPI.Models.Certificate", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CertificateUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("IssueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Issuer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PortfolioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PortfolioId");
+
+                    b.ToTable("certificates");
+                });
+
             modelBuilder.Entity("AppDock.Services.PortfolioAPI.Models.Contact", b =>
                 {
                     b.Property<string>("Id")
@@ -202,15 +240,7 @@ namespace AppDock.Services.PortfolioAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ProficiencyLevel")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SkillName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SkillType")
+                    b.Property<string>("Skills")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -248,6 +278,17 @@ namespace AppDock.Services.PortfolioAPI.Migrations
                     b.HasOne("AppDock.PortfolioService.Models.UserPortfolio", "Portfolio")
                         .WithOne("About")
                         .HasForeignKey("AppDock.Services.PortfolioAPI.Models.About", "PortfolioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Portfolio");
+                });
+
+            modelBuilder.Entity("AppDock.Services.PortfolioAPI.Models.Certificate", b =>
+                {
+                    b.HasOne("AppDock.PortfolioService.Models.UserPortfolio", "Portfolio")
+                        .WithMany("Certificates")
+                        .HasForeignKey("PortfolioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -302,6 +343,8 @@ namespace AppDock.Services.PortfolioAPI.Migrations
                 {
                     b.Navigation("About")
                         .IsRequired();
+
+                    b.Navigation("Certificates");
 
                     b.Navigation("Contact")
                         .IsRequired();

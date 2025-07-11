@@ -35,6 +35,11 @@ namespace AppDock.Services.PortfolioAPI.Data
                 .HasForeignKey(e => e.PortfolioId);
 
             modelBuilder.Entity<UserPortfolio>()
+                .HasMany(p => p.Certificates)
+                .WithOne(e => e.Portfolio)
+                .HasForeignKey(e => e.PortfolioId);
+
+            modelBuilder.Entity<UserPortfolio>()
                 .HasMany(p => p.Skills)
                 .WithOne(e => e.Portfolio)
                 .HasForeignKey(e => e.PortfolioId);
@@ -49,6 +54,7 @@ namespace AppDock.Services.PortfolioAPI.Data
         public DbSet<About> about {  get; set; }
         public DbSet<Contact> contact {  get; set; }
         public DbSet<Experience> experiences {  get; set; }
+        public DbSet<Certificate> certificates {  get; set; }
         public DbSet<Projects> projects {  get; set; }
         public DbSet<Skill> skills {  get; set; }
 

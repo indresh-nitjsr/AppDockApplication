@@ -9,10 +9,7 @@ namespace AppDock.Services.PortfolioAPI.Models
         public string Id { get; set; }
         [Required]
         public string PortfolioId { get; set; }
-        public string SkillName { get; set; } = "";
-        public string ProficiencyLevel { get; set; } = "";
-        public string SkillType { get; set; } = "";
-
+        public string Skills { get; set; } = "";
         // Navigation
         public UserPortfolio Portfolio { get; set; }
     }

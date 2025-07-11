@@ -22,6 +22,16 @@ export class PortfolioDetails implements OnInit {
     this.getPortfolioDetails();
   }
 
+  formatDate(date: string | Date): string {
+    if (!date) return '';
+    const d = typeof date === 'string' ? new Date(date) : date;
+    const options: Intl.DateTimeFormatOptions = {
+      month: 'short',
+      year: 'numeric',
+    };
+    return d.toLocaleDateString('en-US', options);
+  }
+
   getPortfolioDetails() {
     const user = localStorage.getItem('user');
     if (user) {

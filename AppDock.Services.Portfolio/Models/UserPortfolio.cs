@@ -19,5 +19,6 @@ namespace AppDock.PortfolioService.Models
         public IEnumerable<Experience> Experiences { get; set; }
         public IEnumerable<Projects> Projects { get; set; }
         public IEnumerable<Skill> Skills { get; set; }
+        public IEnumerable<Certificate> Certificates { get; set; }
     }
 }
