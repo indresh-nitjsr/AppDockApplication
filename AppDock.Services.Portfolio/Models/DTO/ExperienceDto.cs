@@ -1,8 +1,8 @@
 ﻿using AppDock.PortfolioService.Models;
 
-namespace AppDock.Services.PortfolioAPI.Models
+namespace AppDock.Services.PortfolioAPI.Models.DTO
 {
-    public class Experience
+    public class ExperienceDto
     {
         public string Id { get; set; }
         public string PortfolioId { get; set; }

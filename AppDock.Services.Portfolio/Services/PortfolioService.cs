@@ -15,8 +15,6 @@ namespace AppDock.Services.PortfolioAPI.Services
         private readonly ApplicationDbContext _context;
         private readonly IAuthService _authService;
         private readonly IAboutService _aboutService;
-        private readonly AuthService _authService;
-        private readonly AboutService _aboutService;
         private readonly ISkillService _skillService;
         //private readonly Mapper _mapper;
         private readonly IProjectService _projectService;
@@ -27,11 +25,8 @@ namespace AppDock.Services.PortfolioAPI.Services
             IAuthService authService, 
             IAboutService aboutService, 
             IProjectService projectService,
-            ICertificateService certificateService
-            IMapper mapper, 
-            AuthService authService, 
-            AboutService aboutService, 
-            IProjectService projectService, 
+            ICertificateService certificateService,
+            IMapper mapper,  
             ISkillService skillService
            )
         {
