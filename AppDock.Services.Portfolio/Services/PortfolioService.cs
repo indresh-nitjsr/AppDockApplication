@@ -15,6 +15,9 @@ namespace AppDock.Services.PortfolioAPI.Services
         private readonly ApplicationDbContext _context;
         private readonly IAuthService _authService;
         private readonly IAboutService _aboutService;
+        private readonly AuthService _authService;
+        private readonly AboutService _aboutService;
+        private readonly ISkillService _skillService;
         //private readonly Mapper _mapper;
         private readonly IProjectService _projectService;
         private readonly ICertificateService _certificateService;
@@ -25,6 +28,11 @@ namespace AppDock.Services.PortfolioAPI.Services
             IAboutService aboutService, 
             IProjectService projectService,
             ICertificateService certificateService
+            IMapper mapper, 
+            AuthService authService, 
+            AboutService aboutService, 
+            IProjectService projectService, 
+            ISkillService skillService
            )
         {
             _context = context;
@@ -32,6 +40,7 @@ namespace AppDock.Services.PortfolioAPI.Services
             _aboutService = aboutService;
             _projectService = projectService;
             _certificateService = certificateService;
+            _skillService = skillService;
         }
 
 
@@ -146,6 +155,7 @@ namespace AppDock.Services.PortfolioAPI.Services
             var about = await _aboutService.GetAboutAsync(user.userId);
             var projects = await _projectService.GetAllProjectsAsync(portfolio.Id);
             var certificates = await _certificateService.GetCertificatesAsync(portfolio.Id);
+            var skills = await _skillService.GetAllSkillAsync(portfolio.Id);
 
             PortfolioDetailsDto portfolioDetails = new PortfolioDetailsDto();
             portfolioDetails.Id = portfolio.Id;
@@ -155,7 +165,7 @@ namespace AppDock.Services.PortfolioAPI.Services
             portfolioDetails.About = about;
             portfolioDetails.Projects = projects;
             portfolioDetails.Certificates = certificates;
-
+            portfolioDetails.Skills = skills;
             return portfolioDetails;
         }
 
