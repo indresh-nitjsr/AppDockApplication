@@ -1,12 +1,6 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  NgZone,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule, NgClass } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { PortfolioService } from '../../services/portfolioService';
 import { UserPortfolio } from '../../models/userPortfolio';
 import { PortfolioDetails as PortfolioDetailsModel } from '../../models/portfolioDetails';
