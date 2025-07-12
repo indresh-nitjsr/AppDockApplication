@@ -123,12 +123,13 @@ export class Experience {
 }
 
 export class Skill {
-  id: string = '';
-  portfolioId: string = '';
-  skills: string = '';
+  skillId: string;
+  portfolioId: string;
+  skills: string;
 
   constructor() {
-    this.id = '';
-    (this.portfolioId = ''), (this.skills = '');
+    this.skillId = '';
+    this.portfolioId = '';
+    this.skills = '';
   }
 }

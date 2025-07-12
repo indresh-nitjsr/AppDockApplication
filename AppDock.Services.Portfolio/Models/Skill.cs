@@ -13,6 +13,8 @@ namespace AppDock.Services.PortfolioAPI.Models
 
         public string Skills { get; set; } = "";
         // Navigation
-       
+
+        public UserPortfolio Portfolio { get; set; }
+
     }
 }
