@@ -6,6 +6,7 @@ export class PortfolioDetails {
   about: About;
   projects?: Projects[];
   certificates?: Certificates[];
+  skills?: Skills[];
 
   constructor() {
     this.id = 0;
@@ -15,6 +16,7 @@ export class PortfolioDetails {
     this.user = new User();
     this.projects = [];
     this.certificates = [];
+    this.skills = [];
   }
 
   static fromJson(json: any): PortfolioDetails {
@@ -28,14 +30,15 @@ export class PortfolioDetails {
       : new About();
     obj.projects = json.projects
       ? json.projects.map((project: any) =>
-          Object.assign(new Projects(), project)
-        )
+        Object.assign(new Projects(), project)
+      )
       : [];
     obj.certificates = json.certificates
       ? json.certificates.map((certificate: any) =>
-          Object.assign(new Certificates(), certificate)
-        )
+        Object.assign(new Certificates(), certificate)
+      )
       : [];
+    obj.skills = json.skills ? json.skills.map((skill: any) => Object.assign(new Skills(), skill)) : [];
     return obj;
   }
 }
@@ -111,5 +114,17 @@ export class Certificates {
     this.expiryDate = undefined;
     this.issuer = '';
     this.certificateUrl = '';
+  }
+}
+
+export class Skills {
+  id: string;
+  portfolioId: string;
+  skills: string;
+
+  constructor() {
+    this.id = '';
+    this.portfolioId = '';
+    this.skills = '';
   }
 }
