@@ -121,70 +121,26 @@
   </section>
 
   <!-- Skills Section -->
-  <section class="py-16 max-w-6xl mx-auto px-4">
-    <h3 class="text-5xl font-bold text-gray-400 text-center mb-12">Skills</h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Skill Card -->
-      <div
-        class="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:scale-[1.02] transition"
-      >
-        <h4 class="text-lg font-semibold text-white mb-2">HTML</h4>
-        <p class="text-gray-400 text-sm mb-3">
-          Expert in crafting semantic HTML.
-        </p>
-        <div class="w-full bg-gray-700 rounded-full h-2.5">
-          <div class="bg-blue-600 h-2.5 rounded-full" style="width: 35%"></div>
-        </div>
-        <p class="text-gray-400 text-xs mt-1">35%</p>
+<section class="py-16 max-w-6xl mx-auto px-4">
+  <h3 class="text-5xl font-bold text-gray-400 text-center mb-12">Skills</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div
+      *ngFor="let skill of skillsList"
+      class="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:scale-[1.02] transition"
+    >
+      <h4 class="text-lg font-semibold text-white mb-2">{{ skill.name }}</h4>
+      <p class="text-gray-400 text-sm mb-3">Proficiency in {{ skill.name }}</p>
+      <div class="w-full bg-gray-700 rounded-full h-2.5">
+        <div
+          class="h-2.5 rounded-full"
+          [ngClass]="'bg-' + skill.color + '-500'"
+          [style.width.%]="skill.percent"
+        ></div>
       </div>
-
-      <!-- Skill Card -->
-      <div
-        class="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:scale-[1.02] transition"
-      >
-        <h4 class="text-lg font-semibold text-white mb-2">CSS</h4>
-        <p class="text-gray-400 text-sm mb-3">Master of responsive design.</p>
-        <div class="w-full bg-gray-700 rounded-full h-2.5">
-          <div class="bg-green-500 h-2.5 rounded-full" style="width: 90%"></div>
-        </div>
-        <p class="text-gray-400 text-xs mt-1">90%</p>
-      </div>
-
-      <!-- Skill Card -->
-      <div
-        class="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:scale-[1.02] transition"
-      >
-        <h4 class="text-lg font-semibold text-white mb-2">JavaScript</h4>
-        <p class="text-gray-400 text-sm mb-3">
-          Proficient in modern JavaScript.
-        </p>
-        <div class="w-full bg-gray-700 rounded-full h-2.5">
-          <div
-            class="bg-yellow-500 h-2.5 rounded-full"
-            style="width: 85%"
-          ></div>
-        </div>
-        <p class="text-gray-400 text-xs mt-1">85%</p>
-      </div>
-
-      <!-- Skill Card -->
-      <div
-        class="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:scale-[1.02] transition"
-      >
-        <h4 class="text-lg font-semibold text-white mb-2">TypeScript</h4>
-        <p class="text-gray-400 text-sm mb-3">
-          Skilled in building scalable apps.
-        </p>
-        <div class="w-full bg-gray-700 rounded-full h-2.5">
-          <div
-            class="bg-purple-500 h-2.5 rounded-full"
-            style="width: 80%"
-          ></div>
-        </div>
-        <p class="text-gray-400 text-xs mt-1">80%</p>
-      </div>
+      <p class="text-gray-400 text-xs mt-1">{{ skill.percent }}%</p>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- My Projects Section -->
   <section class="py-16 max-w-7xl mx-auto px-4">

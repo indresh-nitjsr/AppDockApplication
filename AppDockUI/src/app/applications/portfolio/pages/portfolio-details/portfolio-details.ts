@@ -53,5 +53,22 @@ export class PortfolioDetails implements OnInit {
     } else {
       console.error('User not found in local storage');
     }
+  
+  
+  }
+
+  get skillsList() {
+    const colors = ['blue', 'green', 'yellow', 'purple', 'red'];
+    return this.portfolioDetails?.skills?.flatMap(entry => {
+      return entry.skills.split(',').map(skill => {
+        const percent = Math.floor(Math.random() * 30 + 60); // random between 60–90%
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        return {
+          name: skill.trim(),
+          percent,
+          color
+        };
+      });
+    }) ?? [];
   }
 }
