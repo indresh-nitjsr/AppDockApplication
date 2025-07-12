@@ -13,8 +13,5 @@ namespace AppDock.Services.PortfolioAPI.Models.DTO
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Description { get; set; } = "";
-
-        // Navigation
-        public UserPortfolio Portfolio { get; set; }
     }
 }

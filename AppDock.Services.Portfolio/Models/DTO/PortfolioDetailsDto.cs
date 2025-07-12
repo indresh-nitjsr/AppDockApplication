@@ -17,5 +17,6 @@
         public IEnumerable<CertificateDto> Certificates { get; set; }
 
         public IEnumerable<SkillDto> Skills { get; set; }
+        public IEnumerable<ExperienceDto> Experiences { get; set; }
     }
 }

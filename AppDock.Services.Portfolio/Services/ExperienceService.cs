@@ -26,6 +26,8 @@ namespace AppDock.Services.PortfolioAPI.Services
                 PortfolioId = experienceDto.PortfolioId,
                 Title = experienceDto.Title,
                 CompanyName = experienceDto.CompanyName,
+                EmployementType = experienceDto.EmployementType,
+                IsCurrentlyWorking = experienceDto.IsCurrentlyWorking,
                 StartDate = experienceDto.StartDate,
                 EndDate = experienceDto.EndDate,
                 Description = experienceDto.Description
