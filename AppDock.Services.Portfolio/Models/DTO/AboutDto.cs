@@ -1,6 +1,4 @@
-﻿using AppDock.PortfolioService.Models;
-
-namespace AppDock.Services.PortfolioAPI.Models.DTO
+﻿namespace AppDock.Services.PortfolioAPI.Models.DTO
 {
     public class AboutDto
     {

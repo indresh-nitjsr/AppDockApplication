@@ -22,8 +22,8 @@ export class PortfolioDetails implements OnInit {
     this.getPortfolioDetails();
   }
 
-  formatDate(date: string | Date): string {
-    if (!date) return '';
+  formatDate(date?: string | Date): string {
+    if (!date) return ''; // If undefined or null, return empty string
     const d = typeof date === 'string' ? new Date(date) : date;
     const options: Intl.DateTimeFormatOptions = {
       month: 'short',

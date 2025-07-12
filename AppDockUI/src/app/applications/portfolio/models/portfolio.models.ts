@@ -6,7 +6,6 @@ export class PortfolioDetails {
   about: About;
   projects?: Projects[];
   certificates?: Certificates[];
-  skills?: Skills[];
   experiences: Experience[];
 
   constructor() {
@@ -17,50 +16,23 @@ export class PortfolioDetails {
     this.user = new User();
     this.projects = [];
     this.certificates = [];
-    this.skills = [];
     this.experiences = [];
-  }
-
-  static fromJson(json: any): PortfolioDetails {
-    const obj = new PortfolioDetails();
-    obj.id = json.id;
-    obj.role = json.role;
-    obj.dob = new Date(json.dob);
-    obj.user = Object.assign(new User(), json.user);
-    obj.about = json.about
-      ? Object.assign(new About(), json.about)
-      : new About();
-    obj.projects = json.projects
-      ? json.projects.map((project: any) =>
-          Object.assign(new Projects(), project)
-        )
-      : [];
-    obj.certificates = json.certificates
-      ? json.certificates.map((certificate: any) =>
-          Object.assign(new Certificates(), certificate)
-        )
-      : [];
-    obj.skills = json.skills
-      ? json.skills.map((skill: any) => Object.assign(new Skills(), skill))
-      : [];
-    obj.experiences = json.experiences
-      ? json.experiences.map((experience: any) =>
-          Object.assign(new Experience(), experience)
-        )
-      : [];
-    return obj;
   }
 }
 
 export class About {
   heading: string;
-  profilePicture: string;
   description: string;
+  profileImageUrl: string;
+  userId: string;
+  portfolioId: string;
 
   constructor() {
     this.description = '';
     this.heading = '';
-    this.profilePicture = '';
+    this.profileImageUrl = '';
+    this.userId = '';
+    this.portfolioId = '';
   }
 }
 
@@ -126,18 +98,6 @@ export class Certificates {
   }
 }
 
-export class Skills {
-  id: string;
-  portfolioId: string;
-  skills: string;
-
-  constructor() {
-    this.id = '';
-    this.portfolioId = '';
-    this.skills = '';
-  }
-}
-
 export class Experience {
   id: string;
   portfolioId: string;
@@ -146,7 +106,7 @@ export class Experience {
   companyName: string;
   isCurrentlyWorking: boolean;
   startDate: Date;
-  endDate?: Date;
+  endDate?: Date | undefined;
   description: string;
 
   constructor() {
@@ -159,5 +119,16 @@ export class Experience {
     this.startDate = new Date();
     this.endDate = new Date();
     this.description = '';
+  }
+}
+
+export class Skill {
+  id: string = '';
+  portfolioId: string = '';
+  skills: string = '';
+
+  constructor() {
+    this.id = '';
+    (this.portfolioId = ''), (this.skills = '');
   }
 }
