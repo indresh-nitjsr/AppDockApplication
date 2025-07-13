@@ -42,7 +42,7 @@ namespace AppDock.Services.PortfolioAPI.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("portfolio/{portfolioId}")]
         public async Task<IActionResult> GetSkills(string portfolioId)
         {
             if (string.IsNullOrWhiteSpace(portfolioId))
@@ -127,21 +127,21 @@ namespace AppDock.Services.PortfolioAPI.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetSkillById(string id)
+        [HttpGet("{skillId}")]
+        public async Task<IActionResult> GetSkillById(string skillId)
         {
-            if (string.IsNullOrWhiteSpace(id))
+            if (string.IsNullOrWhiteSpace(skillId))
             {
                 return BadRequest("Skill ID is required.");
             }
 
             try
             {
-                var skillDto = await _skillService.GetSkillByIdAsync(id);
+                var skillDto = await _skillService.GetSkillByIdAsync(skillId);
 
                 if (skillDto == null)
                 {
-                    return NotFound($"Skill with ID '{id}' not found.");
+                    return NotFound($"Skill with ID '{skillId}' not found.");
                 }
 
                 return Ok(skillDto);

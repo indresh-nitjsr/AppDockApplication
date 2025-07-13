@@ -6,7 +6,7 @@ export class PortfolioDetails {
   about: About;
   projects?: Projects[];
   certificates?: Certificates[];
-  skills?: Skills[];
+  skills: Skills[];
   experiences: Experience[];
 
   constructor() {
@@ -54,13 +54,13 @@ export class PortfolioDetails {
 
 export class About {
   heading: string;
-  profilePicture: string;
+  profileImageUrl: string;
   description: string;
 
   constructor() {
     this.description = '';
     this.heading = '';
-    this.profilePicture = '';
+    this.profileImageUrl = '';
   }
 }
 
@@ -113,6 +113,7 @@ export class Certificates {
   expiryDate?: Date;
   issuer: string;
   certificateUrl: string;
+  type: string;
 
   constructor() {
     this.id = '';
@@ -123,16 +124,17 @@ export class Certificates {
     this.expiryDate = undefined;
     this.issuer = '';
     this.certificateUrl = '';
+    this.type = '';
   }
 }
 
 export class Skills {
-  id: string;
+  skillId: string;
   portfolioId: string;
   skills: string;
 
   constructor() {
-    this.id = '';
+    this.skillId = '';
     this.portfolioId = '';
     this.skills = '';
   }

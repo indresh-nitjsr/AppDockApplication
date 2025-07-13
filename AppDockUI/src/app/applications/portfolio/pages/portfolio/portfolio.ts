@@ -8,8 +8,10 @@ import {
   About,
   Certificates,
   Experience,
+  Projects,
   Skill,
 } from '../../models/portfolio.models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-portfolio',
@@ -32,11 +34,13 @@ export class Portfolio implements OnInit {
   experienceObj: Experience = new Experience();
   certificateObj: Certificates = new Certificates();
   skillObj: Skill = new Skill();
+  projectObj: Projects = new Projects();
 
   constructor(
     public portfolioService: PortfolioService,
     private cdr: ChangeDetectorRef,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -86,6 +90,7 @@ export class Portfolio implements OnInit {
     this.aboutObj.portfolioId = this.portfolioDetails.id;
     this.aboutObj.userId = this.portfolioDetails.user.userId;
     this.aboutObj.heading = `Hi I'm ${this.portfolioDetails.user.name}`;
+    console.log('aboutObj: ', this.aboutObj);
 
     if (!this.aboutObj.profileImageUrl) {
       // If no URL given, assign default image before saving
@@ -122,7 +127,7 @@ export class Portfolio implements OnInit {
   }
 
   createPortfolioCertificate() {
-    this.experienceObj.portfolioId = this.portfolioDetails.id;
+    this.certificateObj.portfolioId = this.portfolioDetails.id;
 
     this.portfolioService.createCertificate(this.certificateObj).subscribe(
       (res: Certificates) => {
@@ -139,10 +144,32 @@ export class Portfolio implements OnInit {
 
   createPortfolioSkill() {
     this.skillObj.portfolioId = this.portfolioDetails.id;
-
     this.portfolioService.createSkill(this.skillObj).subscribe(
-      (res: Skill) => {
-        console.log('Skill Create successfully: ', res);
+      (res: any) => {
+        console.log('Skill created: ', res);
+
+        // Now fetch updated list
+        this.portfolioService
+          .getSkillsByPortfolioId(this.portfolioDetails.id)
+          .subscribe((skills: any) => {
+            console.log('get skill: ', skills);
+            this.portfolioDetails.skills = skills;
+            this.ngZone.run(() => {
+              this.nextStep();
+            });
+          });
+      },
+      (error: any) => {
+        console.log('Error creating Skill: ', error);
+      }
+    );
+  }
+
+  createPortfolioProject() {
+    this.projectObj.portfolioId = this.portfolioDetails.id;
+    this.portfolioService.createProject(this.projectObj).subscribe(
+      (res: any) => {
+        console.log('Project created: ', res);
         this.ngZone.run(() => {
           this.nextStep();
         });
@@ -151,6 +178,10 @@ export class Portfolio implements OnInit {
         console.log('Error creating Skill: ', error);
       }
     );
+  }
+
+  submitPortfolio() {
+    this.router.navigate(['/services/portfolio', 'portfolio-details']);
   }
 
   onCheckboxChange() {
@@ -175,26 +206,31 @@ export class Portfolio implements OnInit {
   decideNextStep() {
     if (
       !this.portfolioDetails.about ||
-      this.portfolioDetails.about.description == ''
+      this.portfolioDetails.about.description === ''
     ) {
-      this.currentStep = 2;
+      this.currentStep = 2; // About
     } else if (
       !this.portfolioDetails.experiences ||
       this.portfolioDetails.experiences.length === 0
     ) {
-      this.currentStep = 3;
+      this.currentStep = 3; // Experience
+    } else if (
+      !this.portfolioDetails.skills ||
+      this.portfolioDetails.skills.length === 0
+    ) {
+      this.currentStep = 4; // Skills
     } else if (
       !this.portfolioDetails.projects ||
       this.portfolioDetails.projects.length === 0
     ) {
-      this.currentStep = 4;
+      this.currentStep = 5; // Projects
     } else if (
       !this.portfolioDetails.certificates ||
       this.portfolioDetails.certificates.length === 0
     ) {
-      this.currentStep = 5;
+      this.currentStep = 6; // Certificates
     } else {
-      this.currentStep = 6; // All done
+      this.currentStep = 7; // All done
     }
   }
 }

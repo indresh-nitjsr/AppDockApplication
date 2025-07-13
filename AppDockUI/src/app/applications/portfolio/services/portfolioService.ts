@@ -7,6 +7,7 @@ import {
   Certificates,
   Experience,
   PortfolioDetails,
+  Projects,
   Skill,
 } from '../models/portfolio.models';
 
@@ -52,5 +53,18 @@ export class PortfolioService {
   createSkill(obj: Skill): Observable<Skill> {
     console.log('Creating Skill portfolio: ', obj);
     return this.http.post<Skill>(`${this.BaseUrl}/skill`, obj);
+  }
+
+  getSkillsByPortfolioId(portfolioId: string): Observable<string> {
+    console.log('Fetching portfolio for user ID:', portfolioId);
+    return this.http.get<string>(
+      `${this.BaseUrl}/skill/portfolio/${portfolioId}`
+    );
+  }
+
+  //Project operations
+  createProject(obj: Projects): Observable<Projects> {
+    console.log('Creating Project portfolio::', obj);
+    return this.http.post<Projects>(`${this.BaseUrl}/project`, obj);
   }
 }
