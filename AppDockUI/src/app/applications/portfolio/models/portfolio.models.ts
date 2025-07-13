@@ -7,6 +7,7 @@ export class PortfolioDetails {
   projects?: Projects[];
   certificates?: Certificates[];
   experiences: Experience[];
+  skills: Skill[];
 
   constructor() {
     this.id = '';
@@ -17,6 +18,7 @@ export class PortfolioDetails {
     this.projects = [];
     this.certificates = [];
     this.experiences = [];
+    this.skills = [];
   }
 }
 
@@ -51,7 +53,7 @@ export class User {
 }
 
 export class Projects {
-  id: string;
+  projectId: string;
   portfolioId: string;
   title: string;
   description: string;
@@ -63,7 +65,7 @@ export class Projects {
   repoLink: string;
 
   constructor() {
-    this.id = '';
+    this.projectId = '';
     this.title = '';
     this.portfolioId = '';
     this.description = '';
@@ -85,6 +87,7 @@ export class Certificates {
   expiryDate?: Date;
   issuer: string;
   certificateUrl: string;
+  type: string;
 
   constructor() {
     this.id = '';
@@ -95,6 +98,7 @@ export class Certificates {
     this.expiryDate = undefined;
     this.issuer = '';
     this.certificateUrl = '';
+    this.type = '';
   }
 }
 

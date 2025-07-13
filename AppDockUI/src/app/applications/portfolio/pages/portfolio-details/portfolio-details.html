@@ -1,136 +1,127 @@
 <div
   *ngIf="portfolioDetails && portfolioDetails.user.userId; else loading"
-  class="bg-gradient-to-b from-[#0b002b] to-[#15002f] text-white font-sans"
+  class="font-sans"
 >
-  <!-- Navbar -->
-  <nav
-    class="flex items-center justify-between px-8 py-6 border-b border-white/10"
-  >
-    <div class="text-xl font-bold">🌙</div>
-    <ul class="flex space-x-6 text-gray-300">
-      <li><a href="#" class="hover:text-white">Home</a></li>
-      <li><a href="#" class="hover:text-white">About</a></li>
-      <li><a href="#" class="hover:text-white">Labs</a></li>
-    </ul>
-  </nav>
-
   <!-- About Section -->
-  <section class="flex flex-col items-center text-center py-16">
-    <img
-      src="https://avatars.githubusercontent.com/u/9919?s=280&v=4"
-      alt="Avatar"
-      class="w-24 h-24 rounded-full mb-4 shadow-lg"
-    />
-    <h2 class="text-gray-400 text-sm mb-2">
-      Hello! I’m
-      <a href="#" class="text-purple-500 hover:underline"
-        >{{ portfolioDetails.user.name }}</a
+  <section
+    class="relative overflow-hidden bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
+  >
+    <div
+      class="max-w-7xl mx-auto px-4 pt-8 pb-32 flex flex-col items-center text-center"
+    >
+      <!-- Navbar -->
+      <nav class="w-full flex justify-between items-center px-8 mb-12">
+        <div class="text-2xl font-bold text-white">🌙</div>
+        <ul class="flex space-x-6 text-gray-300 font-medium">
+          <li><a href="#" class="hover:text-pink-500 transition">Home</a></li>
+          <li><a href="#" class="hover:text-pink-500 transition">About</a></li>
+          <li><a href="#" class="hover:text-pink-500 transition">Labs</a></li>
+        </ul>
+      </nav>
+
+      <!-- Decorative shapes -->
+      <div
+        class="absolute top-0 left-0 w-72 h-72 bg-purple-700 opacity-30 rounded-full mix-blend-multiply blur-3xl animate-pulse"
+      ></div>
+      <div
+        class="absolute bottom-0 right-0 w-72 h-72 bg-indigo-600 opacity-20 rounded-full mix-blend-multiply blur-3xl animate-pulse"
+      ></div>
+
+      <!-- Profile Image -->
+      <img
+        [src]="profileImage || 'images/profileImageGirl.jpeg'"
+        alt="Profile"
+        class="w-44 h-44 rounded-full object-cover border-4 border-white shadow-2xl mb-6 hover:scale-105 transition duration-500"
+      />
+
+      <!-- Name -->
+      <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2">
+        {{ portfolioDetails.user.name || 'Your Name' }}
+      </h1>
+
+      <!-- Expertise Title -->
+      <p class="text-xl md:text-2xl text-purple-200 font-medium mb-4">
+        {{ portfolioDetails.about.description }}
+      </p>
+
+      <!-- Short tagline -->
+      <p class="max-w-xl text-gray-300 mb-8">
+        Crafting powerful digital experiences that connect ideas to users. Let's
+        build together with elegance and precision.
+      </p>
+
+      <!-- Call to Action -->
+      <button
+        class="inline-flex items-center bg-pink-600 hover:bg-pink-700 text-white font-bold px-8 py-3 rounded-full shadow-lg transition"
       >
-    </h2>
-    <h1 class="text-3xl md:text-5xl font-bold mb-4">
-      Judges a book <br />
-      by its <span class="text-purple-500">cover.</span>
-    </h1>
-    <p class="max-w-2xl text-gray-400 mb-6 px-4">
-      I'm a Software Engineer. I craft beautiful user experiences, design
-      systems, and solve design problems with code.
-    </p>
+        Explore My Work
+        <svg
+          class="ml-2 w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M5 12h14M12 5l7 7-7 7"
+          />
+        </svg>
+      </button>
+    </div>
   </section>
 
-  <!-- Education Section -->
-  <!-- <section class="py-16 max-w-6xl mx-auto px-4">
-    <h1 class="text-5xl font-bold text-gray-400 text-center mb-10">
-      Education
-    </h1>
-
-    <div
-      class="bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 overflow-x-auto"
-    >
-      <table class="min-w-full text-left">
-        <thead>
-          <tr class="border-b border-white/10">
-            <th class="px-6 py-4 text-lg font-semibold text-white">
-              Degree / Certificate
-            </th>
-            <th class="px-6 py-4 text-lg font-semibold text-white">
-              Institution / Board
-            </th>
-            <th class="px-6 py-4 text-lg font-semibold text-white">
-              CGPA / Percentage
-            </th>
-            <th class="px-6 py-4 text-lg font-semibold text-white">Year</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="hover:bg-white/10 transition">
-            <td class="px-6 py-4 text-gray-400">BCA</td>
-            <td class="px-6 py-4 text-gray-400">Allahabad University</td>
-            <td class="px-6 py-4 text-gray-400">68.4%</td>
-            <td class="px-6 py-4 text-gray-400">2017 - 2020</td>
-          </tr>
-          <tr class="hover:bg-white/10 transition">
-            <td class="px-6 py-4 text-gray-400">MCA</td>
-            <td class="px-6 py-4 text-gray-400">NIT Jamshedpur</td>
-            <td class="px-6 py-4 text-gray-400">7.92</td>
-            <td class="px-6 py-4 text-gray-400">2020 - 2023</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section> -->
-
   <!-- Work Experience -->
-  <section class="py-20 max-w-5xl mx-auto px-4">
-    <h3 class="text-5xl font-bold text-gray-400 text-center mb-12">
-      Work Experience
-    </h3>
-
-    <div class="relative border-l border-gray-700/50 ml-4">
-      <div
-        *ngFor="let exp of portfolioDetails.experiences"
-        class="mb-12 relative pl-12 group"
-      >
-        <!-- Timeline dot -->
-        <span
-          class="absolute -left-[22px] top-6 w-4 h-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 border-2 border-white shadow-md"
-        ></span>
-
-        <!-- Company badge -->
+  <section
+    class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
+  >
+    <div class="max-w-7xl mx-auto px-4 py-20">
+      <h3 class="text-5xl font-bold text-gray-400 text-center mb-12">
+        Work Experience
+      </h3>
+      <div class="relative border-l border-gray-700/50 ml-4">
         <div
-          class="relative bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 shadow-xl hover:shadow-2xl transition transform hover:scale-[1.02]"
+          *ngFor="let exp of portfolioDetails.experiences"
+          class="mb-12 relative pl-12 group"
         >
-          <!-- Company badge on top of card -->
-          <div
-            class="absolute -top-3 left-4 bg-blue-600 text-white-900 text-xs px-3 py-1 rounded-full shadow-lg"
-          >
-            {{ exp.companyName || 'Company' }}
-          </div>
+          <span
+            class="absolute -left-[22px] top-6 w-4 h-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 border-2 border-white shadow-md"
+          ></span>
 
-          <!-- Card content -->
           <div
-            class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 mt-2"
+            class="relative bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 shadow-xl hover:shadow-2xl transition transform hover:scale-[1.02]"
           >
-            <h4 class="text-xl font-bold text-white">{{ exp.title }}</h4>
-            <span class="text-gray-400 text-sm">
-              {{ formatDate(exp.startDate) }} -
-              <span
-                [ngClass]="{'text-green-400 font-semibold': exp.isCurrentlyWorking}"
-              >
-                {{ exp.isCurrentlyWorking ? 'Present' : formatDate(exp.endDate)
-                }}
+            <div
+              class="absolute -top-3 left-4 bg-blue-600 text-white text-xs px-3 py-1 rounded-full shadow-lg"
+            >
+              {{ exp.companyName || 'Company' }}
+            </div>
+
+            <div
+              class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 mt-2"
+            >
+              <h4 class="text-xl font-bold text-white">{{ exp.title }}</h4>
+              <span class="text-gray-400 text-sm">
+                {{ formatDate(exp.startDate) }} -
+                <span
+                  [ngClass]="{'text-green-400 font-semibold': exp.isCurrentlyWorking}"
+                >
+                  {{ exp.isCurrentlyWorking ? 'Present' :
+                  formatDate(exp.endDate) }}
+                </span>
               </span>
-            </span>
-          </div>
+            </div>
 
-          <p class="text-gray-400 text-sm leading-relaxed">
-            {{ exp.description }}
-          </p>
-
-          <div
-            *ngIf="exp.employementType"
-            class="text-xs text-gray-400 italic mt-2"
-          >
-            Type: {{ exp.employementType }}
+            <p class="text-gray-400 text-sm leading-relaxed">
+              {{ exp.description }}
+            </p>
+            <div
+              *ngIf="exp.employementType"
+              class="text-xs text-gray-400 italic mt-2"
+            >
+              Type: {{ exp.employementType }}
+            </div>
           </div>
         </div>
       </div>
@@ -138,193 +129,234 @@
   </section>
 
   <!-- Skills Section -->
-<section class="py-16 max-w-6xl mx-auto px-4">
-  <h3 class="text-5xl font-bold text-gray-400 text-center mb-12">Skills</h3>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div
-      *ngFor="let skill of skillsList"
-      class="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:scale-[1.02] transition"
-    >
-      <h4 class="text-lg font-semibold text-white mb-2">{{ skill.name }}</h4>
-      <p class="text-gray-400 text-sm mb-3">Proficiency in {{ skill.name }}</p>
-      <div class="w-full bg-gray-700 rounded-full h-2.5">
+  <section
+    class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
+  >
+    <div class="max-w-7xl mx-auto px-4 py-16">
+      <h3 class="text-5xl font-bold text-gray-400 text-center mb-12">Skills</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div
-          class="h-2.5 rounded-full"
-          [ngClass]="'bg-' + skill.color + '-500'"
-          [style.width.%]="skill.percent"
-        ></div>
-      </div>
-      <p class="text-gray-400 text-xs mt-1">{{ skill.percent }}%</p>
-    </div>
-  </div>
-</section>
-
-  <!-- My Projects Section -->
-  <section class="py-16 max-w-7xl mx-auto px-4">
-    <h3 class="text-5xl font-bold text-gray-400 text-center mb-12">
-      My Projects
-    </h3>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Loop through projects -->
-      <div
-        *ngFor="let project of portfolioDetails.projects"
-        class="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover:scale-[1.02] transition transform shadow-lg"
-      >
-        <div class="relative">
-          <img
-            src="images/1st_project.PNG"
-            [alt]="project.title"
-            class="w-full h-56 object-cover"
-          />
-          <div
-            class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
-          ></div>
-        </div>
-        <div class="p-6">
-          <h4 class="text-xl font-bold text-white mb-2">{{ project.title }}</h4>
-          <p class="text-gray-400 mb-2 text-sm">{{ project.description }}</p>
-          <p class="text-gray-500 text-xs mb-1">
-            <strong>Tech Stack:</strong> {{ project.techStack }}
+          *ngFor="let skill of skillsList"
+          class="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:scale-[1.02] transition"
+        >
+          <h4 class="text-lg font-semibold text-white mb-2">
+            {{ skill.name }}
+          </h4>
+          <p class="text-gray-400 text-sm mb-3">
+            Proficiency in {{ skill.name }}
           </p>
-          <p class="text-gray-500 text-xs mb-4">
-            <strong>Duration:</strong> {{ formatDate(project.startDate) }} - {{
-            formatDate(project.endDate) }}
-          </p>
-          <a
-            *ngIf="project.repoLink && project.repoLink !== 'string'"
-            [href]="project.repoLink"
-            target="_blank"
-            class="inline-block mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-          >
-            Source Code
-          </a>
-          <a
-            *ngIf="project.repoLink && project.repoLink !== 'string'"
-            [href]="project.repoLink"
-            target="_blank"
-            class="inline-block mt-2 ml-2 bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800 transition"
-          >
-            Live Project
-          </a>
+          <div class="w-full bg-gray-700 rounded-full h-2.5">
+            <div
+              class="h-2.5 rounded-full"
+              [ngClass]="'bg-' + skill.color + '-500'"
+              [style.width.%]="skill.percent"
+            ></div>
+          </div>
+          <p class="text-gray-400 text-xs mt-1">{{ skill.percent }}%</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Certification Section -->
-  <section class="max-w-7xl mx-auto px-4 py-20 space-y-24">
-    <h3 class="text-4xl font-bold text-gray-400 text-center mb-10">
-      Certificates / Portfolios / Achievements
-    </h3>
-
-    <!-- Certificate 1 -->
-    <div
-      *ngFor="let certificate of portfolioDetails.certificates; let i = index"
-      class="flex flex-col md:flex-row"
-      [ngClass]="{'md:flex-row-reverse': i % 2 !== 0, 'items-center': true}"
-    >
-      <!-- Image -->
-      <div
-        class="relative w-full md:w-1/2 overflow-hidden rounded-xl shadow-lg p-10"
-      >
-        <!-- Image -->
-        <img
-          src="images/1st_project.PNG"
-          alt="{{ certificate.title }}"
-          class="object-cover w-full h-full transform hover:scale-105 transition duration-500 rounded-xl"
-        />
-
-        <!-- Strong solid overlay -->
+  <!-- My Projects Section -->
+  <section
+    class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
+  >
+    <div class="max-w-7xl mx-auto px-4 py-16">
+      <h3 class="text-5xl font-bold text-gray-400 text-center mb-12">
+        My Projects
+      </h3>
+      <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         <div
-          class="absolute inset-0 rounded-xl"
-          [ngClass]="{
-            'bg-gradient-to-bl from-blue-600/40 to-purple-500/30': i % 2 === 0,
-            'bg-gradient-to-tr from-pink-500/40 to-yellow-400/30': i % 2 !== 0
-          }"
-          style="opacity: 5"
-        ></div>
-
-        <!-- Badge -->
-        <div
-          class="absolute top-4 left-4 text-white text-lg font-bold w-15 h-15 flex items-center justify-center rounded-full shadow-lg z-20"
-          [ngClass]="{
-            'bg-blue-600': i % 2 === 0,
-            'bg-pink-600': i % 2 !== 0
-          }"
+          *ngFor="let project of portfolioDetails.projects"
+          class="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover:scale-[1.02] transition transform shadow-lg"
         >
-          {{ i + 1 }}
+          <div class="relative">
+            <img
+              src="images/1st_project.PNG"
+              [alt]="project.title"
+              class="w-full h-56 object-cover"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
+            ></div>
+          </div>
+          <div class="p-6">
+            <h4 class="text-xl font-bold text-white mb-2">
+              {{ project.title }}
+            </h4>
+            <p class="text-gray-400 mb-2 text-sm">{{ project.description }}</p>
+            <p class="text-gray-500 text-xs mb-1">
+              <strong>Tech Stack:</strong> {{ project.techStack }}
+            </p>
+            <p class="text-gray-500 text-xs mb-4">
+              <strong>Duration:</strong> {{ formatDate(project.startDate) }} -
+              {{ formatDate(project.endDate) }}
+            </p>
+            <a
+              *ngIf="project.repoLink && project.repoLink !== 'string'"
+              [href]="project.repoLink"
+              target="_blank"
+              class="inline-block mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+              >Source Code</a
+            >
+            <a
+              *ngIf="project.liveLink && project.liveLink !== 'string'"
+              [href]="project.liveLink"
+              target="_blank"
+              class="inline-block mt-2 ml-2 bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800 transition"
+              >Live Project</a
+            >
+          </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- Content -->
-      <div class="w-full md:w-1/2 mt-8 md:mt-0 md:pl-12">
-        <h3 class="text-3xl font-bold text-white mb-4">
-          {{ certificate.title }}
-        </h3>
-        <p class="text-gray-400 mb-4">{{ certificate.description }}</p>
-        <p class="text-gray-400 mb-4">
-          <strong>Issued By:</strong> {{ certificate.issuer }}
-        </p>
-        <p class="text-gray-400 mb-4">
-          <strong>Issued on:</strong>
-          {{ formatDate(certificate.issueDate) }}
-        </p>
-        <a
-          *ngIf="certificate.certificateUrl"
-          [href]="certificate.certificateUrl"
-          target="_blank"
-          class="inline-block mt-6 px-6 py-3 rounded text-white transition"
-          [ngClass]="{
-          'bg-blue-600 hover:bg-blue-700': i % 2 === 0,
-          'bg-pink-600 hover:bg-pink-700': i % 2 !== 0
-        }"
+  <!-- Certificates / Portfolio / Achievements -->
+  <!-- Certificates / Portfolio / Achievements -->
+  <section
+    class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
+  >
+    <div class="max-w-7xl mx-auto px-4 py-20 space-y-16">
+      <h3 class="text-4xl font-bold text-gray-400 text-center mb-12">
+        Certificates / Portfolio / Achievements
+      </h3>
+      <div class="flex justify-center space-x-4 mb-12">
+        <button
+          (click)="activeTab = 'certificate'"
+          [ngClass]="{'bg-blue-600 text-white': activeTab === 'certificate', 'bg-gray-700 text-gray-300 hover:bg-gray-600': activeTab !== 'certificate'}"
+          class="px-6 py-2 rounded transition"
         >
-          View
-        </a>
+          Certificates
+        </button>
+        <button
+          (click)="activeTab = 'portfolio'"
+          [ngClass]="{'bg-blue-600 text-white': activeTab === 'portfolio', 'bg-gray-700 text-gray-300 hover:bg-gray-600': activeTab !== 'portfolio'}"
+          class="px-6 py-2 rounded transition"
+        >
+          Portfolio
+        </button>
+        <button
+          (click)="activeTab = 'achievement'"
+          [ngClass]="{'bg-blue-600 text-white': activeTab === 'achievement', 'bg-gray-700 text-gray-300 hover:bg-gray-600': activeTab !== 'achievement'}"
+          class="px-6 py-2 rounded transition"
+        >
+          Achievements
+        </button>
+      </div>
+      <!-- Content Items -->
+      <div
+        *ngFor="let item of filteredItems; let i = index"
+        class="flex flex-col md:flex-row"
+        [ngClass]="{'md:flex-row-reverse': i % 2 !== 0, 'items-center': true}"
+      >
+        <!-- Image -->
+        <div
+          class="relative w-full h-70 md:w-1/2 overflow-hidden rounded-xl shadow-lg p-10"
+        >
+          <img
+            [src]="item.certificateUrl || 'images/placeholder.png'"
+            [alt]="item.title"
+            class="object-cover w-full h-full transform hover:scale-105 transition duration-500 rounded-xl"
+          />
+          <div
+            class="absolute inset-0 rounded-xl"
+            [ngClass]="{
+              'bg-gradient-to-bl from-blue-600/40 to-purple-500/30': i % 2 === 0,
+              'bg-gradient-to-tr from-pink-500/40 to-yellow-400/30': i % 2 !== 0
+            }"
+          ></div>
+          <div
+            class="absolute top-4 left-4 text-white text-lg font-bold w-12 h-12 flex items-center justify-center rounded-full shadow-lg z-20"
+            [ngClass]="{
+              'bg-blue-600': i % 2 === 0,
+              'bg-pink-600': i % 2 !== 0
+            }"
+          >
+            {{ i + 1 }}
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="w-full md:w-1/2 mt-8 md:mt-0 md:pl-12">
+          <h3 class="text-3xl font-bold text-white mb-4">{{ item.title }}</h3>
+          <p class="text-gray-400 mb-2">{{ item.description }}</p>
+          <p class="text-gray-400 mb-2">
+            <strong>Issued By:</strong> {{ item.issuer }}
+          </p>
+          <p class="text-gray-400">
+            <strong>Issued on:</strong> {{ formatDate(item.issueDate) }}
+          </p>
+          <a
+            *ngIf="item.certificateUrl"
+            [href]="item.certificateUrl"
+            target="_blank"
+            class="inline-block mt-6 px-6 py-3 rounded text-white transition"
+            [ngClass]="{
+              'bg-blue-600 hover:bg-blue-700': i % 2 === 0,
+              'bg-pink-600 hover:bg-pink-700': i % 2 !== 0
+            }"
+          >
+            View
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Social Links -->
-  <section class="flex justify-center items-center space-x-4 my-12">
-    <a href="#" class="text-gray-400 hover:text-white text-xl"
-      ><i class="fa-brands fa-github"></i> 🌟</a
+  <section
+    class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
+  >
+    <div
+      class="max-w-7xl mx-auto px-4 py-12 flex justify-center items-center space-x-4"
     >
-    <a href="#" class="text-gray-400 hover:text-white text-xl"
-      ><i class="fa-brands fa-twitter"></i> 💬</a
-    >
-    <a href="#" class="text-gray-400 hover:text-white text-xl"
-      ><i class="fa-brands fa-linkedin"></i> 🔗</a
-    >
+      <a href="#" class="text-gray-400 hover:text-white text-xl"
+        ><i class="fa-brands fa-github"></i> 🌟</a
+      >
+      <a href="#" class="text-gray-400 hover:text-white text-xl"
+        ><i class="fa-brands fa-twitter"></i> 💬</a
+      >
+      <a href="#" class="text-gray-400 hover:text-white text-xl"
+        ><i class="fa-brands fa-linkedin"></i> 🔗</a
+      >
+    </div>
   </section>
 
   <!-- Orb / Graphic Section -->
-  <section class="flex justify-center items-center py-20">
-    <div
-      class="w-48 h-48 rounded-full bg-gradient-to-br from-purple-700 to-purple-500 flex items-center justify-center shadow-purple-500/50 shadow-2xl"
-    >
-      <span class="text-5xl">⏳</span>
+  <section
+    class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
+  >
+    <div class="max-w-7xl mx-auto px-4 py-20 flex justify-center items-center">
+      <div
+        class="w-48 h-48 rounded-full bg-gradient-to-br from-purple-700 to-purple-500 flex items-center justify-center shadow-purple-500/50 shadow-2xl"
+      >
+        <span class="text-5xl">⏳</span>
+      </div>
     </div>
   </section>
 
   <!-- Contact Section -->
-  <section class="py-16 text-center">
-    <h3 class="text-5xl font-bold text-gray-400 mb-4">Contact</h3>
-    <p class="text-gray-400 mb-4">
-      I'm currently looking to join a cross-functional team.
-    </p>
-    <div class="flex justify-center space-x-6">
-      <a href="#" class="hover:text-white text-gray-400">GitHub</a>
-      <a href="#" class="hover:text-white text-gray-400">LinkedIn</a>
-      <a href="#" class="hover:text-white text-gray-400">Email</a>
+  <section
+    class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
+  >
+    <div class="max-w-7xl mx-auto px-4 py-16 text-center">
+      <h3 class="text-5xl font-bold text-gray-400 mb-4">Contact</h3>
+      <p class="text-gray-400 mb-4">
+        I'm currently looking to join a cross-functional team.
+      </p>
+      <div class="flex justify-center space-x-6">
+        <a href="#" class="hover:text-white text-gray-400">GitHub</a>
+        <a href="#" class="hover:text-white text-gray-400">LinkedIn</a>
+        <a href="#" class="hover:text-white text-gray-400">Email</a>
+      </div>
     </div>
   </section>
 </div>
 
 <ng-template #loading>
   <div class="flex flex-col items-center justify-center min-h-[300px]">
-    <!-- Optional spinner -->
     <svg
       class="animate-spin h-10 w-10 text-blue-600 mb-4"
       xmlns="http://www.w3.org/2000/svg"
@@ -345,7 +377,6 @@
         d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4l-3 3 3 3h-4a8 8 0 01-8-8z"
       ></path>
     </svg>
-
     <p class="text-lg text-gray-600 font-medium animate-pulse">
       Loading portfolio...
     </p>
