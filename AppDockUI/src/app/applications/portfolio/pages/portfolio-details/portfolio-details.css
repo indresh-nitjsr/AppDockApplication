@@ -1,0 +1,53 @@
+.fancy-tab {
+  background-color: #1f2937; /* gray-800 fallback */
+  color: #d1d5db; /* gray-300 fallback */
+  border: 2px solid transparent;
+  overflow: hidden;
+}
+
+.fancy-tab:hover {
+  background-color: #374151; /* gray-700 hover fallback */
+  color: white;
+}
+
+.fancy-tab.active {
+  background-image: linear-gradient(to right, #ec4899, #8b5cf6, #6366f1);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+}
+
+.fancy-tab.active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+
+nav ul li a:hover span {
+  width: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
