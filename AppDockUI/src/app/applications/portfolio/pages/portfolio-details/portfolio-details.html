@@ -2,23 +2,88 @@
   *ngIf="portfolioDetails && portfolioDetails.user.userId; else loading"
   class="font-sans"
 >
+  <div
+    class="fixed top-0 left-0 right-0 z-50 backdrop-blur-lg bg-gradient-to-r from-[#1c0647]/80 via-[#2d0b68]/80 to-[#12022f]/80 shadow-lg"
+  >
+    <nav
+      class="flex justify-between items-center w-full max-w-7xl mx-auto px-4 py-3"
+    >
+      <!-- Brand -->
+      <div class="flex items-center gap-2 text-2xl font-extrabold text-white">
+        🌙
+        <span
+          class="bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 text-transparent bg-clip-text animate-gradient bg-[200%_auto]"
+          >MyPortfolio</span
+        >
+      </div>
+
+      <!-- Navigation links -->
+      <ul
+        class="hidden md:flex space-x-10 uppercase text-sm font-medium tracking-widest"
+      >
+        <li>
+          <a
+            href="#home"
+            class="nav-link relative text-gray-300 transition duration-300 ease-in-out hover:text-yellow-400 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-yellow-400 after:transition-all after:duration-300 hover:after:w-full"
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            [routerLink]="[]"
+            fragment="experience"
+            class="nav-link relative text-gray-300 transition duration-300 ease-in-out hover:text-yellow-400 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-yellow-400 after:transition-all after:duration-300 hover:after:w-full"
+          >
+            Experiences
+          </a>
+        </li>
+        <li>
+          <a
+            href="#skill"
+            class="nav-link relative text-gray-300 transition duration-300 ease-in-out hover:text-yellow-400 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-yellow-400 after:transition-all after:duration-300 hover:after:w-full"
+          >
+            Skills
+          </a>
+        </li>
+        <li>
+          <a
+            href="#project"
+            class="nav-link relative text-gray-300 transition duration-300 ease-in-out hover:text-yellow-400 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-yellow-400 after:transition-all after:duration-300 hover:after:w-full"
+          >
+            Projects
+          </a>
+        </li>
+        <li>
+          <a
+            href="#certificate"
+            class="nav-link relative text-gray-300 transition duration-300 ease-in-out hover:text-yellow-400 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-yellow-400 after:transition-all after:duration-300 hover:after:w-full"
+          >
+            Certificates
+          </a>
+        </li>
+      </ul>
+
+      <!-- Call to action button -->
+      <div class="hidden md:flex items-center space-x-4">
+        <a
+          href="#contact"
+          class="bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 text-white px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transition transform hover:scale-105"
+        >
+          Contact
+        </a>
+      </div>
+    </nav>
+  </div>
+
   <!-- About Section -->
   <section
+    id="home"
     class="relative overflow-hidden bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
   >
     <div
       class="max-w-7xl mx-auto px-4 pt-8 pb-32 flex flex-col items-center text-center"
     >
-      <!-- Navbar -->
-      <nav class="w-full flex justify-between items-center px-8 mb-12">
-        <div class="text-2xl font-bold text-white">🌙</div>
-        <ul class="flex space-x-6 text-gray-300 font-medium">
-          <li><a href="#" class="hover:text-pink-500 transition">Home</a></li>
-          <li><a href="#" class="hover:text-pink-500 transition">About</a></li>
-          <li><a href="#" class="hover:text-pink-500 transition">Labs</a></li>
-        </ul>
-      </nav>
-
       <!-- Decorative shapes -->
       <div
         class="absolute top-0 left-0 w-72 h-72 bg-purple-700 opacity-30 rounded-full mix-blend-multiply blur-3xl animate-pulse"
@@ -74,12 +139,40 @@
 
   <!-- Work Experience -->
   <section
+    id="experience"
     class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
+    [ngClass]="{'text-yellow-400': activeSection === 'experience'}"
   >
+    <!-- Section Separator -->
+    <div
+      class="relative flex flex-col items-center justify-center py-16 overflow-hidden"
+    >
+      <!-- Blurred glow background behind text -->
+      <div
+        class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"
+      ></div>
+      <div
+        class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"
+      ></div>
+
+      <!-- Section Title -->
+      <h2 class="relative text-4xl md:text-5xl font-bold text-white mb-5 z-10">
+        🚀 Work Experience
+      </h2>
+
+      <!-- Gradient underline -->
+      <div
+        class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"
+      ></div>
+
+      <!-- Optional tagline -->
+      <p class="text-gray-400 text-center max-w-md px-4 z-10">
+        Discover my journey and impactful milestones in various companies and
+        roles.
+      </p>
+    </div>
     <div class="max-w-7xl mx-auto px-4 py-20">
-      <h3 class="text-5xl font-bold text-gray-400 text-center mb-12">
-        Work Experience
-      </h3>
+      <!-- Experience Content -->
       <div class="relative border-l border-gray-700/50 ml-4">
         <div
           *ngFor="let exp of portfolioDetails.experiences"
@@ -95,7 +188,7 @@
             <div
               class="absolute -top-3 left-4 bg-blue-600 text-white text-xs px-3 py-1 rounded-full shadow-lg"
             >
-              {{ exp.companyName || 'Company' }}
+              Company: {{ exp.companyName || 'Company' }}
             </div>
 
             <div
@@ -130,10 +223,40 @@
 
   <!-- Skills Section -->
   <section
+    id="skill"
     class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
   >
+    <!-- Section Separator -->
+    <div
+      class="relative flex flex-col items-center justify-center py-16 overflow-hidden"
+    >
+      <!-- Blurred glow background behind text -->
+      <div
+        class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"
+      ></div>
+      <div
+        class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"
+      ></div>
+
+      <!-- Section Title -->
+      <h2 class="relative text-4xl md:text-5xl font-bold text-white mb-5 z-10">
+        🚀 Skills
+      </h2>
+
+      <!-- Gradient underline -->
+      <div
+        class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"
+      ></div>
+
+      <!-- Optional tagline -->
+      <p class="text-gray-400 text-center max-w-md px-4 z-10">
+        Discover my journey and impactful milestones in various companies and
+        roles.
+      </p>
+    </div>
+
+    <!-- Skill Content -->
     <div class="max-w-7xl mx-auto px-4 py-16">
-      <h3 class="text-5xl font-bold text-gray-400 text-center mb-12">Skills</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div
           *ngFor="let skill of skillsList"
@@ -147,8 +270,7 @@
           </p>
           <div class="w-full bg-gray-700 rounded-full h-2.5">
             <div
-              class="h-2.5 rounded-full"
-              [ngClass]="'bg-' + skill.color + '-500'"
+              class="h-2.5 rounded-full bg-gradient-to-r from-pink-500 to-purple-500"
               [style.width.%]="skill.percent"
             ></div>
           </div>
@@ -160,12 +282,38 @@
 
   <!-- My Projects Section -->
   <section
+    id="project"
     class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
   >
+    <!-- Section Separator -->
+    <div
+      class="relative flex flex-col items-center justify-center py-16 overflow-hidden"
+    >
+      <!-- Blurred glow background behind text -->
+      <div
+        class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"
+      ></div>
+      <div
+        class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"
+      ></div>
+
+      <!-- Section Title -->
+      <h2 class="relative text-4xl md:text-5xl font-bold text-white mb-5 z-10">
+        🚀 My Projects
+      </h2>
+
+      <!-- Gradient underline -->
+      <div
+        class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"
+      ></div>
+
+      <!-- Optional tagline -->
+      <p class="text-gray-400 text-center max-w-md px-4 z-10">
+        Discover my journey and impactful milestones in various companies and
+        roles.
+      </p>
+    </div>
     <div class="max-w-7xl mx-auto px-4 py-16">
-      <h3 class="text-5xl font-bold text-gray-400 text-center mb-12">
-        My Projects
-      </h3>
       <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         <div
           *ngFor="let project of portfolioDetails.projects"
@@ -214,35 +362,86 @@
   </section>
 
   <!-- Certificates / Portfolio / Achievements -->
-  <!-- Certificates / Portfolio / Achievements -->
   <section
+    id="certificate"
     class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
   >
+    <!-- Section Separator -->
+    <div
+      class="relative flex flex-col items-center justify-center py-16 overflow-hidden"
+    >
+      <!-- Blurred glow background behind text -->
+      <div
+        class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"
+      ></div>
+      <div
+        class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"
+      ></div>
+
+      <!-- Section Title -->
+      <h2 class="relative text-4xl md:text-5xl font-bold text-white mb-5 z-10">
+        🚀 Certification | Portfolio | Achievements
+      </h2>
+
+      <!-- Gradient underline -->
+      <div
+        class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"
+      ></div>
+
+      <!-- Optional tagline -->
+      <p class="text-gray-400 text-center max-w-md px-4 z-10">
+        Discover my journey and impactful milestones in various companies and
+        roles.
+      </p>
+    </div>
     <div class="max-w-7xl mx-auto px-4 py-20 space-y-16">
-      <h3 class="text-4xl font-bold text-gray-400 text-center mb-12">
-        Certificates / Portfolio / Achievements
-      </h3>
-      <div class="flex justify-center space-x-4 mb-12">
+      <div class="flex justify-center flex-wrap gap-4 mt-5">
+        <!-- Certificates -->
         <button
           (click)="activeTab = 'certificate'"
-          [ngClass]="{'bg-blue-600 text-white': activeTab === 'certificate', 'bg-gray-700 text-gray-300 hover:bg-gray-600': activeTab !== 'certificate'}"
-          class="px-6 py-2 rounded transition"
+          [ngClass]="{
+            'bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 text-white shadow-xl shadow-pink-500/40 ring-2 ring-pink-400/50': activeTab === 'certificate',
+            'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white': activeTab !== 'certificate'
+          }"
+          class="fancy-tab px-6 py-2 rounded-full font-semibold transition transform hover:scale-110 duration-300 flex items-center space-x-2"
         >
-          Certificates
+          <i class="fa-solid fa-certificate"></i>
+          <span>Certificates</span>
+          <span *ngIf="activeTab === 'certificate'" class="ml-1 animate-pulse"
+            >✨</span
+          >
         </button>
+
+        <!-- Portfolio -->
         <button
           (click)="activeTab = 'portfolio'"
-          [ngClass]="{'bg-blue-600 text-white': activeTab === 'portfolio', 'bg-gray-700 text-gray-300 hover:bg-gray-600': activeTab !== 'portfolio'}"
-          class="px-6 py-2 rounded transition"
+          [ngClass]="{
+            'bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 text-white shadow-xl shadow-pink-500/40 ring-2 ring-pink-400/50': activeTab === 'portfolio',
+            'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white': activeTab !== 'portfolio'
+          }"
+          class="fancy-tab px-6 py-2 rounded-full font-semibold transition transform hover:scale-110 duration-300 flex items-center space-x-2"
         >
-          Portfolio
+          <i class="fa-solid fa-briefcase"></i>
+          <span>Portfolio</span>
+          <span *ngIf="activeTab === 'portfolio'" class="ml-1 animate-pulse"
+            >✨</span
+          >
         </button>
+
+        <!-- Achievements -->
         <button
           (click)="activeTab = 'achievement'"
-          [ngClass]="{'bg-blue-600 text-white': activeTab === 'achievement', 'bg-gray-700 text-gray-300 hover:bg-gray-600': activeTab !== 'achievement'}"
-          class="px-6 py-2 rounded transition"
+          [ngClass]="{
+            'bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 text-white shadow-xl shadow-pink-500/40 ring-2 ring-pink-400/50': activeTab === 'achievement',
+            'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white': activeTab !== 'achievement'
+          }"
+          class="fancy-tab px-6 py-2 rounded-full font-semibold transition transform hover:scale-110 duration-300 flex items-center space-x-2"
         >
-          Achievements
+          <i class="fa-solid fa-trophy"></i>
+          <span>Achievements</span>
+          <span *ngIf="activeTab === 'achievement'" class="ml-1 animate-pulse"
+            >✨</span
+          >
         </button>
       </div>
       <!-- Content Items -->
@@ -339,10 +538,13 @@
 
   <!-- Contact Section -->
   <section
+    id="contact"
     class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
   >
     <div class="max-w-7xl mx-auto px-4 py-16 text-center">
-      <h3 class="text-5xl font-bold text-gray-400 mb-4">Contact</h3>
+      <h3 class="text-5xl font-bold text-purple-300 text-center mb-12">
+        Contacts
+      </h3>
       <p class="text-gray-400 mb-4">
         I'm currently looking to join a cross-functional team.
       </p>
