@@ -1,27 +1,50 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  Renderer2,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  HostListener,
+} from '@angular/core';
 import { PortfolioService } from '../../services/portfolioService';
 import { PortfolioDetails as PortfolioDetailsModel } from '../../models/portfolioDetails';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-portfolio-details',
   templateUrl: './portfolio-details.html',
   styleUrls: ['./portfolio-details.css'],
   standalone: true,
-  imports: [CommonModule], // add CommonModule etc. if needed
+  imports: [CommonModule, RouterLink], // add CommonModule etc. if needed
 })
 export class PortfolioDetails implements OnInit {
   portfolioDetails: PortfolioDetailsModel = new PortfolioDetailsModel();
   activeTab: string = 'certificate';
   profileImage: any = '';
+  activeSection: string = 'home';
 
   constructor(
     private portfolioService: PortfolioService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit() {
     this.getPortfolioDetails();
+  }
+
+  activateTab(tab: string) {
+    this.activeTab = tab;
+
+    // Find all ripple spans and reset them
+    setTimeout(() => {
+      document.querySelectorAll('.ripple').forEach((el) => {
+        el.classList.remove('animate');
+      });
+    }, 0);
   }
 
   get filteredItems() {
@@ -80,5 +103,20 @@ export class PortfolioDetails implements OnInit {
         });
       }) ?? []
     );
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const sections = ['home', 'experience', 'skill', 'project', 'certificate'];
+    for (const section of sections) {
+      const element = document.getElementById(section);
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        if (rect.top <= 100 && rect.bottom >= 100) {
+          this.activeSection = section;
+          break;
+        }
+      }
+    }
   }
 }
