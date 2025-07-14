@@ -7,6 +7,7 @@ import { PortfolioDetails as PortfolioDetailsModel } from '../../models/portfoli
 import {
   About,
   Certificates,
+  Contact,
   Experience,
   Projects,
   Skill,
@@ -35,6 +36,7 @@ export class Portfolio implements OnInit {
   certificateObj: Certificates = new Certificates();
   skillObj: Skill = new Skill();
   projectObj: Projects = new Projects();
+  contactObj: Contact = new Contact();
 
   constructor(
     public portfolioService: PortfolioService,
@@ -180,6 +182,22 @@ export class Portfolio implements OnInit {
     );
   }
 
+ createPortfolioContact() {
+
+  this.contactObj.portfolioId = this.portfolioDetails.id;
+  this.contactObj.userId = this.portfolioDetails.user.userId;
+  this.portfolioService.createContact(this.contactObj).subscribe(
+    (res: Contact) => {
+      console.log('Contact saved:', res);
+      this.ngZone.run(() => {
+        this.nextStep();
+      });
+    },
+    (error: any) => {
+      console.log('Error saving contact:', error);
+    }
+  );
+}
   submitPortfolio() {
     this.router.navigate(['/services/portfolio', 'portfolio-details']);
   }
@@ -229,8 +247,11 @@ export class Portfolio implements OnInit {
       this.portfolioDetails.certificates.length === 0
     ) {
       this.currentStep = 6; // Certificates
+    }else if (!this.portfolioDetails.contact||
+      this.portfolioDetails.contact.address === ''){
+         this.currentStep = 7;
     } else {
-      this.currentStep = 7; // All done
+      this.currentStep = 8; // All done
     }
   }
 }
