@@ -37,6 +37,7 @@ builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<ICertificateService, CertificateService>();
 builder.Services.AddScoped<ISkillService, SkillService>();
 builder.Services.AddScoped<IExperienceService, ExperienceService>();
+builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<AboutService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddHttpClient<IAuthService, AuthService>(client =>

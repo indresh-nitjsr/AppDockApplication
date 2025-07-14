@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import {
   About,
   Certificates,
+  Contact,
   Experience,
   PortfolioDetails,
   Projects,
@@ -66,5 +67,9 @@ export class PortfolioService {
   createProject(obj: Projects): Observable<Projects> {
     console.log('Creating Project portfolio::', obj);
     return this.http.post<Projects>(`${this.BaseUrl}/project`, obj);
+  }
+
+  createContact(contact: Contact): Observable<Contact> {
+  return this.http.post<Contact>(`${this.BaseUrl}/contact`, contact);
   }
 }

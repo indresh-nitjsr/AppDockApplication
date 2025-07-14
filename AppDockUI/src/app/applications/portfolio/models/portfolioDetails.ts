@@ -1,3 +1,4 @@
+
 export class PortfolioDetails {
   id: string;
   role: string;
@@ -8,6 +9,7 @@ export class PortfolioDetails {
   certificates?: Certificates[];
   skills: Skills[];
   experiences: Experience[];
+  contact: Contact;
 
   constructor() {
     this.id = '';
@@ -19,6 +21,7 @@ export class PortfolioDetails {
     this.certificates = [];
     this.skills = [];
     this.experiences = [];
+    this.contact = new Contact();
   }
 
   static fromJson(json: any): PortfolioDetails {
@@ -48,6 +51,9 @@ export class PortfolioDetails {
           Object.assign(new Experience(), experience)
         )
       : [];
+     obj.contact = json.contact
+      ? Object.assign(new Contact(), json.contact)
+      : new Contact();
     return obj;
   }
 }
@@ -163,3 +169,24 @@ export class Experience {
     this.description = '';
   }
 }
+
+export class Contact {
+  id: string;
+  portfolioId: string;
+  userId: string;
+  address: string;
+  linkedInUrl: string;
+  gitHubUrl: string;
+  twitterUrl: string;
+
+  constructor() {
+    this.id = '';
+    this.portfolioId = '';
+    this.userId = '';
+    this.address= '';
+    this.linkedInUrl= '';
+    this.gitHubUrl= '';
+    this.twitterUrl= '';
+  }
+}
+

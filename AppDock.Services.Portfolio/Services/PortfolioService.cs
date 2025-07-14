@@ -20,6 +20,7 @@ namespace AppDock.Services.PortfolioAPI.Services
         private readonly IProjectService _projectService;
         private readonly ICertificateService _certificateService;
         private readonly IExperienceService _experienceService;
+        private readonly IContactService _contactService;
 
         public PortfolioService(
             ApplicationDbContext context, 
@@ -29,7 +30,7 @@ namespace AppDock.Services.PortfolioAPI.Services
             ICertificateService certificateService,
             IMapper mapper,  
             ISkillService skillService,
-            IExperienceService experienceService
+            IExperienceService experienceService, IContactService contactService
            )
         {
             _context = context;
@@ -39,6 +40,7 @@ namespace AppDock.Services.PortfolioAPI.Services
             _certificateService = certificateService;
             _skillService = skillService;
             _experienceService = experienceService;
+            _contactService = contactService;
         }
 
 
@@ -155,6 +157,7 @@ namespace AppDock.Services.PortfolioAPI.Services
             var certificates = await _certificateService.GetCertificatesAsync(portfolio.Id);
             var skills = await _skillService.GetAllSkillAsync(portfolio.Id);
             var experiences = await _experienceService.GetAllExperienceAsync(portfolio.Id);
+            var contact = await _contactService.GetContactAsync(user.userId);
 
             PortfolioDetailsDto portfolioDetails = new PortfolioDetailsDto();
             portfolioDetails.Id = portfolio.Id;
@@ -166,6 +169,7 @@ namespace AppDock.Services.PortfolioAPI.Services
             portfolioDetails.Certificates = certificates;
             portfolioDetails.Skills = skills;
             portfolioDetails.Experiences = experiences;
+            portfolioDetails.Contact = contact;
             return portfolioDetails;
         }
 

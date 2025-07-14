@@ -18,5 +18,7 @@
 
         public IEnumerable<SkillDto> Skills { get; set; }
         public IEnumerable<ExperienceDto> Experiences { get; set; }
+
+        public ContactDto Contact { get; set; }
     }
 }
