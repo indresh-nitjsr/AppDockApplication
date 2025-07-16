@@ -3,22 +3,19 @@ import {
   Component,
   OnInit,
   Renderer2,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
   HostListener,
 } from '@angular/core';
 import { PortfolioService } from '../../services/portfolioService';
 import { PortfolioDetails as PortfolioDetailsModel } from '../../models/portfolioDetails';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-portfolio-details',
   templateUrl: './portfolio-details.html',
   styleUrls: ['./portfolio-details.css'],
   standalone: true,
-  imports: [CommonModule, RouterLink], // add CommonModule etc. if needed
+  imports: [CommonModule, RouterModule], // add CommonModule etc. if needed
 })
 export class PortfolioDetails implements OnInit {
   portfolioDetails: PortfolioDetailsModel = new PortfolioDetailsModel();
@@ -30,7 +27,7 @@ export class PortfolioDetails implements OnInit {
     private portfolioService: PortfolioService,
     private cdr: ChangeDetectorRef,
     private renderer: Renderer2
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getPortfolioDetails();
