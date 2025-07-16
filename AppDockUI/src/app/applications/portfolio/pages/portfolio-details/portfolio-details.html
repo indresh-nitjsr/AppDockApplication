@@ -1,107 +1,28 @@
-<div
-  *ngIf="portfolioDetails && portfolioDetails.user.userId; else loading"
-  class="font-sans"
->
-  <div
-    class="fixed top-0 left-0 right-0 z-50 backdrop-blur-lg bg-gradient-to-r from-[#1c0647]/80 via-[#2d0b68]/80 to-[#12022f]/80 shadow-lg"
-  >
-    <nav
-      class="flex justify-between items-center w-full max-w-7xl mx-auto px-4 py-3"
-    >
-      <!-- Brand -->
-      <div class="flex items-center gap-2 text-2xl font-extrabold text-white">
-        🌙
-        <span
-          class="bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 text-transparent bg-clip-text animate-gradient bg-[200%_auto]"
-          >MyPortfolio</span
-        >
-      </div>
-
-      <!-- Navigation links -->
-      <ul
-        class="hidden md:flex space-x-10 uppercase text-sm font-medium tracking-widest"
-      >
-        <li>
-          <a
-            href="#home"
-            class="nav-link relative text-gray-300 transition duration-300 ease-in-out hover:text-yellow-400 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-yellow-400 after:transition-all after:duration-300 hover:after:w-full"
-          >
-            Home
-          </a>
-        </li>
-        <li>
-          <a
-            [routerLink]="[]"
-            fragment="experience"
-            class="nav-link relative text-gray-300 transition duration-300 ease-in-out hover:text-yellow-400 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-yellow-400 after:transition-all after:duration-300 hover:after:w-full"
-          >
-            Experiences
-          </a>
-        </li>
-        <li>
-          <a
-            href="#skill"
-            class="nav-link relative text-gray-300 transition duration-300 ease-in-out hover:text-yellow-400 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-yellow-400 after:transition-all after:duration-300 hover:after:w-full"
-          >
-            Skills
-          </a>
-        </li>
-        <li>
-          <a
-            href="#project"
-            class="nav-link relative text-gray-300 transition duration-300 ease-in-out hover:text-yellow-400 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-yellow-400 after:transition-all after:duration-300 hover:after:w-full"
-          >
-            Projects
-          </a>
-        </li>
-        <li>
-          <a
-            href="#certificate"
-            class="nav-link relative text-gray-300 transition duration-300 ease-in-out hover:text-yellow-400 after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-yellow-400 after:transition-all after:duration-300 hover:after:w-full"
-          >
-            Certificates
-          </a>
-        </li>
-      </ul>
-
-      <!-- Call to action button -->
-      <div class="hidden md:flex items-center space-x-4">
-        <a
-          href="#contact"
-          class="bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 text-white px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transition transform hover:scale-105"
-        >
-          Contact
-        </a>
-      </div>
-    </nav>
-  </div>
-
+<div *ngIf="portfolioDetails && portfolioDetails.user.userId; else loading" class="font-sans">
   <!-- About Section -->
-  <section
-    id="home"
-    class="relative overflow-hidden bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
-  >
-    <div
-      class="max-w-7xl mx-auto px-4 pt-8 pb-32 flex flex-col items-center text-center"
-    >
+  <section id="home"
+    class="relative overflow-hidden bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
+    <div class="max-w-7xl mx-auto px-4 pt-8 pb-32 flex flex-col items-center text-center">
       <!-- Decorative shapes -->
       <div
-        class="absolute top-0 left-0 w-72 h-72 bg-purple-700 opacity-30 rounded-full mix-blend-multiply blur-3xl animate-pulse"
-      ></div>
+        class="absolute top-0 left-0 w-72 h-72 bg-purple-700 opacity-30 rounded-full mix-blend-multiply blur-3xl animate-pulse">
+      </div>
       <div
-        class="absolute bottom-0 right-0 w-72 h-72 bg-indigo-600 opacity-20 rounded-full mix-blend-multiply blur-3xl animate-pulse"
-      ></div>
+        class="absolute bottom-0 right-0 w-72 h-72 bg-indigo-600 opacity-20 rounded-full mix-blend-multiply blur-3xl animate-pulse">
+      </div>
 
       <!-- Profile Image -->
-      <img
-        [src]="profileImage || 'images/profileImageGirl.jpeg'"
-        alt="Profile"
-        class="w-44 h-44 rounded-full object-cover border-4 border-white shadow-2xl mb-6 hover:scale-105 transition duration-500"
-      />
+      <img [src]="portfolioDetails.about.profileImageUrl || 'images/profileImageGirl.jpeg'" alt="Profile"
+        class="w-44 h-44 rounded-full object-cover border-4 border-white shadow-2xl mb-6 hover:scale-105 transition duration-500" />
 
       <!-- Name -->
       <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2">
-        {{ portfolioDetails.user.name || 'Your Name' }}
+        {{ portfolioDetails.user.name || '' }}
+      </h1>
+
+      <!-- Professions -->
+      <h1 class="text-4xl md:text-5xl font-extrabold text-yellow-400 mb-2">
+        I'm Full Stack Developer
       </h1>
 
       <!-- Expertise Title -->
@@ -117,43 +38,23 @@
 
       <!-- Call to Action -->
       <button
-        class="inline-flex items-center bg-pink-600 hover:bg-pink-700 text-white font-bold px-8 py-3 rounded-full shadow-lg transition"
-      >
+        class="inline-flex items-center bg-pink-600 hover:bg-pink-700 text-white font-bold px-8 py-3 rounded-full shadow-lg transition">
         Explore My Work
-        <svg
-          class="ml-2 w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M5 12h14M12 5l7 7-7 7"
-          />
+        <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7" />
         </svg>
       </button>
     </div>
   </section>
 
   <!-- Work Experience -->
-  <section
-    id="experience"
-    class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
-    [ngClass]="{'text-yellow-400': activeSection === 'experience'}"
-  >
+  <section id="experience" class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
+    [ngClass]="{'text-yellow-400': activeSection === 'experience'}">
     <!-- Section Separator -->
-    <div
-      class="relative flex flex-col items-center justify-center py-16 overflow-hidden"
-    >
+    <div class="relative flex flex-col items-center justify-center py-16 overflow-hidden">
       <!-- Blurred glow background behind text -->
-      <div
-        class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"
-      ></div>
-      <div
-        class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"
-      ></div>
+      <div class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"></div>
+      <div class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"></div>
 
       <!-- Section Title -->
       <h2 class="relative text-4xl md:text-5xl font-bold text-white mb-5 z-10">
@@ -161,9 +62,7 @@
       </h2>
 
       <!-- Gradient underline -->
-      <div
-        class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"
-      ></div>
+      <div class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"></div>
 
       <!-- Optional tagline -->
       <p class="text-gray-400 text-center max-w-md px-4 z-10">
@@ -174,32 +73,21 @@
     <div class="max-w-7xl mx-auto px-4 py-20">
       <!-- Experience Content -->
       <div class="relative border-l border-gray-700/50 ml-4">
-        <div
-          *ngFor="let exp of portfolioDetails.experiences"
-          class="mb-12 relative pl-12 group"
-        >
+        <div *ngFor="let exp of portfolioDetails.experiences" class="mb-12 relative pl-12 group">
           <span
-            class="absolute -left-[22px] top-6 w-4 h-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 border-2 border-white shadow-md"
-          ></span>
+            class="absolute -left-[22px] top-6 w-4 h-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 border-2 border-white shadow-md"></span>
 
           <div
-            class="relative bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 shadow-xl hover:shadow-2xl transition transform hover:scale-[1.02]"
-          >
-            <div
-              class="absolute -top-3 left-4 bg-blue-600 text-white text-xs px-3 py-1 rounded-full shadow-lg"
-            >
+            class="relative bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 shadow-xl hover:shadow-2xl transition transform hover:scale-[1.02]">
+            <div class="absolute -top-3 left-4 bg-blue-600 text-white text-xs px-3 py-1 rounded-full shadow-lg">
               Company: {{ exp.companyName || 'Company' }}
             </div>
 
-            <div
-              class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 mt-2"
-            >
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 mt-2">
               <h4 class="text-xl font-bold text-white">{{ exp.title }}</h4>
               <span class="text-gray-400 text-sm">
                 {{ formatDate(exp.startDate) }} -
-                <span
-                  [ngClass]="{'text-green-400 font-semibold': exp.isCurrentlyWorking}"
-                >
+                <span [ngClass]="{'text-green-400 font-semibold': exp.isCurrentlyWorking}">
                   {{ exp.isCurrentlyWorking ? 'Present' :
                   formatDate(exp.endDate) }}
                 </span>
@@ -209,10 +97,7 @@
             <p class="text-gray-400 text-sm leading-relaxed">
               {{ exp.description }}
             </p>
-            <div
-              *ngIf="exp.employementType"
-              class="text-xs text-gray-400 italic mt-2"
-            >
+            <div *ngIf="exp.employementType" class="text-xs text-gray-400 italic mt-2">
               Type: {{ exp.employementType }}
             </div>
           </div>
@@ -222,21 +107,12 @@
   </section>
 
   <!-- Skills Section -->
-  <section
-    id="skill"
-    class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
-  >
+  <section id="skill" class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
     <!-- Section Separator -->
-    <div
-      class="relative flex flex-col items-center justify-center py-16 overflow-hidden"
-    >
+    <div class="relative flex flex-col items-center justify-center py-16 overflow-hidden">
       <!-- Blurred glow background behind text -->
-      <div
-        class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"
-      ></div>
-      <div
-        class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"
-      ></div>
+      <div class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"></div>
+      <div class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"></div>
 
       <!-- Section Title -->
       <h2 class="relative text-4xl md:text-5xl font-bold text-white mb-5 z-10">
@@ -244,9 +120,7 @@
       </h2>
 
       <!-- Gradient underline -->
-      <div
-        class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"
-      ></div>
+      <div class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"></div>
 
       <!-- Optional tagline -->
       <p class="text-gray-400 text-center max-w-md px-4 z-10">
@@ -258,10 +132,8 @@
     <!-- Skill Content -->
     <div class="max-w-7xl mx-auto px-4 py-16">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div
-          *ngFor="let skill of skillsList"
-          class="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:scale-[1.02] transition"
-        >
+        <div *ngFor="let skill of skillsList"
+          class="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:scale-[1.02] transition">
           <h4 class="text-lg font-semibold text-white mb-2">
             {{ skill.name }}
           </h4>
@@ -269,10 +141,8 @@
             Proficiency in {{ skill.name }}
           </p>
           <div class="w-full bg-gray-700 rounded-full h-2.5">
-            <div
-              class="h-2.5 rounded-full bg-gradient-to-r from-pink-500 to-purple-500"
-              [style.width.%]="skill.percent"
-            ></div>
+            <div class="h-2.5 rounded-full bg-gradient-to-r from-pink-500 to-purple-500"
+              [style.width.%]="skill.percent"></div>
           </div>
           <p class="text-gray-400 text-xs mt-1">{{ skill.percent }}%</p>
         </div>
@@ -281,21 +151,12 @@
   </section>
 
   <!-- My Projects Section -->
-  <section
-    id="project"
-    class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
-  >
+  <section id="project" class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
     <!-- Section Separator -->
-    <div
-      class="relative flex flex-col items-center justify-center py-16 overflow-hidden"
-    >
+    <div class="relative flex flex-col items-center justify-center py-16 overflow-hidden">
       <!-- Blurred glow background behind text -->
-      <div
-        class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"
-      ></div>
-      <div
-        class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"
-      ></div>
+      <div class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"></div>
+      <div class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"></div>
 
       <!-- Section Title -->
       <h2 class="relative text-4xl md:text-5xl font-bold text-white mb-5 z-10">
@@ -303,9 +164,7 @@
       </h2>
 
       <!-- Gradient underline -->
-      <div
-        class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"
-      ></div>
+      <div class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"></div>
 
       <!-- Optional tagline -->
       <p class="text-gray-400 text-center max-w-md px-4 z-10">
@@ -315,19 +174,11 @@
     </div>
     <div class="max-w-7xl mx-auto px-4 py-16">
       <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        <div
-          *ngFor="let project of portfolioDetails.projects"
-          class="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover:scale-[1.02] transition transform shadow-lg"
-        >
+        <div *ngFor="let project of portfolioDetails.projects"
+          class="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover:scale-[1.02] transition transform shadow-lg">
           <div class="relative">
-            <img
-              src="images/1st_project.PNG"
-              [alt]="project.title"
-              class="w-full h-56 object-cover"
-            />
-            <div
-              class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
-            ></div>
+            <img src="images/1st_project.PNG" [alt]="project.title" class="w-full h-56 object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
           </div>
           <div class="p-6">
             <h4 class="text-xl font-bold text-white mb-2">
@@ -341,20 +192,12 @@
               <strong>Duration:</strong> {{ formatDate(project.startDate) }} -
               {{ formatDate(project.endDate) }}
             </p>
-            <a
-              *ngIf="project.repoLink && project.repoLink !== 'string'"
-              [href]="project.repoLink"
-              target="_blank"
-              class="inline-block mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-              >Source Code</a
-            >
-            <a
-              *ngIf="project.liveLink && project.liveLink !== 'string'"
-              [href]="project.liveLink"
-              target="_blank"
-              class="inline-block mt-2 ml-2 bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800 transition"
-              >Live Project</a
-            >
+            <a *ngIf="project.repoLink && project.repoLink !== 'string'" [href]="project.repoLink" target="_blank"
+              class="inline-block mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Source
+              Code</a>
+            <a *ngIf="project.liveLink && project.liveLink !== 'string'" [href]="project.liveLink" target="_blank"
+              class="inline-block mt-2 ml-2 bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800 transition">Live
+              Project</a>
           </div>
         </div>
       </div>
@@ -362,21 +205,12 @@
   </section>
 
   <!-- Certificates / Portfolio / Achievements -->
-  <section
-    id="certificate"
-    class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
-  >
+  <section id="certificate" class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
     <!-- Section Separator -->
-    <div
-      class="relative flex flex-col items-center justify-center py-16 overflow-hidden"
-    >
+    <div class="relative flex flex-col items-center justify-center py-16 overflow-hidden">
       <!-- Blurred glow background behind text -->
-      <div
-        class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"
-      ></div>
-      <div
-        class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"
-      ></div>
+      <div class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"></div>
+      <div class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"></div>
 
       <!-- Section Title -->
       <h2 class="relative text-4xl md:text-5xl font-bold text-white mb-5 z-10">
@@ -384,9 +218,7 @@
       </h2>
 
       <!-- Gradient underline -->
-      <div
-        class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"
-      ></div>
+      <div class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"></div>
 
       <!-- Optional tagline -->
       <p class="text-gray-400 text-center max-w-md px-4 z-10">
@@ -397,82 +229,55 @@
     <div class="max-w-7xl mx-auto px-4 py-20 space-y-16">
       <div class="flex justify-center flex-wrap gap-4 mt-5">
         <!-- Certificates -->
-        <button
-          (click)="activeTab = 'certificate'"
-          [ngClass]="{
+        <button (click)="activeTab = 'certificate'" [ngClass]="{
             'bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 text-white shadow-xl shadow-pink-500/40 ring-2 ring-pink-400/50': activeTab === 'certificate',
             'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white': activeTab !== 'certificate'
           }"
-          class="fancy-tab px-6 py-2 rounded-full font-semibold transition transform hover:scale-110 duration-300 flex items-center space-x-2"
-        >
+          class="fancy-tab px-6 py-2 rounded-full font-semibold transition transform hover:scale-110 duration-300 flex items-center space-x-2">
           <i class="fa-solid fa-certificate"></i>
           <span>Certificates</span>
-          <span *ngIf="activeTab === 'certificate'" class="ml-1 animate-pulse"
-            >✨</span
-          >
+          <span *ngIf="activeTab === 'certificate'" class="ml-1 animate-pulse">✨</span>
         </button>
 
         <!-- Portfolio -->
-        <button
-          (click)="activeTab = 'portfolio'"
-          [ngClass]="{
+        <button (click)="activeTab = 'portfolio'" [ngClass]="{
             'bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 text-white shadow-xl shadow-pink-500/40 ring-2 ring-pink-400/50': activeTab === 'portfolio',
             'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white': activeTab !== 'portfolio'
           }"
-          class="fancy-tab px-6 py-2 rounded-full font-semibold transition transform hover:scale-110 duration-300 flex items-center space-x-2"
-        >
+          class="fancy-tab px-6 py-2 rounded-full font-semibold transition transform hover:scale-110 duration-300 flex items-center space-x-2">
           <i class="fa-solid fa-briefcase"></i>
           <span>Portfolio</span>
-          <span *ngIf="activeTab === 'portfolio'" class="ml-1 animate-pulse"
-            >✨</span
-          >
+          <span *ngIf="activeTab === 'portfolio'" class="ml-1 animate-pulse">✨</span>
         </button>
 
         <!-- Achievements -->
-        <button
-          (click)="activeTab = 'achievement'"
-          [ngClass]="{
+        <button (click)="activeTab = 'achievement'" [ngClass]="{
             'bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 text-white shadow-xl shadow-pink-500/40 ring-2 ring-pink-400/50': activeTab === 'achievement',
             'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white': activeTab !== 'achievement'
           }"
-          class="fancy-tab px-6 py-2 rounded-full font-semibold transition transform hover:scale-110 duration-300 flex items-center space-x-2"
-        >
+          class="fancy-tab px-6 py-2 rounded-full font-semibold transition transform hover:scale-110 duration-300 flex items-center space-x-2">
           <i class="fa-solid fa-trophy"></i>
           <span>Achievements</span>
-          <span *ngIf="activeTab === 'achievement'" class="ml-1 animate-pulse"
-            >✨</span
-          >
+          <span *ngIf="activeTab === 'achievement'" class="ml-1 animate-pulse">✨</span>
         </button>
       </div>
       <!-- Content Items -->
-      <div
-        *ngFor="let item of filteredItems; let i = index"
-        class="flex flex-col md:flex-row"
-        [ngClass]="{'md:flex-row-reverse': i % 2 !== 0, 'items-center': true}"
-      >
+      <div *ngFor="let item of filteredItems; let i = index" class="flex flex-col md:flex-row"
+        [ngClass]="{'md:flex-row-reverse': i % 2 !== 0, 'items-center': true}">
         <!-- Image -->
-        <div
-          class="relative w-full h-70 md:w-1/2 overflow-hidden rounded-xl shadow-lg p-10"
-        >
-          <img
-            [src]="item.certificateUrl || 'images/placeholder.png'"
-            [alt]="item.title"
-            class="object-cover w-full h-full transform hover:scale-105 transition duration-500 rounded-xl"
-          />
-          <div
-            class="absolute inset-0 rounded-xl"
-            [ngClass]="{
+        <div class="relative w-full h-70 md:w-1/2 overflow-hidden rounded-xl shadow-lg p-10">
+          <img [src]="item.certificateUrl || 'images/placeholder.png'" [alt]="item.title"
+            class="object-cover w-full h-full transform hover:scale-105 transition duration-500 rounded-xl" />
+          <div class="absolute inset-0 rounded-xl" [ngClass]="{
               'bg-gradient-to-bl from-blue-600/40 to-purple-500/30': i % 2 === 0,
               'bg-gradient-to-tr from-pink-500/40 to-yellow-400/30': i % 2 !== 0
-            }"
-          ></div>
+            }"></div>
           <div
             class="absolute top-4 left-4 text-white text-lg font-bold w-12 h-12 flex items-center justify-center rounded-full shadow-lg z-20"
             [ngClass]="{
               'bg-blue-600': i % 2 === 0,
               'bg-pink-600': i % 2 !== 0
-            }"
-          >
+            }">
             {{ i + 1 }}
           </div>
         </div>
@@ -487,16 +292,11 @@
           <p class="text-gray-400">
             <strong>Issued on:</strong> {{ formatDate(item.issueDate) }}
           </p>
-          <a
-            *ngIf="item.certificateUrl"
-            [href]="item.certificateUrl"
-            target="_blank"
-            class="inline-block mt-6 px-6 py-3 rounded text-white transition"
-            [ngClass]="{
+          <a *ngIf="item.certificateUrl" [href]="item.certificateUrl" target="_blank"
+            class="inline-block mt-6 px-6 py-3 rounded text-white transition" [ngClass]="{
               'bg-blue-600 hover:bg-blue-700': i % 2 === 0,
               'bg-pink-600 hover:bg-pink-700': i % 2 !== 0
-            }"
-          >
+            }">
             View
           </a>
         </div>
@@ -505,138 +305,72 @@
   </section>
 
   <!-- Social Links -->
-<section
-  class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
->
-  <div
-    class="max-w-7xl mx-auto px-4 py-12 flex justify-center items-center space-x-4"
-  >
-    <!-- GitHub -->
-    <a
-      *ngIf="portfolioDetails?.contact?.gitHubUrl"
-      [href]="portfolioDetails.contact.gitHubUrl"
-      target="_blank"
-      class="text-gray-400 hover:text-white text-xl"
-    >
-      <i class="fa-brands fa-github"></i>
-    </a>
+  <section class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
+    <div class="max-w-7xl mx-auto px-4 py-12 flex justify-center items-center space-x-4">
+      <!-- GitHub -->
+      <a *ngIf="portfolioDetails?.contact?.gitHubUrl" [href]="portfolioDetails.contact.gitHubUrl" target="_blank"
+        class="text-gray-400 hover:text-white text-xl">
+        <i class="fa-brands fa-github"></i>
+      </a>
 
-    <!-- Twitter -->
-    <a
-      *ngIf="portfolioDetails?.contact?.twitterUrl"
-      [href]="portfolioDetails.contact.twitterUrl"
-      target="_blank"
-      class="text-gray-400 hover:text-white text-xl"
-    >
-      <i class="fa-brands fa-twitter"></i>
-    </a>
+      <!-- Twitter -->
+      <a *ngIf="portfolioDetails?.contact?.twitterUrl" [href]="portfolioDetails.contact.twitterUrl" target="_blank"
+        class="text-gray-400 hover:text-white text-xl">
+        <i class="fa-brands fa-twitter"></i>
+      </a>
 
-    <!-- LinkedIn -->
-    <a
-      *ngIf="portfolioDetails?.contact?.linkedInUrl"
-      [href]="portfolioDetails.contact.linkedInUrl"
-      target="_blank"
-      class="text-gray-400 hover:text-white text-xl"
-    >
-      <i class="fa-brands fa-linkedin"></i>
-    </a>
-  </div>
-</section>
+      <!-- LinkedIn -->
+      <a *ngIf="portfolioDetails?.contact?.linkedInUrl" [href]="portfolioDetails.contact.linkedInUrl" target="_blank"
+        class="text-gray-400 hover:text-white text-xl">
+        <i class="fa-brands fa-linkedin"></i>
+      </a>
+    </div>
+  </section>
 
   <!-- Orb / Graphic Section -->
-  <section
-    class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
-  >
+  <section class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
     <div class="max-w-7xl mx-auto px-4 py-20 flex justify-center items-center">
       <div
-        class="w-48 h-48 rounded-full bg-gradient-to-br from-purple-700 to-purple-500 flex items-center justify-center shadow-purple-500/50 shadow-2xl"
-      >
+        class="w-48 h-48 rounded-full bg-gradient-to-br from-purple-700 to-purple-500 flex items-center justify-center shadow-purple-500/50 shadow-2xl">
         <span class="text-5xl">⏳</span>
       </div>
     </div>
   </section>
 
   <!-- Contact Section -->
- <section
-  class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
->
-  <div class="max-w-7xl mx-auto px-4 py-16 text-center">
-    <h3 class="text-5xl font-bold text-gray-400 mb-4">Contact</h3>
-    <p class="text-gray-400 mb-4">
-      I'm currently looking to join a cross-functional team.
-    </p>
-
-    <div class="flex justify-center space-x-6">
-      <!-- GitHub -->
-      <a
-        *ngIf="portfolioDetails?.contact?.gitHubUrl"
-        [href]="portfolioDetails.contact.gitHubUrl"
-        target="_blank"
-        class="hover:text-white text-gray-400"
-        >GitHub</a
-      >
-
-      <!-- LinkedIn -->
-      <a
-        *ngIf="portfolioDetails?.contact?.linkedInUrl"
-        [href]="portfolioDetails.contact.linkedInUrl"
-        target="_blank"
-        class="hover:text-white text-gray-400"
-        >LinkedIn</a
-      >
-
-      <!-- Email -->
-      <a
-        *ngIf="portfolioDetails?.user?.email"
-        [href]="'mailto:' + portfolioDetails.user.email"
-        class="hover:text-white text-gray-400"
-        >Email : {{portfolioDetails.user.email}}</a
-      >
-  </section>
-
-  <section
-    id="contact"
-    class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
-  >
+  <section class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
     <div class="max-w-7xl mx-auto px-4 py-16 text-center">
-      <h3 class="text-5xl font-bold text-purple-300 text-center mb-12">
-        Contacts
-      </h3>
+      <h3 class="text-5xl font-bold text-gray-400 mb-4">Contact</h3>
       <p class="text-gray-400 mb-4">
         I'm currently looking to join a cross-functional team.
       </p>
+
       <div class="flex justify-center space-x-6">
-        <a href="#" class="hover:text-white text-gray-400">GitHub</a>
-        <a href="#" class="hover:text-white text-gray-400">LinkedIn</a>
-        <a href="#" class="hover:text-white text-gray-400">Email</a>
+        <!-- GitHub -->
+        <a *ngIf="portfolioDetails?.contact?.gitHubUrl" [href]="portfolioDetails.contact.gitHubUrl" target="_blank"
+          class="hover:text-white text-gray-400">GitHub</a>
+
+        <!-- LinkedIn -->
+        <a *ngIf="portfolioDetails?.contact?.linkedInUrl" [href]="portfolioDetails.contact.linkedInUrl" target="_blank"
+          class="hover:text-white text-gray-400">LinkedIn</a>
+
+        <!-- Email -->
+        <a *ngIf="portfolioDetails?.user?.email" [href]="'mailto:' + portfolioDetails.user.email"
+          class="hover:text-white text-gray-400">Email : {{portfolioDetails.user.email}}</a>
       </div>
     </div>
-  </div>
-</section>
-
+  </section>
 </div>
+
+<router-outlet></router-outlet>
 
 <ng-template #loading>
   <div class="flex flex-col items-center justify-center min-h-[300px]">
-    <svg
-      class="animate-spin h-10 w-10 text-blue-600 mb-4"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <circle
-        class="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        stroke-width="4"
-      ></circle>
-      <path
-        class="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4l-3 3 3 3h-4a8 8 0 01-8-8z"
-      ></path>
+    <svg class="animate-spin h-10 w-10 text-blue-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+      viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor"
+        d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4l-3 3 3 3h-4a8 8 0 01-8-8z"></path>
     </svg>
     <p class="text-lg text-gray-600 font-medium animate-pulse">
       Loading portfolio...

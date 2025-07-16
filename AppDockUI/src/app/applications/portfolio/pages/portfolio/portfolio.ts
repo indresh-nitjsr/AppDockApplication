@@ -43,7 +43,7 @@ export class Portfolio implements OnInit {
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getPortfolioDetails();
@@ -51,6 +51,7 @@ export class Portfolio implements OnInit {
 
   getPortfolioDetails() {
     const user = localStorage.getItem('user');
+    console.log("user: ", user)
     if (user) {
       const userId = JSON.parse(user).userId;
       if (userId) {
@@ -78,6 +79,7 @@ export class Portfolio implements OnInit {
     this.portfolioService.createUserPortfolio(this.portfolioObj).subscribe(
       (res: UserPortfolio) => {
         console.log('Portfolio created successfully:', res);
+        this.getPortfolioDetails();
         this.ngZone.run(() => {
           this.nextStep();
         });
@@ -182,22 +184,22 @@ export class Portfolio implements OnInit {
     );
   }
 
- createPortfolioContact() {
+  createPortfolioContact() {
 
-  this.contactObj.portfolioId = this.portfolioDetails.id;
-  this.contactObj.userId = this.portfolioDetails.user.userId;
-  this.portfolioService.createContact(this.contactObj).subscribe(
-    (res: Contact) => {
-      console.log('Contact saved:', res);
-      this.ngZone.run(() => {
-        this.nextStep();
-      });
-    },
-    (error: any) => {
-      console.log('Error saving contact:', error);
-    }
-  );
-}
+    this.contactObj.portfolioId = this.portfolioDetails.id;
+    this.contactObj.userId = this.portfolioDetails.user.userId;
+    this.portfolioService.createContact(this.contactObj).subscribe(
+      (res: Contact) => {
+        console.log('Contact saved:', res);
+        this.ngZone.run(() => {
+          this.nextStep();
+        });
+      },
+      (error: any) => {
+        console.log('Error saving contact:', error);
+      }
+    );
+  }
   submitPortfolio() {
     this.router.navigate(['/services/portfolio', 'portfolio-details']);
   }
@@ -247,9 +249,9 @@ export class Portfolio implements OnInit {
       this.portfolioDetails.certificates.length === 0
     ) {
       this.currentStep = 6; // Certificates
-    }else if (!this.portfolioDetails.contact||
-      this.portfolioDetails.contact.address === ''){
-         this.currentStep = 7;
+    } else if (!this.portfolioDetails.contact ||
+      this.portfolioDetails.contact.address === '') {
+      this.currentStep = 7;
     } else {
       this.currentStep = 8; // All done
     }
