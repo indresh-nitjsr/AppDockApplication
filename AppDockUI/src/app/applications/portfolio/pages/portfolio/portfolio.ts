@@ -55,7 +55,7 @@ export class Portfolio implements OnInit {
     if (user) {
       const userId = JSON.parse(user).userId;
       if (userId) {
-        this.portfolioService.getUserPortfolio(userId).subscribe(
+        this.portfolioService.getUserPortfolioByUserId(userId).subscribe(
           (portfolio) => {
             this.portfolioDetails = PortfolioDetailsModel.fromJson(portfolio);
             console.log('Portfolio Details: ', this.portfolioDetails);
@@ -101,7 +101,7 @@ export class Portfolio implements OnInit {
       this.aboutObj.profileImageUrl = `images/portfolio_profile_img.png`;
     }
 
-    this.portfolioService.createAbout(this.aboutObj).subscribe(
+    this.portfolioService.createUpdateAbout(this.aboutObj).subscribe(
       (res: About) => {
         console.log('About Create successfully: ', res);
         this.ngZone.run(() => {

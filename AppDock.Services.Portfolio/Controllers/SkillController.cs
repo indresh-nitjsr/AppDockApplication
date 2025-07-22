@@ -73,7 +73,7 @@ namespace AppDock.Services.PortfolioAPI.Controllers
 
 
         [HttpPut]
-        public async Task<IActionResult> UpdateProject([FromBody] SkillDto skillDto)
+        public async Task<IActionResult> UpdateSkill([FromBody] SkillDto skillDto)
         {
             if (skillDto == null)
             {

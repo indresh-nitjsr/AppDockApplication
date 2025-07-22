@@ -36,15 +36,10 @@ namespace AppDock.Services.PortfolioAPI.Controllers
             return Ok(_responseDto);
         }
 
-        [HttpGet("{userId}")]
-        public async Task<IActionResult> GetAbout(string userId)
+        [HttpGet("{portfolioId}")]
+        public async Task<IActionResult> GetAbout(string portfolioId)
         {
-            var about = await _aboutService.GetAboutAsync(userId);
-            //if (about == null)
-            //{
-            //    return NotFound();
-            //}
-
+            var about = await _aboutService.GetAboutAsync(portfolioId);
             _responseDto.Results = about;
             return Ok(_responseDto);
         }

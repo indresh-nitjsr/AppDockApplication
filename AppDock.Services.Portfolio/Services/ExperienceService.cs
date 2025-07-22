@@ -69,7 +69,8 @@ namespace AppDock.Services.PortfolioAPI.Services
                 CompanyName = e.CompanyName,
                 StartDate = e.StartDate,
                 EndDate = e.EndDate,
-                Description = e.Description
+                Description = e.Description,
+                EmployementType = e.EmployementType
             }).ToList();
 
             return dtos;

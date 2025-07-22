@@ -8,29 +8,54 @@ import {
 import { PortfolioService } from '../../services/portfolioService';
 import { PortfolioDetails as PortfolioDetailsModel } from '../../models/portfolioDetails';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterModule } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterLink,
+  RouterModule,
+} from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { PortfolioIdService } from '../../services/portfolio-id.service';
 
 @Component({
   selector: 'app-portfolio-details',
   templateUrl: './portfolio-details.html',
   styleUrls: ['./portfolio-details.css'],
   standalone: true,
-  imports: [CommonModule, RouterModule], // add CommonModule etc. if needed
+  imports: [CommonModule, RouterModule, FormsModule], // add CommonModule etc. if needed
 })
 export class PortfolioDetails implements OnInit {
   portfolioDetails: PortfolioDetailsModel = new PortfolioDetailsModel();
   activeTab: string = 'certificate';
   profileImage: any = '';
   activeSection: string = 'home';
+  isFlipped: boolean[] = [];
+  isUserLoggedIn = false;
 
   constructor(
     private portfolioService: PortfolioService,
     private cdr: ChangeDetectorRef,
-    private renderer: Renderer2
-  ) { }
+    private renderer: Renderer2,
+    private router: Router,
+    private route: ActivatedRoute,
+    private portfolioIdService: PortfolioIdService
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
   ngOnInit() {
-    this.getPortfolioDetails();
+    this.route.paramMap.subscribe((params: any) => {
+      const portfolioId = params.get('portfolioId');
+      console.log('portfolio id: ', portfolioId);
+
+      if (portfolioId) {
+        this.getPortfolioDetails(portfolioId);
+      }
+    });
+    this.initializeFlips();
+    if (localStorage.getItem('user')) {
+      this.isUserLoggedIn = true;
+    }
   }
 
   activateTab(tab: string) {
@@ -44,9 +69,13 @@ export class PortfolioDetails implements OnInit {
     }, 0);
   }
 
-  get filteredItems() {
-    console.log('certificates: ', this.portfolioDetails.certificates);
+  initializeFlips(): void {
+    if (this.filteredItems) {
+      this.isFlipped = this.filteredItems.map(() => false);
+    }
+  }
 
+  get filteredItems() {
     return this.portfolioDetails.certificates?.filter(
       (item) => item.type === this.activeTab
     );
@@ -62,26 +91,27 @@ export class PortfolioDetails implements OnInit {
     return d.toLocaleDateString('en-US', options);
   }
 
-  getPortfolioDetails() {
-    const user = localStorage.getItem('user');
-    if (user) {
-      const userId = JSON.parse(user).userId;
-      if (userId) {
-        this.portfolioService.getUserPortfolio(userId).subscribe(
+  getPortfolioDetails(portfolioId: string) {
+    // const portfolioId = '2d41cd57-5110-4ee6-8d9f-c2374d8ffe3b';
+
+    if (portfolioId) {
+      this.portfolioService
+        .getUserPortfolioByPortfolioId(portfolioId)
+        .subscribe(
           (portfolio) => {
             this.portfolioDetails = PortfolioDetailsModel.fromJson(portfolio);
             console.log('Portfolio details loaded:', this.portfolioDetails);
+            if (this.portfolioDetails.id) {
+              this.portfolioIdService.setPortfolioId(this.portfolioDetails.id);
+            }
             this.cdr.detectChanges();
           },
           (error) => {
             console.error('Error fetching portfolio details:', error);
           }
         );
-      } else {
-        console.error('User ID not found in local storage');
-      }
     } else {
-      console.error('User not found in local storage');
+      console.error('User ID not found in local storage');
     }
   }
 
@@ -114,6 +144,61 @@ export class PortfolioDetails implements OnInit {
           break;
         }
       }
+    }
+  }
+
+  selectedCertificate: any = null;
+  isModalOpen: boolean = false;
+
+  openModal(certificate: any): void {
+    this.selectedCertificate = certificate;
+    this.isModalOpen = true;
+  }
+
+  closeModal(): void {
+    this.selectedCertificate = null;
+    this.isModalOpen = false;
+  }
+
+  flippedIndex: number | null = null;
+
+  toggleFlip(index: number): void {
+    this.flippedIndex = index;
+  }
+
+  resetFlip(index: number): void {
+    if (this.flippedIndex === index) {
+      this.flippedIndex = null;
+    }
+  }
+
+  expandedDescriptions: { [key: number]: boolean } = {};
+
+  toggleDescription(index: number): void {
+    this.expandedDescriptions[index] = !this.expandedDescriptions[index];
+  }
+
+  // Contact form
+  contactData = {
+    name: '',
+    email: '',
+    message: '',
+  };
+
+  sendMessage() {
+    if (
+      this.contactData.name &&
+      this.contactData.email &&
+      this.contactData.message
+    ) {
+      // You can replace this with actual HTTP POST to backend
+      console.log('Sending message:', this.contactData);
+
+      // Reset the form
+      this.contactData = { name: '', email: '', message: '' };
+      alert('Message sent successfully!');
+    } else {
+      alert('Please fill in all fields.');
     }
   }
 }

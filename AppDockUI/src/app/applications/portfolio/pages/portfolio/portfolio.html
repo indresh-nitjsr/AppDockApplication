@@ -1,18 +1,16 @@
 <div
-  class="max-w-xl mx-auto mt-10 bg-white/5 backdrop-blur rounded-lg p-8 border border-white/10 shadow-lg transition-transform duration-500 ease-in-out"
->
+  class="mt-25 max-w-xl mx-auto bg-white/5 backdrop-blur rounded-lg p-8 border border-white/10 shadow-lg transition-transform duration-500 ease-in-out">
   <!-- Portfolio Create Form -->
   <div
     *ngIf="currentStep === 1"
-    class="transition-opacity duration-500 ease-in-out"
-  >
-    <h2 class="text-2xl font-bold text-gray-300 mb-6 text-center">
+    class="transition-opacity duration-500 ease-in-out">
+    <h2 class="text-2xl font-bold text-purple-700 mb-6 text-center">
       Create Your Portfolio
     </h2>
 
     <form #form="ngForm">
       <div class="mb-4">
-        <label class="block text-gray-400 mb-2">Role</label>
+        <label class="block text-gray-600 mb-2">Role</label>
         <input
           type="text"
           [(ngModel)]="portfolioObj.role"
@@ -20,8 +18,8 @@
           required
           #roleInput="ngModel"
           placeholder="e.g., Full Stack Developer"
-          class="w-full px-4 py-2 bg-white/10 border border-blue/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200 placeholder-gray-400"
-        />
+          class="w-full px-4 py-2 text-black placeholder-gray-400 bg-white/5 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
         <div *ngIf="roleInput.errors?.['required'] && roleInput.touched">
           <p class="text-red-500 text-sm">Role is required.</p>
         </div>
@@ -35,8 +33,7 @@
           name="dob"
           required
           #dobInput="ngModel"
-          class="w-full px-4 py-2 bg-white/10 border border-blue/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200 placeholder-gray-400"
-        />
+          class="w-full px-4 py-2 text-black placeholder-gray-400 bg-white/5 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
         <div *ngIf="dobInput.errors?.['required'] && dobInput.touched">
           <p class="text-red-500 text-sm">Date of Birth is required.</p>
         </div>
@@ -46,8 +43,7 @@
         type="button"
         [disabled]="form.invalid"
         (click)="createPortfolio()"
-        class="w-full text-white font-semibold py-3 rounded bg-blue-600 hover:bg-blue-700 transition disabled:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-500"
-      >
+        class="w-full text-white font-semibold py-3 rounded bg-blue-600 hover:bg-blue-700 transition disabled:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-500">
         Save & Next →
       </button>
     </form>
@@ -56,12 +52,10 @@
   <!-- About Section -->
   <div
     *ngIf="currentStep === 2"
-    class="relative transition-opacity duration-500 ease-in-out bg-white/5 p-6 rounded-lg border border-white/10 max-w-xl mx-auto"
-  >
+    class="relative transition-opacity duration-500 ease-in-out bg-white/5 p-6 rounded-lg border border-white/10 max-w-xl mx-auto">
     <!-- Skip button top-right -->
     <a
-      class="absolute top-4 right-4 text-blue-500 hover:underline cursor-pointer"
-    >
+      class="absolute top-4 right-4 text-blue-500 hover:underline cursor-pointer">
       Skip
     </a>
 
@@ -72,8 +66,7 @@
       [(ngModel)]="aboutObj.description"
       rows="6"
       placeholder="Write about your background, passions, and goals..."
-      class="w-full p-4 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 resize-none"
-    ></textarea>
+      class="w-full p-4 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 resize-none"></textarea>
     <div class="mb-6 flex flex-col">
       <label class="block text-gray-400 mb-2">Profile Image URL</label>
       <input
@@ -81,28 +74,24 @@
         [(ngModel)]="aboutObj.profileImageUrl"
         name="profileImageUrl"
         placeholder="Enter image URL"
-        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
-      />
+        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400" />
       <!-- Preview image -->
       <img
         *ngIf="aboutObj.profileImageUrl"
         [src]="aboutObj.profileImageUrl"
         alt="Profile Preview"
-        class="mt-3 w-28 h-28 object-cover rounded-full mb-4 border border-white/20 shadow mx-auto"
-      />
+        class="mt-3 w-28 h-28 object-cover rounded-full mb-4 border border-white/20 shadow mx-auto" />
     </div>
 
     <div class="flex justify-between">
       <a
         (click)="prevStep()"
-        class="py-3 px-6 bg-gray-600 text-white rounded hover:bg-gray-700 transition cursor-pointer"
-      >
+        class="py-3 px-6 bg-gray-600 text-white rounded hover:bg-gray-700 transition cursor-pointer">
         ← Back
       </a>
       <a
         (click)="createPortfolioAbout()"
-        class="py-3 px-6 bg-blue-600 text-white rounded hover:bg-blue-700 transition cursor-pointer"
-      >
+        class="py-3 px-6 bg-blue-600 text-white rounded hover:bg-blue-700 transition cursor-pointer">
         Save & Next →
       </a>
     </div>
@@ -111,8 +100,7 @@
   <!-- Experience Section -->
   <div
     *ngIf="currentStep === 3"
-    class="transition-opacity duration-500 ease-in-out"
-  >
+    class="transition-opacity duration-500 ease-in-out">
     <h2 class="text-2xl font-bold text-gray-300 mb-6 text-center">
       Experience
     </h2>
@@ -123,8 +111,7 @@
         [(ngModel)]="experienceObj.title"
         name="title"
         placeholder="Ex. Retail Sales Manager"
-        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
-      />
+        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400" />
     </div>
     <div class="mb-4">
       <label class="block text-gray-700 mb-2">Employment Type</label>
@@ -135,9 +122,8 @@
           'text-gray-400': !experienceObj.employementType,
           'text-gray-900': experienceObj.employementType
         }"
-        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-      >
-        <option value="" disabled [selected]="!experienceObj.employementType">
+        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <option value disabled [selected]="!experienceObj.employementType">
           Select employment type
         </option>
         <option *ngFor="let type of employmentTypes" [value]="type">
@@ -152,8 +138,7 @@
         [(ngModel)]="experienceObj.companyName"
         name="companyName"
         placeholder="Ex. Microsoft, Google"
-        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
-      />
+        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400" />
     </div>
     <div class="flex items-center mb-4">
       <input
@@ -162,13 +147,11 @@
         [(ngModel)]="experienceObj.isCurrentlyWorking"
         (change)="onCheckboxChange()"
         name="isCurrentlyWorking"
-        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500"
-      />
+        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500" />
       <label
         for="currently-working"
-        class="ms-2 text-sm font-medium text-gray-500"
-        >I am currently working in this role</label
-      >
+        class="ms-2 text-sm font-medium text-gray-500">I am currently working in
+        this role</label>
     </div>
 
     <div class="flex flex-col md:flex-row gap-4 mb-4">
@@ -180,8 +163,7 @@
           [(ngModel)]="experienceObj.startDate"
           name="startDate"
           required
-          class="w-full px-4 py-2 bg-white/10 border border-blue/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200"
-        />
+          class="w-full px-4 py-2 bg-white/10 border border-blue/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200" />
       </div>
 
       <!-- End Date -->
@@ -192,8 +174,7 @@
           [(ngModel)]="experienceObj.endDate"
           name="endDate"
           [disabled]="experienceObj.isCurrentlyWorking"
-          class="w-full px-4 py-2 bg-white/10 border border-blue/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200 disabled:bg-gray-600/30 disabled:cursor-not-allowed"
-        />
+          class="w-full px-4 py-2 bg-white/10 border border-blue/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200 disabled:bg-gray-600/30 disabled:cursor-not-allowed" />
       </div>
     </div>
 
@@ -202,22 +183,19 @@
       [(ngModel)]="experienceObj.description"
       rows="4"
       placeholder="Describe your responsibilities, achievements, etc."
-      class="w-full p-4 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
-    ></textarea>
+      class="w-full p-4 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"></textarea>
 
     <div class="flex justify-between mt-6">
       <button
         type="button"
         (click)="prevStep()"
-        class="py-3 px-6 bg-gray-600 text-white rounded hover:bg-gray-700 transition"
-      >
+        class="py-3 px-6 bg-gray-600 text-white rounded hover:bg-gray-700 transition">
         ← Back
       </button>
       <button
         type="button"
         (click)="createPortfolioExperience()"
-        class="py-3 px-6 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-      >
+        class="py-3 px-6 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
         Save & Next →
       </button>
     </div>
@@ -226,8 +204,7 @@
   <!-- Skill Section -->
   <div
     *ngIf="currentStep === 4"
-    class="transition-opacity duration-500 ease-in-out bg-white/5 p-6 rounded-lg border border-white/10 max-w-xl mx-auto"
-  >
+    class="transition-opacity duration-500 ease-in-out bg-white/5 p-6 rounded-lg border border-white/10 max-w-xl mx-auto">
     <h2 class="text-2xl font-bold text-gray-300 mb-6 text-center">Skills</h2>
 
     <div class="mb-4">
@@ -237,23 +214,20 @@
         name="skills"
         rows="4"
         placeholder="e.g., Angular, .NET, SQL, Azure..."
-        class="w-full p-4 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
-      ></textarea>
+        class="w-full p-4 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"></textarea>
     </div>
 
     <div class="flex justify-between mt-6">
       <button
         type="button"
         (click)="createPortfolioSkill()"
-        class="py-3 px-6 bg-gray-600 text-white rounded hover:bg-gray-700 transition"
-      >
+        class="py-3 px-6 bg-gray-600 text-white rounded hover:bg-gray-700 transition">
         ← Back
       </button>
       <button
         type="button"
         (click)="createPortfolioSkill()"
-        class="py-3 px-6 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-      >
+        class="py-3 px-6 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
         Save & Next →
       </button>
     </div>
@@ -262,8 +236,7 @@
   <!-- certificate section -->
   <div
     *ngIf="currentStep === 6"
-    class="transition-opacity duration-500 ease-in-out bg-white/5 p-6 rounded-lg border border-white/10 max-w-xl mx-auto"
-  >
+    class="transition-opacity duration-500 ease-in-out bg-white/5 p-6 rounded-lg border border-white/10 max-w-xl mx-auto">
     <h2 class="text-2xl font-bold text-gray-300 mb-6 text-center">
       Certificates
     </h2>
@@ -276,8 +249,7 @@
         [(ngModel)]="certificateObj.title"
         name="title"
         placeholder="e.g., Azure Fundamentals"
-        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200"
-      />
+        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200" />
     </div>
 
     <!-- Issuer -->
@@ -288,8 +260,7 @@
         [(ngModel)]="certificateObj.issuer"
         name="issuer"
         placeholder="e.g., Microsoft"
-        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200"
-      />
+        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200" />
     </div>
 
     <!-- Issue Date & Expiry Date -->
@@ -301,8 +272,7 @@
           [(ngModel)]="certificateObj.issueDate"
           name="issueDate"
           required
-          class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200"
-        />
+          class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200" />
       </div>
 
       <div class="w-full">
@@ -311,8 +281,7 @@
           type="date"
           [(ngModel)]="certificateObj.expiryDate"
           name="expiryDate"
-          class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200"
-        />
+          class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200" />
       </div>
     </div>
 
@@ -324,8 +293,7 @@
         name="description"
         rows="3"
         placeholder="Brief description about the certificate"
-        class="w-full p-4 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200 resize-none"
-      ></textarea>
+        class="w-full p-4 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200 resize-none"></textarea>
     </div>
 
     <!-- Certificate URL -->
@@ -336,8 +304,7 @@
         [(ngModel)]="certificateObj.certificateUrl"
         name="certificateUrl"
         placeholder="e.g., https://example.com/certificate"
-        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200"
-      />
+        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200" />
     </div>
 
     <!-- Buttons -->
@@ -345,15 +312,13 @@
       <button
         type="button"
         (click)="prevStep()"
-        class="py-3 px-6 bg-gray-600 text-white rounded hover:bg-gray-700 transition"
-      >
+        class="py-3 px-6 bg-gray-600 text-white rounded hover:bg-gray-700 transition">
         ← Back
       </button>
       <button
         type="button"
         (click)="createPortfolioCertificate()"
-        class="py-3 px-6 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-      >
+        class="py-3 px-6 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
         Save & Next →
       </button>
     </div>
@@ -362,8 +327,7 @@
   <!-- Project Section -->
   <div
     *ngIf="currentStep === 5"
-    class="transition-opacity duration-500 ease-in-out bg-white/5 p-6 rounded-lg border border-white/10 max-w-xl mx-auto"
-  >
+    class="transition-opacity duration-500 ease-in-out bg-white/5 p-6 rounded-lg border border-white/10 max-w-xl mx-auto">
     <h2 class="text-2xl font-bold text-gray-300 mb-6 text-center">Projects</h2>
 
     <!-- Title -->
@@ -374,8 +338,7 @@
         [(ngModel)]="projectObj.title"
         name="title"
         placeholder="e.g., Personal Project"
-        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200"
-      />
+        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200" />
     </div>
 
     <!-- Description -->
@@ -386,8 +349,7 @@
         name="description"
         rows="3"
         placeholder="Brief description of your project"
-        class="w-full p-4 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200 resize-none"
-      ></textarea>
+        class="w-full p-4 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200 resize-none"></textarea>
     </div>
 
     <!-- Start Date & End Date -->
@@ -399,8 +361,7 @@
           [(ngModel)]="projectObj.startDate"
           name="startDate"
           required
-          class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200"
-        />
+          class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200" />
       </div>
       <div class="w-full">
         <label class="block text-gray-700 mb-2">End Date*</label>
@@ -409,8 +370,7 @@
           [(ngModel)]="projectObj.endDate"
           name="endDate"
           required
-          class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200"
-        />
+          class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200" />
       </div>
     </div>
 
@@ -422,8 +382,7 @@
         [(ngModel)]="projectObj.techStack"
         name="techStack"
         placeholder="e.g., Angular, .NET, Tailwind"
-        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200"
-      />
+        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200" />
     </div>
 
     <!-- Role -->
@@ -434,8 +393,7 @@
         [(ngModel)]="projectObj.role"
         name="role"
         placeholder="Enter Role in this project"
-        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200"
-      />
+        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200" />
     </div>
 
     <!-- Live Link -->
@@ -446,8 +404,7 @@
         [(ngModel)]="projectObj.liveLink"
         name="liveLink"
         placeholder="e.g., https://yourproject.com"
-        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200"
-      />
+        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200" />
     </div>
 
     <!-- Repo Link -->
@@ -458,8 +415,7 @@
         [(ngModel)]="projectObj.repoLink"
         name="repoLink"
         placeholder="e.g., https://github.com/yourrepo"
-        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200"
-      />
+        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200" />
     </div>
 
     <!-- Buttons -->
@@ -467,26 +423,23 @@
       <button
         type="button"
         (click)="prevStep()"
-        class="py-3 px-6 bg-gray-600 text-white rounded hover:bg-gray-700 transition"
-      >
+        class="py-3 px-6 bg-gray-600 text-white rounded hover:bg-gray-700 transition">
         ← Back
       </button>
       <button
         type="button"
         (click)="createPortfolioProject()"
-        class="py-3 px-6 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-      >
+        class="py-3 px-6 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
         Save & Next →
       </button>
     </div>
   </div>
- 
+
   <!-- Contact -Section  -->
 
-   <div
+  <div
     *ngIf="currentStep === 7"
-    class="transition-opacity duration-500 ease-in-out bg-white/5 p-6 rounded-lg border border-white/10 max-w-xl mx-auto"
-  >
+    class="transition-opacity duration-500 ease-in-out bg-white/5 p-6 rounded-lg border border-white/10 max-w-xl mx-auto">
     <h2 class="text-2xl font-bold text-gray-300 mb-6 text-center">Contacts</h2>
 
     <!-- Address -->
@@ -497,8 +450,7 @@
         [(ngModel)]="contactObj.address"
         name="address"
         placeholder="Enter Address"
-        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200"
-      />
+        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200" />
     </div>
 
     <!-- LinkedInUrl -->
@@ -509,8 +461,7 @@
         [(ngModel)]="contactObj.linkedInUrl"
         name="linkedInUrl"
         placeholder="Enter LinkedInUrl"
-        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200"
-      />
+        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200" />
     </div>
 
     <!-- LinkedInUrl -->
@@ -521,11 +472,10 @@
         [(ngModel)]="contactObj.gitHubUrl"
         name="gitHubUrl"
         placeholder="Enter GitHubUrl"
-        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200"
-      />
+        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200" />
     </div>
 
-     <!-- LinkedInUrl -->
+    <!-- LinkedInUrl -->
     <div class="mb-4">
       <label class="block text-gray-700 mb-2">TwitterUrl</label>
       <input
@@ -533,8 +483,7 @@
         [(ngModel)]="contactObj.twitterUrl"
         name="twitterUrl"
         placeholder="Enter TwitterUrl"
-        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200"
-      />
+        class="w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 text-gray-200" />
     </div>
 
     <!-- Buttons -->
@@ -542,15 +491,13 @@
       <button
         type="button"
         (click)="prevStep()"
-        class="py-3 px-6 bg-gray-600 text-white rounded hover:bg-gray-700 transition"
-      >
+        class="py-3 px-6 bg-gray-600 text-white rounded hover:bg-gray-700 transition">
         ← Back
       </button>
       <button
         type="button"
         (click)="createPortfolioContact()"
-        class="py-3 px-6 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-      >
+        class="py-3 px-6 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
         Save & Next →
       </button>
     </div>
@@ -558,8 +505,7 @@
   <!-- Final Section -->
   <div
     *ngIf="currentStep === 8"
-    class="transition-opacity duration-500 ease-in-out"
-  >
+    class="transition-opacity duration-500 ease-in-out">
     <h2 class="text-2xl font-bold text-gray-300 mb-6 text-center">
       All Done 🎉
     </h2>
@@ -570,8 +516,7 @@
     <button
       type="button"
       (click)="submitPortfolio()"
-      class="w-full py-3 bg-green-600 text-white rounded hover:bg-green-700 transition font-semibold"
-    >
+      class="w-full py-3 bg-green-600 text-white rounded hover:bg-green-700 transition font-semibold">
       Submit Portfolio
     </button>
   </div>

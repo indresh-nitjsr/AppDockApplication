@@ -34,13 +34,13 @@ namespace AppDock.Services.PortfolioAPI.Controllers
             return Ok(_responseDto);
         }
 
-        [HttpGet("{userId}")]
-        public async Task<IActionResult> GetContact(string userId)
+        [HttpGet("{portfolioId}")]
+        public async Task<IActionResult> GetContact(string portfolioId)
         {
-            var contact = await _contactService.GetContactAsync(userId);
+            var contact = await _contactService.GetContactAsync(portfolioId);
            
             _responseDto.Results = contact;
             return Ok(_responseDto);
         }
-        }
+    }
 }

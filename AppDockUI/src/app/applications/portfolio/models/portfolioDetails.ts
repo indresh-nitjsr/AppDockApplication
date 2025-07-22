@@ -1,4 +1,3 @@
-
 export class PortfolioDetails {
   id: string;
   role: string;
@@ -51,7 +50,7 @@ export class PortfolioDetails {
           Object.assign(new Experience(), experience)
         )
       : [];
-     obj.contact = json.contact
+    obj.contact = json.contact
       ? Object.assign(new Contact(), json.contact)
       : new Contact();
     return obj;
@@ -62,6 +61,7 @@ export class About {
   heading: string;
   profileImageUrl: string;
   description: string;
+  facts?: string[];
 
   constructor() {
     this.description = '';
@@ -138,11 +138,13 @@ export class Skills {
   skillId: string;
   portfolioId: string;
   skills: string;
+  proficiency: number;
 
   constructor() {
     this.skillId = '';
     this.portfolioId = '';
     this.skills = '';
+    this.proficiency = 0;
   }
 }
 
@@ -183,10 +185,9 @@ export class Contact {
     this.id = '';
     this.portfolioId = '';
     this.userId = '';
-    this.address= '';
-    this.linkedInUrl= '';
-    this.gitHubUrl= '';
-    this.twitterUrl= '';
+    this.address = '';
+    this.linkedInUrl = '';
+    this.gitHubUrl = '';
+    this.twitterUrl = '';
   }
 }
-

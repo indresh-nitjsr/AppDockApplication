@@ -112,7 +112,7 @@ namespace AppDock.Services.PortfolioAPI.Services
                     return $"skill with ID {skillDto.SkillId} not found.";
                 }
                 existingSkill.Skills = skillDto.Skills;
-               // existingSkill.PortfolioId = skillDto.PortfolioId;
+                existingSkill.proficiency = skillDto.Proficiency;
                 _context.skills.Update(existingSkill);
                 await _context.SaveChangesAsync();
 
@@ -179,7 +179,8 @@ namespace AppDock.Services.PortfolioAPI.Services
                 {
                     SkillId = skill.Id,
                     PortfolioId = skill.PortfolioId,
-                    Skills = skill.Skills
+                    Skills = skill.Skills,
+                    Proficiency = skill.proficiency
                 };
 
                 return skillDto;

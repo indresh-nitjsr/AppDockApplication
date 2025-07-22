@@ -1,8 +1,18 @@
-<div *ngIf="portfolioDetails && portfolioDetails.user.userId; else loading" class="font-sans">
+<div *ngIf="portfolioDetails && portfolioDetails.user.userId; else loading"
+  class="font-sans mt-16">
   <!-- About Section -->
   <section id="home"
     class="relative overflow-hidden bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
-    <div class="max-w-7xl mx-auto px-4 pt-8 pb-32 flex flex-col items-center text-center">
+    <a *ngIf="isUserLoggedIn" href="/" class="absolute top-4 left-4 z-10">
+      <button
+        class="flex items-center gap-2 border border-blue-400 text-blue-400 font-medium px-4 py-2 rounded-full bg-transparent hover:bg-blue-500 hover:text-white transition cursor-pointer">
+        <i class="fas fa-arrow-left"></i>
+        Back to AppDock
+      </button>
+    </a>
+
+    <div
+      class="max-w-7xl mx-auto px-4 pt-8 pb-20 flex flex-col items-center text-center">
       <!-- Decorative shapes -->
       <div
         class="absolute top-0 left-0 w-72 h-72 bg-purple-700 opacity-30 rounded-full mix-blend-multiply blur-3xl animate-pulse">
@@ -12,49 +22,65 @@
       </div>
 
       <!-- Profile Image -->
-      <img [src]="portfolioDetails.about.profileImageUrl || 'images/profileImageGirl.jpeg'" alt="Profile"
-        class="w-44 h-44 rounded-full object-cover border-4 border-white shadow-2xl mb-6 hover:scale-105 transition duration-500" />
+      <img
+        [src]="portfolioDetails.about.profileImageUrl || 'images/profile_img_male.png'"
+        alt="Profile"
+        class="w-44 h-44 rounded-full object-cover border-4 border-white shadow-2xl mb-4 hover:scale-105 transition duration-500" />
 
-      <!-- Name -->
-      <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2">
-        {{ portfolioDetails.user.name || '' }}
-      </h1>
-
-      <!-- Professions -->
-      <h1 class="text-4xl md:text-5xl font-extrabold text-yellow-400 mb-2">
-        I'm Full Stack Developer
-      </h1>
+      <!-- Name / Email / Contact Row -->
+      <div
+        class=" flex flex-wrap justify-center gap-6 text-blue-200 font-medium mb-6 text-xl sm:text-xl">
+        <div class="flex items-center gap-2">
+          <i class="fas fa-user text-blue-400"></i>
+          {{ portfolioDetails.user.name || 'Your Name' }}
+        </div>
+        <div *ngIf="portfolioDetails.user.email"
+          class="flex items-center gap-2">
+          <i class="fas fa-envelope text-blue-400"></i>
+          {{ portfolioDetails.user.email }}
+        </div>
+        <div *ngIf="portfolioDetails.user.phoneNumber"
+          class="flex items-center gap-2">
+          <i class="fas fa-phone text-blue-400"></i>
+          +91 {{ portfolioDetails.user.phoneNumber }}
+        </div>
+        <div *ngIf="portfolioDetails.user.phoneNumber"
+          class="flex items-center gap-2">
+          <i class="fa-solid fa-location-dot text-blue-400"></i>
+          {{ portfolioDetails.contact.address }}
+        </div>
+      </div>
 
       <!-- Expertise Title -->
-      <p class="text-xl md:text-2xl text-purple-200 font-medium mb-4">
+      <p class="text-xl md:text-2xl text-purple-200 font-medium mb-8">
         {{ portfolioDetails.about.description }}
-      </p>
-
-      <!-- Short tagline -->
-      <p class="max-w-xl text-gray-300 mb-8">
-        Crafting powerful digital experiences that connect ideas to users. Let's
-        build together with elegance and precision.
       </p>
 
       <!-- Call to Action -->
       <button
         class="inline-flex items-center bg-pink-600 hover:bg-pink-700 text-white font-bold px-8 py-3 rounded-full shadow-lg transition">
         Explore My Work
-        <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7" />
+        <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor"
+          stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M5 12h14M12 5l7 7-7 7" />
         </svg>
       </button>
     </div>
   </section>
 
   <!-- Work Experience -->
-  <section id="experience" class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
+  <section id="experience"
+    class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
     [ngClass]="{'text-yellow-400': activeSection === 'experience'}">
     <!-- Section Separator -->
-    <div class="relative flex flex-col items-center justify-center py-16 overflow-hidden">
+    <div
+      class="relative flex flex-col items-center justify-center py-16 overflow-hidden">
       <!-- Blurred glow background behind text -->
-      <div class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"></div>
-      <div class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"></div>
+      <div
+        class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"></div>
+      <div
+        class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"></div>
 
       <!-- Section Title -->
       <h2 class="relative text-4xl md:text-5xl font-bold text-white mb-5 z-10">
@@ -62,9 +88,8 @@
       </h2>
 
       <!-- Gradient underline -->
-      <div class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"></div>
-
-      <!-- Optional tagline -->
+      <div
+        class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"></div>
       <p class="text-gray-400 text-center max-w-md px-4 z-10">
         Discover my journey and impactful milestones in various companies and
         roles.
@@ -73,21 +98,25 @@
     <div class="max-w-7xl mx-auto px-4 py-20">
       <!-- Experience Content -->
       <div class="relative border-l border-gray-700/50 ml-4">
-        <div *ngFor="let exp of portfolioDetails.experiences" class="mb-12 relative pl-12 group">
+        <div *ngFor="let exp of portfolioDetails.experiences"
+          class="mb-12 relative pl-12 group">
           <span
             class="absolute -left-[22px] top-6 w-4 h-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 border-2 border-white shadow-md"></span>
 
           <div
             class="relative bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 shadow-xl hover:shadow-2xl transition transform hover:scale-[1.02]">
-            <div class="absolute -top-3 left-4 bg-blue-600 text-white text-xs px-3 py-1 rounded-full shadow-lg">
+            <div
+              class="absolute -top-3 left-4 bg-blue-600 text-white text-xs px-3 py-1 rounded-full shadow-lg">
               Company: {{ exp.companyName || 'Company' }}
             </div>
 
-            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 mt-2">
+            <div
+              class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 mt-2">
               <h4 class="text-xl font-bold text-white">{{ exp.title }}</h4>
               <span class="text-gray-400 text-sm">
                 {{ formatDate(exp.startDate) }} -
-                <span [ngClass]="{'text-green-400 font-semibold': exp.isCurrentlyWorking}">
+                <span
+                  [ngClass]="{'text-green-400 font-semibold': exp.isCurrentlyWorking}">
                   {{ exp.isCurrentlyWorking ? 'Present' :
                   formatDate(exp.endDate) }}
                 </span>
@@ -97,7 +126,8 @@
             <p class="text-gray-400 text-sm leading-relaxed">
               {{ exp.description }}
             </p>
-            <div *ngIf="exp.employementType" class="text-xs text-gray-400 italic mt-2">
+            <div *ngIf="exp.employementType"
+              class="text-xs text-gray-400 italic mt-2">
               Type: {{ exp.employementType }}
             </div>
           </div>
@@ -107,257 +137,305 @@
   </section>
 
   <!-- Skills Section -->
-  <section id="skill" class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
-    <!-- Section Separator -->
-    <div class="relative flex flex-col items-center justify-center py-16 overflow-hidden">
-      <!-- Blurred glow background behind text -->
-      <div class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"></div>
-      <div class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"></div>
+  <section id="skill"
+    class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] py-16 px-4 text-white relative overflow-hidden">
 
-      <!-- Section Title -->
-      <h2 class="relative text-4xl md:text-5xl font-bold text-white mb-5 z-10">
-        🚀 Skills
+    <!-- Section Title -->
+    <div class="text-center mb-12 relative z-10">
+      <h2 class="text-4xl font-bold flex items-center justify-center gap-2">
+        🚀 <span>Skills</span>
       </h2>
-
-      <!-- Gradient underline -->
-      <div class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"></div>
-
-      <!-- Optional tagline -->
-      <p class="text-gray-400 text-center max-w-md px-4 z-10">
-        Discover my journey and impactful milestones in various companies and
-        roles.
-      </p>
+      <div
+        class="w-24 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 mx-auto mt-2 rounded-full"></div>
     </div>
 
-    <!-- Skill Content -->
-    <div class="max-w-7xl mx-auto px-4 py-16">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div *ngFor="let skill of skillsList"
-          class="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:scale-[1.02] transition">
-          <h4 class="text-lg font-semibold text-white mb-2">
-            {{ skill.name }}
-          </h4>
-          <p class="text-gray-400 text-sm mb-3">
-            Proficiency in {{ skill.name }}
-          </p>
-          <div class="w-full bg-gray-700 rounded-full h-2.5">
-            <div class="h-2.5 rounded-full bg-gradient-to-r from-pink-500 to-purple-500"
-              [style.width.%]="skill.percent"></div>
+    <!-- Skills Grid -->
+    <div
+      class="relative z-10 max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
+      <div *ngFor="let skill of portfolioDetails.skills"
+        class="bg-white/5 backdrop-blur-sm border border-white/10 shadow-lg rounded-xl p-4 hover:scale-105 transition-transform duration-300 space-y-2">
+
+        <div class="flex justify-between text-sm font-semibold text-white/90">
+          <span>{{ skill.skills }}</span>
+          <span>{{ skill.proficiency }}%</span>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+          <div
+            class="h-2 bg-gradient-to-r from-pink-500 via-purple-500 to-purple-700 rounded-full shadow-md"
+            [style.width.%]="skill.proficiency">
           </div>
-          <p class="text-gray-400 text-xs mt-1">{{ skill.percent }}%</p>
         </div>
       </div>
     </div>
+
+    <!-- Glowing Background Blobs -->
+    <div
+      class="absolute w-72 h-72 bg-pink-500 opacity-20 rounded-full blur-3xl -top-10 -left-10"></div>
+    <div
+      class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl -bottom-10 -right-10"></div>
   </section>
 
   <!-- My Projects Section -->
-  <section id="project" class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
-    <!-- Section Separator -->
-    <div class="relative flex flex-col items-center justify-center py-16 overflow-hidden">
-      <!-- Blurred glow background behind text -->
-      <div class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"></div>
-      <div class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"></div>
-
-      <!-- Section Title -->
+  <section id="project"
+    class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
+    <!-- Section Title -->
+    <div
+      class="relative flex flex-col items-center justify-center py-16 overflow-hidden">
+      <div
+        class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"></div>
+      <div
+        class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"></div>
       <h2 class="relative text-4xl md:text-5xl font-bold text-white mb-5 z-10">
         🚀 My Projects
       </h2>
-
-      <!-- Gradient underline -->
-      <div class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"></div>
-
-      <!-- Optional tagline -->
-      <p class="text-gray-400 text-center max-w-md px-4 z-10">
-        Discover my journey and impactful milestones in various companies and
-        roles.
-      </p>
-    </div>
-    <div class="max-w-7xl mx-auto px-4 py-16">
-      <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        <div *ngFor="let project of portfolioDetails.projects"
-          class="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover:scale-[1.02] transition transform shadow-lg">
-          <div class="relative">
-            <img src="images/1st_project.PNG" [alt]="project.title" class="w-full h-56 object-cover" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-          </div>
-          <div class="p-6">
-            <h4 class="text-xl font-bold text-white mb-2">
-              {{ project.title }}
-            </h4>
-            <p class="text-gray-400 mb-2 text-sm">{{ project.description }}</p>
-            <p class="text-gray-500 text-xs mb-1">
-              <strong>Tech Stack:</strong> {{ project.techStack }}
-            </p>
-            <p class="text-gray-500 text-xs mb-4">
-              <strong>Duration:</strong> {{ formatDate(project.startDate) }} -
-              {{ formatDate(project.endDate) }}
-            </p>
-            <a *ngIf="project.repoLink && project.repoLink !== 'string'" [href]="project.repoLink" target="_blank"
-              class="inline-block mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Source
-              Code</a>
-            <a *ngIf="project.liveLink && project.liveLink !== 'string'" [href]="project.liveLink" target="_blank"
-              class="inline-block mt-2 ml-2 bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800 transition">Live
-              Project</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Certificates / Portfolio / Achievements -->
-  <section id="certificate" class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
-    <!-- Section Separator -->
-    <div class="relative flex flex-col items-center justify-center py-16 overflow-hidden">
-      <!-- Blurred glow background behind text -->
-      <div class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"></div>
-      <div class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"></div>
-
-      <!-- Section Title -->
-      <h2 class="relative text-4xl md:text-5xl font-bold text-white mb-5 z-10">
-        🚀 Certification | Portfolio | Achievements
-      </h2>
-
-      <!-- Gradient underline -->
-      <div class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"></div>
-
-      <!-- Optional tagline -->
-      <p class="text-gray-400 text-center max-w-md px-4 z-10">
-        Discover my journey and impactful milestones in various companies and
-        roles.
-      </p>
-    </div>
-    <div class="max-w-7xl mx-auto px-4 py-20 space-y-16">
-      <div class="flex justify-center flex-wrap gap-4 mt-5">
-        <!-- Certificates -->
-        <button (click)="activeTab = 'certificate'" [ngClass]="{
-            'bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 text-white shadow-xl shadow-pink-500/40 ring-2 ring-pink-400/50': activeTab === 'certificate',
-            'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white': activeTab !== 'certificate'
-          }"
-          class="fancy-tab px-6 py-2 rounded-full font-semibold transition transform hover:scale-110 duration-300 flex items-center space-x-2">
-          <i class="fa-solid fa-certificate"></i>
-          <span>Certificates</span>
-          <span *ngIf="activeTab === 'certificate'" class="ml-1 animate-pulse">✨</span>
-        </button>
-
-        <!-- Portfolio -->
-        <button (click)="activeTab = 'portfolio'" [ngClass]="{
-            'bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 text-white shadow-xl shadow-pink-500/40 ring-2 ring-pink-400/50': activeTab === 'portfolio',
-            'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white': activeTab !== 'portfolio'
-          }"
-          class="fancy-tab px-6 py-2 rounded-full font-semibold transition transform hover:scale-110 duration-300 flex items-center space-x-2">
-          <i class="fa-solid fa-briefcase"></i>
-          <span>Portfolio</span>
-          <span *ngIf="activeTab === 'portfolio'" class="ml-1 animate-pulse">✨</span>
-        </button>
-
-        <!-- Achievements -->
-        <button (click)="activeTab = 'achievement'" [ngClass]="{
-            'bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 text-white shadow-xl shadow-pink-500/40 ring-2 ring-pink-400/50': activeTab === 'achievement',
-            'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white': activeTab !== 'achievement'
-          }"
-          class="fancy-tab px-6 py-2 rounded-full font-semibold transition transform hover:scale-110 duration-300 flex items-center space-x-2">
-          <i class="fa-solid fa-trophy"></i>
-          <span>Achievements</span>
-          <span *ngIf="activeTab === 'achievement'" class="ml-1 animate-pulse">✨</span>
-        </button>
-      </div>
-      <!-- Content Items -->
-      <div *ngFor="let item of filteredItems; let i = index" class="flex flex-col md:flex-row"
-        [ngClass]="{'md:flex-row-reverse': i % 2 !== 0, 'items-center': true}">
-        <!-- Image -->
-        <div class="relative w-full h-70 md:w-1/2 overflow-hidden rounded-xl shadow-lg p-10">
-          <img [src]="item.certificateUrl || 'images/placeholder.png'" [alt]="item.title"
-            class="object-cover w-full h-full transform hover:scale-105 transition duration-500 rounded-xl" />
-          <div class="absolute inset-0 rounded-xl" [ngClass]="{
-              'bg-gradient-to-bl from-blue-600/40 to-purple-500/30': i % 2 === 0,
-              'bg-gradient-to-tr from-pink-500/40 to-yellow-400/30': i % 2 !== 0
-            }"></div>
-          <div
-            class="absolute top-4 left-4 text-white text-lg font-bold w-12 h-12 flex items-center justify-center rounded-full shadow-lg z-20"
-            [ngClass]="{
-              'bg-blue-600': i % 2 === 0,
-              'bg-pink-600': i % 2 !== 0
-            }">
-            {{ i + 1 }}
-          </div>
-        </div>
-
-        <!-- Content -->
-        <div class="w-full md:w-1/2 mt-8 md:mt-0 md:pl-12">
-          <h3 class="text-3xl font-bold text-white mb-4">{{ item.title }}</h3>
-          <p class="text-gray-400 mb-2">{{ item.description }}</p>
-          <p class="text-gray-400 mb-2">
-            <strong>Issued By:</strong> {{ item.issuer }}
-          </p>
-          <p class="text-gray-400">
-            <strong>Issued on:</strong> {{ formatDate(item.issueDate) }}
-          </p>
-          <a *ngIf="item.certificateUrl" [href]="item.certificateUrl" target="_blank"
-            class="inline-block mt-6 px-6 py-3 rounded text-white transition" [ngClass]="{
-              'bg-blue-600 hover:bg-blue-700': i % 2 === 0,
-              'bg-pink-600 hover:bg-pink-700': i % 2 !== 0
-            }">
-            View
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Social Links -->
-  <section class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
-    <div class="max-w-7xl mx-auto px-4 py-12 flex justify-center items-center space-x-4">
-      <!-- GitHub -->
-      <a *ngIf="portfolioDetails?.contact?.gitHubUrl" [href]="portfolioDetails.contact.gitHubUrl" target="_blank"
-        class="text-gray-400 hover:text-white text-xl">
-        <i class="fa-brands fa-github"></i>
-      </a>
-
-      <!-- Twitter -->
-      <a *ngIf="portfolioDetails?.contact?.twitterUrl" [href]="portfolioDetails.contact.twitterUrl" target="_blank"
-        class="text-gray-400 hover:text-white text-xl">
-        <i class="fa-brands fa-twitter"></i>
-      </a>
-
-      <!-- LinkedIn -->
-      <a *ngIf="portfolioDetails?.contact?.linkedInUrl" [href]="portfolioDetails.contact.linkedInUrl" target="_blank"
-        class="text-gray-400 hover:text-white text-xl">
-        <i class="fa-brands fa-linkedin"></i>
-      </a>
-    </div>
-  </section>
-
-  <!-- Orb / Graphic Section -->
-  <section class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
-    <div class="max-w-7xl mx-auto px-4 py-20 flex justify-center items-center">
       <div
-        class="w-48 h-48 rounded-full bg-gradient-to-br from-purple-700 to-purple-500 flex items-center justify-center shadow-purple-500/50 shadow-2xl">
-        <span class="text-5xl">⏳</span>
+        class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"></div>
+    </div>
+
+    <!-- Project Cards -->
+    <div class="max-w-7xl mx-auto px-4 pb-20">
+      <div
+        class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
+        <div *ngFor="let project of portfolioDetails.projects"
+          class="flex flex-col justify-between bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:border-yellow-400 hover:shadow-yellow-300/30 transition-all duration-300 p-6 shadow-lg font-sans text-white space-y-4 w-full min-h-[430px]">
+
+          <!-- Title -->
+          <h4 class="text-xl font-bold text-yellow-300">{{ project.title }}</h4>
+
+          <!-- Description (no fixed scroll, grows naturally) -->
+          <div
+            class="text-sm text-gray-300 leading-relaxed max-h-32 overflow-hidden relative">
+            <div class="line-clamp-5">
+              {{ project.description }}
+            </div>
+          </div>
+
+          <!-- Tech and Duration -->
+          <div class="text-xs text-gray-400 space-y-1">
+            <p><strong>🛠 Tech Stack:</strong> {{ project.techStack }}</p>
+            <p><strong>⏳ Duration:</strong> {{ formatDate(project.startDate) }}
+              - {{ formatDate(project.endDate) }}</p>
+          </div>
+
+          <!-- Buttons -->
+          <div class="pt-2 flex gap-4 flex-wrap">
+            <a *ngIf="project.repoLink" [href]="project.repoLink"
+              target="_blank"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-blue-400 text-blue-300 hover:text-white hover:border-white transition-all duration-300">
+              <i class="fas fa-code-branch"></i> Source Code
+            </a>
+
+            <a *ngIf="project.liveLink" [href]="project.liveLink"
+              target="_blank"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-green-400 text-green-300 hover:text-white hover:border-white transition-all duration-300">
+              <i class="fas fa-external-link-alt"></i> Live Project
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certificates / Achievements -->
+  <section id="certificate"
+    class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
+    <!-- Section Header -->
+    <div
+      class="relative flex flex-col items-center justify-center py-16 overflow-hidden">
+      <div
+        class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"></div>
+      <div
+        class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"></div>
+
+      <h2 class="relative text-4xl md:text-5xl font-bold text-white mb-5 z-10">
+        🚀 Certification | Achievements
+      </h2>
+      <div
+        class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"></div>
+    </div>
+
+    <!-- Cards -->
+    <div class="max-w-7xl mx-auto px-4 py-20 space-y-16">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          *ngFor="let item of filteredItems; let index = index"
+          class="w-full h-64 perspective cursor-pointer"
+          (click)="toggleFlip(index)"
+          (mouseleave)="resetFlip(index)">
+
+          <div
+            class="relative w-full h-full transition-transform duration-700 transform-style-preserve-3d"
+            [class.rotate-y-180]="flippedIndex === index">
+
+            <!-- Front Side -->
+            <div
+              class="absolute inset-0 rounded-2xl overflow-hidden shadow-md backface-hidden">
+              <img
+                [src]="item.certificateUrl || 'images/placeholder-icon.png'"
+                alt="Certificate"
+                class="w-full h-full object-cover rounded-2xl" />
+            </div>
+
+            <!-- Back Side (Scroll + View Button Fixed) -->
+            <div
+              class="absolute inset-0 rounded-2xl transform rotate-y-180 backface-hidden flex flex-col justify-between p-6 bg-[#f9f6ef] text-gray-900 shadow-lg border border-gray-300 font-serif overflow-hidden">
+
+              <!-- Certificate Info -->
+              <div class="space-y-2 overflow-y-auto max-h-[12rem] pr-1"
+                style="scrollbar-width: thin; scrollbar-color: #cbd5e0 #edf2f7;">
+                <h3
+                  class="text-xl md:text-2xl font-bold leading-snug border-b border-gray-300 pb-2 text-[#2d0b68]">
+                  {{ item.title }}
+                </h3>
+
+                <p class="text-sm font-semibold text-gray-700">
+                  Issued by: {{ item.issuer }}
+                </p>
+
+                <p class="text-xs text-gray-500 italic">
+                  Date: {{ formatDate(item.issueDate) }}
+                </p>
+
+                <p
+                  class="text-sm text-gray-800 leading-relaxed tracking-wide text-justify">
+                  {{ item.description }}
+                </p>
+              </div>
+
+              <!-- View Certificate Link (always at bottom, inside card) -->
+              <a
+                *ngIf="item.certificateUrl"
+                [href]="item.certificateUrl"
+                target="_blank"
+                class="inline-flex gap-2 mt-3 text-gray-700 border border-gray-700 hover:border-gray-900 hover:text-gray-900 hover:bg-gray-100 px-4 py-2 rounded-full font-medium transition-colors duration-300 shadow-md max-w-fit">
+                <i class="fas fa-external-link-alt"></i>
+                View Certificate
+              </a>
+
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Contact Section -->
-  <section class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
-    <div class="max-w-7xl mx-auto px-4 py-16 text-center">
-      <h3 class="text-5xl font-bold text-gray-400 mb-4">Contact</h3>
-      <p class="text-gray-400 mb-4">
-        I'm currently looking to join a cross-functional team.
+  <section id="contact"
+    class="relative bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] text-white py-20 px-4 sm:px-10 md:px-16 lg:px-32 overflow-hidden">
+
+    <!-- Glowing Blobs -->
+    <div
+      class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-pink-500 opacity-20 blur-[120px] rounded-full animate-pulse"></div>
+    <div
+      class="absolute -bottom-20 right-1/4 w-80 h-80 bg-purple-700 opacity-20 blur-[100px] rounded-full animate-ping"></div>
+
+    <!-- Section Heading -->
+    <div class="relative z-10 text-center mb-16">
+      <h2
+        class="text-4xl md:text-5xl font-bold mb-4 tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400">
+        Get In Touch
+      </h2>
+      <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
+        Let’s build something amazing together — reach out for projects, ideas,
+        or collaborations!
       </p>
+    </div>
 
-      <div class="flex justify-center space-x-6">
-        <!-- GitHub -->
-        <a *ngIf="portfolioDetails?.contact?.gitHubUrl" [href]="portfolioDetails.contact.gitHubUrl" target="_blank"
-          class="hover:text-white text-gray-400">GitHub</a>
+    <!-- Grid: Left = Stylish Info, Right = Form -->
+    <div
+      class="relative z-10 grid md:grid-cols-2 gap-10 max-w-5xl mx-auto bg-white/5 backdrop-blur-lg border border-white/10 rounded-3xl shadow-2xl p-6 sm:p-10 md:p-12">
 
-        <!-- LinkedIn -->
-        <a *ngIf="portfolioDetails?.contact?.linkedInUrl" [href]="portfolioDetails.contact.linkedInUrl" target="_blank"
-          class="hover:text-white text-gray-400">LinkedIn</a>
+      <!-- Left Side: Centered Info Block -->
+      <div class="flex flex-col items-center mt-8 space-y-6 text-center">
 
-        <!-- Email -->
-        <a *ngIf="portfolioDetails?.user?.email" [href]="'mailto:' + portfolioDetails.user.email"
-          class="hover:text-white text-gray-400">Email : {{portfolioDetails.user.email}}</a>
+        <!-- Profile Image -->
+        <img
+          [src]="portfolioDetails.about.profileImageUrl || 'https://avatars.githubusercontent.com/u/67064476?v=4'"
+          alt="profile"
+          class="w-32 h-32 rounded-full border-4 border-pink-500 shadow-xl hover:scale-105 transition-transform duration-300" />
+
+        <!-- Contact Info -->
+        <div
+          class="flex gap-4 text-gray-300 w-full justify-center items-centers">
+          <div class="flex items-center gap-3">
+            <i class="fas fa-envelope text-pink-400 text-lg"></i>
+            <span>{{ portfolioDetails.user.email }}</span>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <i class="fas fa-map-marker-alt text-purple-400 text-lg"></i>
+            <span>{{ portfolioDetails.contact.address }}</span>
+          </div>
+        </div>
+
+        <!-- Social Icons with Hover Labels -->
+        <div class="flex gap-5 justify-center items-center mt-4">
+          <!-- GitHub -->
+          <div class="group relative">
+            <a [href]="portfolioDetails.contact.gitHubUrl" target="_blank"
+              class="text-gray-400 hover:text-white text-5xl transition duration-300">
+              <i class="fab fa-github"></i>
+            </a>
+            <div
+              class="absolute left-1/2 -translate-x-1/2 bottom-full mb-1 bg-black text-white text-sm px-3 py-1 rounded shadow-lg 
+                 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 
+                 transition-all duration-300 ease-in-out z-50">
+              GitHub
+            </div>
+          </div>
+
+          <!-- Twitter -->
+          <div class="group relative">
+            <a [href]="portfolioDetails.contact.twitterUrl" target="_blank"
+              class="text-gray-400 hover:text-white text-5xl transition duration-300">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <div
+              class="absolute left-1/2 -translate-x-1/2 bottom-full mb-1 bg-black text-white text-sm px-3 py-1 rounded shadow-lg 
+                 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 
+                 transition-all duration-300 ease-in-out z-50">
+              Twitter
+            </div>
+          </div>
+
+          <!-- LinkedIn -->
+          <div class="group relative">
+            <a [href]="portfolioDetails.contact.linkedInUrl" target="_blank"
+              class="text-gray-400 hover:text-white text-5xl transition duration-300">
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <div
+              class="absolute left-1/2 -translate-x-1/2 bottom-full mb-1 bg-black text-white text-sm px-3 py-1 rounded shadow-lg 
+                 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 
+                 transition-all duration-300 ease-in-out z-50">
+              LinkedIn
+            </div>
+          </div>
+        </div>
+
       </div>
+
+      <!-- Right Side: Contact Form -->
+      <form (submit)="sendMessage()" class="space-y-6">
+        <input [(ngModel)]="contactData.name" name="name" required
+          placeholder="Enter Your Name"
+          class="w-full bg-white/10 text-white placeholder-gray-400 p-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-500" />
+
+        <input [(ngModel)]="contactData.email" name="email" required
+          type="email" placeholder="Enter Your Email"
+          class="w-full bg-white/10 text-white placeholder-gray-400 p-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500" />
+
+        <textarea [(ngModel)]="contactData.message" name="message" required
+          placeholder="Write Your Message"
+          class="w-full bg-white/10 text-white placeholder-gray-400 p-4 h-36 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"></textarea>
+
+        <button type="submit"
+          class="w-full bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-2xl transition duration-300">
+          <i class="fas fa-paper-plane mr-2"></i> Send Message
+        </button>
+      </form>
     </div>
   </section>
 </div>
@@ -366,9 +444,11 @@
 
 <ng-template #loading>
   <div class="flex flex-col items-center justify-center min-h-[300px]">
-    <svg class="animate-spin h-10 w-10 text-blue-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+    <svg class="animate-spin h-10 w-10 text-blue-600 mb-4"
+      xmlns="http://www.w3.org/2000/svg" fill="none"
       viewBox="0 0 24 24">
-      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+        stroke-width="4"></circle>
       <path class="opacity-75" fill="currentColor"
         d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4l-3 3 3 3h-4a8 8 0 01-8-8z"></path>
     </svg>

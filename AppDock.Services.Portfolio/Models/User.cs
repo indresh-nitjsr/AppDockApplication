@@ -12,5 +12,7 @@ namespace AppDock.Services.PortfolioAPI.Models
         public string Name { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
+        [Required]
+        public string PortfolioId { get; set; }
     }
 }

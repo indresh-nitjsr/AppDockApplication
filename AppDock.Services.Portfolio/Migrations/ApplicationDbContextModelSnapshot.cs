@@ -107,6 +107,10 @@ namespace AppDock.Services.PortfolioAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PortfolioId");
@@ -164,8 +168,15 @@ namespace AppDock.Services.PortfolioAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("EmployementType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsCurrentlyWorking")
+                        .HasColumnType("bit");
 
                     b.Property<string>("PortfolioId")
                         .IsRequired()
@@ -244,6 +255,9 @@ namespace AppDock.Services.PortfolioAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("proficiency")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PortfolioId");
@@ -265,6 +279,10 @@ namespace AppDock.Services.PortfolioAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PortfolioId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

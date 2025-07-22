@@ -22,8 +22,6 @@ namespace AppDock.Services.PortfolioAPI.Controllers
             _authService = authService;
         }
 
-        //Portfolio CRUD start
-
         //create portfolio
         [HttpPost]
         public async Task<IActionResult> CreatePortfolio([FromBody] PortfolioDto portfolio)
@@ -42,6 +40,7 @@ namespace AppDock.Services.PortfolioAPI.Controllers
             return Ok(_responseDto);
         }
 
+        // update portfolio
         [HttpPut]
         public async Task<IActionResult> UpdatePortfolio([FromBody] PortfolioDto portfolioDto)
         {
@@ -58,12 +57,13 @@ namespace AppDock.Services.PortfolioAPI.Controllers
             _responseDto.Message = message;
             return Ok(_responseDto);
         }
-
-        [HttpGet("{userId}")]
+           
+        //get portfolio details
+        [HttpGet("{portfolioId}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetPortfolioDetailsAsync(string userId)
+        public async Task<IActionResult> GetPortfolioDetailsAsync(string portfolioId)
         {
-            PortfolioDetailsDto portfolioDetails = await _portfolioService.GetPortfolioDetailsAsync(userId);
+            PortfolioDetailsDto portfolioDetails = await _portfolioService.GetPortfolioDetailsAsync(portfolioId);
 
             if (portfolioDetails == null)
             {
@@ -76,6 +76,28 @@ namespace AppDock.Services.PortfolioAPI.Controllers
             {
                 _responseDto.isSuccess = false;
                 _responseDto.Message = "Portfolio ID is missing.";
+                return NotFound(_responseDto);
+            }
+
+            return Ok(portfolioDetails);
+        }
+
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetUserPortfolioDetailsAsync(string userId)
+        {
+            PortfolioDetailsDto portfolioDetails = await _portfolioService.GetUserPortfolioDetailsAsync(userId);
+
+            if (portfolioDetails == null)
+            {
+                _responseDto.isSuccess = false;
+                _responseDto.Message = "No portfolios found.";
+                return NotFound(_responseDto);
+            }
+
+            if (portfolioDetails.Id == null)
+            {
+                _responseDto.isSuccess = false;
+                _responseDto.Message = "Portfolio not found.";
                 return NotFound(_responseDto);
             }
 

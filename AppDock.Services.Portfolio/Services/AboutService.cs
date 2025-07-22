@@ -60,15 +60,15 @@ namespace AppDock.Services.PortfolioAPI.Services
             }
         }
 
-        public async Task<AboutDto> GetAboutAsync(string userId)
+        public async Task<AboutDto> GetAboutAsync(string portfolioId)
         {
-            if (string.IsNullOrWhiteSpace(userId))
+            if (string.IsNullOrWhiteSpace(portfolioId))
             {
-                throw new ArgumentException("Portfolio ID cannot be null or empty.", nameof(userId));
+                throw new ArgumentException("Portfolio ID cannot be null or empty.", nameof(portfolioId));
             }
 
             var about = await _context.about
-                .FirstOrDefaultAsync(a => a.UserId == userId);
+                .FirstOrDefaultAsync(a => a.PortfolioId == portfolioId);
 
             var aboutDto = _mapper.Map<AboutDto>(about);
             return aboutDto;

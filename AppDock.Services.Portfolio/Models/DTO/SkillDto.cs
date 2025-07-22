@@ -7,5 +7,6 @@ namespace AppDock.Services.PortfolioAPI.Models.DTO
         public string SkillId { get; set; }
         public string PortfolioId { get; set; }
         public string Skills { get; set; } = "";
+        public int Proficiency { get; set; }
     }
 }

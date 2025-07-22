@@ -1,26 +1,637 @@
 <app-header></app-header>
-<div class="font-sans">
 
-  <section id="experience" class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
-    <!-- Section Separator -->
-    <div class="relative flex flex-col items-center justify-center py-16 overflow-hidden">
-      <!-- Blurred glow background behind text -->
-      <div class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"></div>
-      <div class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"></div>
+<div *ngIf="isUserLoggedIn"
+  class="mt-16 relative font-sans text-white bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full min-h-screen overflow-x-hidden">
 
-      <!-- Section Title -->
-      <h2 class="relative text-4xl md:text-5xl font-bold text-white mb-5 z-10">
-        🚀 Work Experience
-      </h2>
+  <!-- Global Glow Effects -->
+  <div
+    class="absolute w-96 h-96 bg-pink-400 opacity-20 rounded-full blur-3xl top-[-100px] left-[-100px] z-0"></div>
+  <div
+    class="absolute w-96 h-96 bg-purple-600 opacity-20 rounded-full blur-3xl bottom-[-100px] right-[-100px] z-0"></div>
 
-      <!-- Gradient underline -->
-      <div class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"></div>
+  <!-- About Section -->
+  <section
+    class="relative bg-white/5 border border-white/10 backdrop-blur-xl shadow-lg  mx-auto overflow-hidden">
+    <!-- Background Glow -->
+    <div
+      class="absolute w-80 h-80 bg-blue-500/20 rounded-full blur-3xl -top-20 -left-20 z-0"></div>
 
-      <!-- Optional tagline -->
-      <p class="text-gray-400 text-center max-w-md px-4 z-10">
-        Discover my journey and impactful milestones in various companies and
-        roles.
+    <!-- Content Wrapper -->
+    <div class="relative z-10 space-y-6 text-center p-10">
+      <!-- Header -->
+      <div class="flex justify-between items-center">
+        <h2 class="text-3xl font-bold text-blue-300">👤 About Me</h2>
+        <div class="flex gap-3">
+          <button
+            (click)="openModal('about', portfolioDetails.about)"
+            class="btn-add text-blue-300 border border-blue-300 hover:text-white hover:border-white px-4 py-1 rounded-md text-sm transition">
+            <i class="fas fa-pen mr-1"></i> Edit
+          </button>
+        </div>
+      </div>
+
+      <!-- Profile Image -->
+      <div class="flex justify-center">
+        <img
+          [src]="portfolioDetails.about.profileImageUrl || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'"
+          alt="Profile Photo"
+          class="w-36 h-36 rounded-full object-cover ring-4 ring-blue-400 hover:scale-105 transition duration-300 shadow-lg" />
+      </div>
+
+      <!-- Name / Email / Contact Row -->
+      <div
+        class="flex flex-wrap justify-center gap-6 text-blue-200 font-medium text-sm sm:text-base">
+        <div class="flex items-center gap-2">
+          <i class="fas fa-user text-blue-400"></i>
+          {{ portfolioDetails.user.name || 'Your Name' }}
+        </div>
+        <div *ngIf="portfolioDetails.user.email"
+          class="flex items-center gap-2">
+          <i class="fas fa-envelope text-blue-400"></i>
+          {{ portfolioDetails.user.email }}
+        </div>
+        <div *ngIf="portfolioDetails.user.phoneNumber"
+          class="flex items-center gap-2">
+          <i class="fas fa-phone text-blue-400"></i>
+          {{ portfolioDetails.user.phoneNumber }}
+        </div>
+        <div *ngIf="portfolioDetails.user.phoneNumber"
+          class="flex items-center gap-2">
+          <i class="fa-solid fa-location-dot text-blue-400"></i>
+          {{ portfolioDetails.contact.address }}
+        </div>
+      </div>
+
+      <!-- Description -->
+      <p
+        class="leading-relaxed text-blue-100 text-sm sm:text-base max-w-3xl mx-auto">
+        {{ portfolioDetails.about.description }}
       </p>
+
+      <!-- Social + Resume -->
+      <div class="flex justify-center flex-wrap gap-4 pt-4">
+        <!-- Resume -->
+        <a
+          [href]="portfolioDetails.contact.twitterUrl"
+          download
+          class="bg-blue-500 text-white px-5 py-2 rounded-full text-sm hover:bg-blue-600 transition flex items-center gap-2">
+          <i class="fas fa-download"></i> Resume
+        </a>
+
+        <!-- LinkedIn -->
+        <a
+          [href]="portfolioDetails.contact.linkedInUrl"
+          target="_blank"
+          class="text-blue-400 text-2xl hover:text-white transition">
+          <i class="fab fa-linkedin"></i>
+        </a>
+
+        <!-- GitHub -->
+        <a
+          [href]="portfolioDetails.contact.gitHubUrl"
+          target="_blank"
+          class="text-blue-400 text-2xl hover:text-white transition">
+          <i class="fab fa-github"></i>
+        </a>
+
+        <!-- Email Icon -->
+        <a
+          *ngIf="portfolioDetails.user.email"
+          href="mailto:{{ portfolioDetails.user.email }}"
+          class="text-blue-400 text-2xl hover:text-white transition">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </div>
     </div>
   </section>
+
+  <!-- Content Wrapper -->
+  <div class="max-w-6xl mx-auto px-6 py-12 space-y-16">
+    <!-- Experience Section -->
+    <section
+      class="relative bg-gradient-to-br from-black via-[#0f172a] to-gray-900 p-8 rounded-3xl shadow-2xl ring-1 ring-green-400/30">
+
+      <!-- Glowing Blur Effect -->
+      <div
+        class="absolute w-72 h-72 bg-green-500 opacity-30 rounded-full blur-3xl top-[-80px] left-[-60px] z-0"></div>
+
+      <!-- Section Header -->
+      <div class="relative z-10 flex justify-between items-center mb-10">
+        <h2 class="text-4xl font-extrabold text-green-300 tracking-wide">💼
+          Experience</h2>
+        <button (click)="openModal('experience')"
+          class="px-4 py-2 border border-green-300 text-green-300 hover:text-white hover:border-white rounded-full transition-all duration-300 hover:bg-green-400/10">
+          <i class="fas fa-plus mr-2"></i> Add
+        </button>
+      </div>
+
+      <!-- Grouped by Company -->
+      <div class="relative z-10 space-y-12">
+        <div *ngFor="let company of (groupExperienceByCompany | keyvalue)">
+          <!-- Company Header -->
+          <div class="mb-4">
+            <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+              <i class="fas fa-building text-green-400"></i> {{ company.key }}
+            </h3>
+            <div class="h-1 w-20 bg-green-400 mt-2 rounded-full"></div>
+          </div>
+
+          <!-- Experience Cards -->
+          <div class="grid md:grid-cols-2 gap-6">
+            <div *ngFor="let exp of company.value"
+              class="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-green-500/20 hover:bg-white/20 transition duration-300 shadow-lg relative group">
+
+              <!-- Edit Button -->
+              <button (click)="openModal('experience', exp)"
+                class="absolute top-4 right-4 px-3 py-1 text-xs font-medium text-green-200 border border-green-200 rounded-full group-hover:bg-green-500 group-hover:text-white transition">
+                <i class="fas fa-pen mr-1"></i>Edit
+              </button>
+
+              <h4 class="text-xl font-semibold text-purple-200">{{ exp.title
+                }}</h4>
+              <p class="text-purple-300 text-sm italic">{{ exp.startDate }} – {{
+                exp.endDate }}</p>
+              <p class="text-purple-100 mt-3 leading-relaxed">{{ exp.description
+                }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section
+      class="relative bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-xl hover:ring-2 hover:ring-pink-500/40">
+      <div class="relative z-10 flex justify-between items-center mb-6">
+        <h2 class="text-4xl font-bold text-pink-400">🛠️ Projects</h2>
+        <button (click)="openModal('project')"
+          class="btn-add text-pink-400 border rounded-full px-4 py-2  border-pink-400 hover:text-pink-500 hover:border-pink-500 ">
+          <i class="fas fa-plus"></i> Add
+        </button>
+      </div>
+      <div class="relative z-10 space-y-6">
+        <div *ngFor="let proj of portfolioDetails.projects; let i = index"
+          class="relative bg-white/5 p-6 rounded-2xl backdrop-blur-md hover:bg-white/10 transition shadow-lg border border-white/10">
+          <!-- Edit Button -->
+          <button (click)="openModal('project', proj)"
+            class="btn-edit text-pink-400 border text-xs font-medium px-3 py-1 rounded-full border-pink-400 hover:text-white hover:border-white hover:bg-pink-400 absolute top-4 right-4">
+            <i class="fas fa-pen"></i> Edit
+          </button>
+          <h3 class="text-2xl font-bold text-purple-200 mb-2">{{ proj.title
+            }}</h3>
+          <p class="text-purple-300 mb-2">{{ proj.description }}</p>
+          <p class="text-sm text-gray-300"><span
+              class="font-medium text-purple-400">Role:</span> {{ proj.role
+            }}</p>
+          <p class="text-sm text-gray-300"><span
+              class="font-medium text-purple-400">Tech Stack:</span> {{
+            proj.techStack }}</p>
+          <p class="text-sm text-gray-400"><span
+              class="font-medium text-purple-400">Duration:</span> {{
+            proj.startDate }} – {{ proj.endDate }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certificates Section -->
+    <section
+      class="relative bg-white/5 backdrop-blur-md p-8 rounded-2xl shadow-xl hover:ring-2 hover:ring-yellow-400/40">
+      <div
+        class="absolute w-72 h-72 bg-yellow-400 opacity-20 rounded-full blur-3xl top-0 left-0"></div>
+      <div
+        class="absolute w-72 h-72 bg-pink-500 opacity-20 rounded-full blur-3xl bottom-0 right-0"></div>
+      <div class="relative z-10 flex justify-between items-center mb-8">
+        <h2 class="text-4xl font-bold text-yellow-300">📜 Certificates</h2>
+        <button (click)="openModal('certificate')"
+          class="btn-add px-4 py-2 rounded-full text-yellow-300 border border-yellow-300 hover:text-white hover:border-white">
+          <i class="fas fa-plus"></i> Add
+        </button>
+      </div>
+      <div class="relative z-10 space-y-6">
+        <div *ngFor="let cert of portfolioDetails.certificates; let i = index"
+          class="relative bg-white/10 p-6 rounded-2xl backdrop-blur-lg hover:bg-white/20 transition duration-300 shadow-lg">
+          <button (click)="openModal('certificate', cert)"
+            class="btn-edit text-yellow-400 border text-xs font-medium px-3 py-1 rounded-full border-yellow-400 hover:text-white hover:border-white hover:bg-yellow-400 absolute top-4 right-4">
+            <i class="fas fa-pen"></i> Edit
+          </button>
+          <div class="space-y-2">
+            <h3 class="text-2xl font-bold text-purple-200">{{ cert.title }}</h3>
+            <p class="text-sm text-purple-400">{{ cert.description }}</p>
+            <p class="text-sm text-purple-500 font-medium">Issuer: {{
+              cert.issuer }}</p>
+            <p class="text-xs text-purple-600 italic">{{ cert.issueDate }}</p>
+            <a [href]="cert.certificateUrl" target="_blank"
+              class="inline-flex items-center gap-2 mt-3 text-yellow-300 border border-yellow-300 hover:border-white hover:text-white px-4 py-2 rounded-full font-medium transition duration-300 hover:scale-105 shadow-sm">
+              <i class="fas fa-external-link-alt"></i> View Certificate
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section
+      class="relative bg-white/5 backdrop-blur-md p-8 rounded-2xl shadow-xl hover:ring-2 hover:ring-cyan-400/40">
+      <div
+        class="absolute w-72 h-72 bg-cyan-400 opacity-20 rounded-full blur-3xl top-0 left-0"></div>
+      <div
+        class="absolute w-72 h-72 bg-indigo-500 opacity-20 rounded-full blur-3xl bottom-0 right-0"></div>
+      <div class="relative z-10 flex justify-between items-center mb-8">
+        <h2 class="text-4xl font-bold text-cyan-300">🛠️ Skills</h2>
+        <button (click)="openModal('skill')"
+          class="btn-add px-4 py-2 rounded-full text-cyan-300 border border-cyan-300 hover:text-white hover:border-white">
+          <i class="fas fa-plus"></i> Add
+        </button>
+      </div>
+      <div class="relative z-10 space-y-6">
+        <div *ngFor="let skill of portfolioDetails.skills"
+          class="relative bg-white/10 p-6 rounded-2xl backdrop-blur-lg hover:bg-white/20 transition duration-300 shadow-lg">
+          <button (click)="openModal('skill', skill)"
+            class="btn-edit text-cyan-400 border text-xs font-medium px-3 py-1 rounded-full border-cyan-400 hover:text-white hover:border-white hover:bg-cyan-400 absolute top-4 right-4">
+            <i class="fas fa-pen"></i> Edit
+          </button>
+          <div class="space-y-2">
+            <h3 class="text-2xl font-bold text-purple-200">{{ skill.skills
+              }}</h3>
+            <div class="w-full bg-purple-200 rounded-full h-2.5">
+              <div class="bg-purple-600 h-2.5 rounded-full"
+                [style.width.%]="skill.proficiency"></div>
+            </div>
+            <p class="text-sm text-yellow-400 font-bold">Proficiency: {{
+              skill.proficiency
+              }}%</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section with Icons and Tooltips -->
+    <section
+      class="relative bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] p-8 rounded-2xl shadow-2xl mt-10 text-white overflow-hidden">
+
+      <!-- Glowing Background Blobs -->
+      <div
+        class="absolute w-72 h-72 bg-pink-500 opacity-20 rounded-full blur-3xl -top-16 -left-16"></div>
+      <div
+        class="absolute w-72 h-72 bg-blue-600 opacity-20 rounded-full blur-3xl -bottom-16 -right-16"></div>
+
+      <!-- Header -->
+      <div class="relative z-10 flex justify-between items-center mb-6">
+        <h2 class="text-4xl font-bold text-pink-300 flex items-center gap-2">
+          <i class="fas fa-address-book"></i> Contact
+        </h2>
+        <button (click)="openModal('contact', portfolioDetails.contact)"
+          class="px-4 py-2 text-sm font-medium rounded-full text-pink-300 border border-pink-300 hover:text-white hover:border-white transition-all duration-300">
+          <i class="fas fa-pen mr-1"></i> Edit
+        </button>
+      </div>
+
+      <!-- Social Icons -->
+      <div class="relative z-10 flex items-center gap-6 mt-4">
+        <p *ngIf="portfolioDetails.contact.address"><i
+            class="fas fa-map-marker-alt text-pink-300 mr-2"></i>{{
+          portfolioDetails.contact.address }}</p>
+        <!-- LinkedIn -->
+        <a *ngIf="portfolioDetails.contact.linkedInUrl"
+          [href]="portfolioDetails.contact.linkedInUrl" target="_blank"
+          class="group relative">
+          <i
+            class="fab fa-linkedin text-2xl text-blue-400 hover:text-white transition-all"></i>
+          <span
+            class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-1 text-xs bg-gray-800 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+            LinkedIn
+          </span>
+        </a>
+
+        <!-- GitHub -->
+        <a *ngIf="portfolioDetails.contact.gitHubUrl"
+          [href]="portfolioDetails.contact.gitHubUrl" target="_blank"
+          class="group relative">
+          <i class="fab fa-github text-2xl hover:text-white transition-all"></i>
+          <span
+            class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-1 text-xs bg-gray-800 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+            GitHub
+          </span>
+        </a>
+
+        <!-- Twitter -->
+        <a *ngIf="portfolioDetails.contact.twitterUrl"
+          [href]="portfolioDetails.contact.twitterUrl" target="_blank"
+          class="group relative">
+          <i
+            class="fab fa-twitter text-2xl text-sky-400 hover:text-white transition-all"></i>
+          <span
+            class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-1 text-xs bg-gray-800 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+            Twitter
+          </span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Modal Backdrop -->
+  <div *ngIf="modalOpen"
+    class="fixed inset-0 z-50 bg-black/60 flex items-center justify-center px-4 backdrop-blur-sm">
+    <!-- Modal Box -->
+    <div
+      class="bg-gradient-to-br from-[#1a002d] to-[#2d0b68] text-white w-full max-w-3xl rounded-2xl shadow-2xl border border-purple-500 flex flex-col max-h-[90vh] overflow-hidden">
+
+      <!-- Header -->
+      <div class="px-6 py-4 border-b border-purple-600 bg-black/20">
+        <h2 class="text-xl font-semibold text-center">
+          {{ currentEditIndex !== null ? 'Update' : 'Add' }} {{ sectionType |
+          titlecase }}
+        </h2>
+      </div>
+
+      <!-- Scrollable Body -->
+      <div class="overflow-y-auto px-6 py-4 space-y-1">
+        <!-- About Section -->
+        <ng-container *ngIf="sectionType === 'about'">
+          <div>
+            <label class="block mb-1 text-sm text-gray-300">Heading</label>
+            <input [(ngModel)]="aboutObj.heading"
+              class="w-full p-3 rounded-lg bg-white/10 border border-purple-500 placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="Expert in .NET, Angular, etc." />
+          </div>
+
+          <div>
+            <label class="block mb-1 text-sm text-gray-300">Profile Image
+              URL</label>
+            <input [(ngModel)]="aboutObj.profileImageUrl"
+              class="w-full p-3 rounded-lg bg-white/10 border border-purple-500 placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="Paste image URL here" />
+          </div>
+
+          <div>
+            <label class="block mb-1 text-sm text-gray-300">Description</label>
+            <textarea [(ngModel)]="aboutObj.description"
+              class="w-full p-3 rounded-lg bg-white/10 border border-purple-500 min-h-[100px] placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="Tell us about yourself..."></textarea>
+          </div>
+        </ng-container>
+
+        <!-- Experience Section -->
+        <ng-container *ngIf="sectionType === 'experience'">
+          <div>
+            <label for="heading" class="block mb-1 text-gray-300">Title</label>
+            <input [(ngModel)]="experienceObj.title" placeholder="Title"
+              name="title"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border" />
+          </div>
+          <div>
+            <label for="heading" class="block mb-1 text-gray-300">Company or
+              Organisation</label>
+            <input [(ngModel)]="experienceObj.companyName" name="companyName"
+              placeholder="Company Name"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border" />
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-300 mb-2">Employment Type</label>
+            <select
+              [(ngModel)]="experienceObj.employementType"
+              name="employmentType"
+              [ngClass]="{
+                'text-gray-400': !experienceObj.employementType,
+                'text-gray-900': experienceObj.employementType
+              }"
+              class="placeholder-gray-400 w-full px-4 py-2 bg-white/10 border border-blue-500/20 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value disabled
+                [selected]="!experienceObj.employementType">
+                Select employment type
+              </option>
+              <option class="bg-white/10 text-black"
+                *ngFor="let type of employmentTypes" [value]="type">
+                {{ type }}
+              </option>
+            </select>
+          </div>
+          <div class="flex gap-3">
+            <input type="checkbox"
+              [(ngModel)]="experienceObj.isCurrentlyWorking"
+              name="isCurrentlyWorking"
+              class="accent-pink-600" />
+            <label for="heading" class="block mb-1 text-gray-300">is currently
+              working</label>
+          </div>
+          <div>
+            <label for="heading" class="block mb-1 text-gray-300">Start
+              Date</label>
+            <input [(ngModel)]="experienceObj.startDate" name="startDate"
+              type="date"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border" />
+          </div>
+          <div>
+            <label for="heading" class="block mb-1 text-gray-300">End
+              Date</label>
+            <input [(ngModel)]="experienceObj.endDate" name="endDate"
+              type="date"
+              [disabled]="experienceObj.isCurrentlyWorking"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border" />
+          </div>
+          <div>
+            <label for="heading"
+              class="block mb-1 text-gray-300">Description</label>
+            <textarea [(ngModel)]="experienceObj.description" name="description"
+              placeholder="Description"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border min-h-[100px]"></textarea>
+          </div>
+        </ng-container>
+
+        <!-- Project Section -->
+        <ng-container *ngIf="sectionType === 'project'">
+          <div>
+            <label for="heading" class="block mb-1 text-gray-300">Title</label>
+            <input [(ngModel)]="projectObj.title" name="title"
+              placeholder="Title"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border" />
+          </div>
+          <div>
+            <label for="heading"
+              class="block mb-1 text-gray-300">Description</label>
+            <textarea [(ngModel)]="projectObj.description" name="description"
+              placeholder="Description"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border min-h-[100px]"></textarea>
+          </div>
+          <div>
+            <label for="heading" class="block mb-1 text-gray-300">Start
+              Date</label>
+            <input [(ngModel)]="projectObj.startDate" name="startDate"
+              type="date"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border" />
+          </div>
+          <div>
+            <label for="heading" class="block mb-1 text-gray-300">End
+              Date</label>
+            <input [(ngModel)]="projectObj.endDate" name="endDate" type="date"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border" />
+          </div>
+          <div>
+            <label for="heading" class="block mb-1 text-gray-300">Tech
+              Stack</label>
+            <input [(ngModel)]="projectObj.techStack" name="techStack"
+              placeholder="Tech Stack (comma-separated)"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border" />
+          </div>
+          <div>
+            <label for="heading" class="block mb-1 text-gray-300">Your Role in
+              Project</label>
+            <input [(ngModel)]="projectObj.role"
+              placeholder="Your Role in this project"
+              name="role"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border" />
+          </div>
+          <div>
+            <label for="heading" class="block mb-1 text-gray-300">Live
+              Link</label>
+            <input [(ngModel)]="projectObj.liveLink" placeholder="Live Link"
+              name="liveLink"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border" />
+          </div>
+          <div>
+            <label for="heading" class="block mb-1 text-gray-300">Repository
+              Link</label>
+            <input [(ngModel)]="projectObj.repoLink"
+              placeholder="Repository Link"
+              name="repoLink"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border" />
+          </div>
+        </ng-container>
+
+        <!-- Certificate Section -->
+        <ng-container *ngIf="sectionType === 'certificate'">
+          <div>
+            <label for="heading" class="block mb-1 text-gray-300">Title</label>
+            <input [(ngModel)]="certificateObj.title" placeholder="Title"
+              name="title"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border" />
+          </div>
+          <div>
+            <label for="heading"
+              class="block mb-1 text-gray-300">Description</label>
+            <textarea [(ngModel)]="certificateObj.description"
+              name="description"
+              placeholder="Description"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border min-h-[100px]"></textarea>
+          </div>
+          <div>
+            <label for="heading" class="block mb-1 text-gray-300">Issued
+              Date</label>
+            <input [(ngModel)]="certificateObj.issueDate" type="date"
+              name="issueDate"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border" />
+          </div>
+          <div>
+            <label for="heading" class="block mb-1 text-gray-300">Expiry
+              Date</label>
+            <input [(ngModel)]="certificateObj.expiryDate" type="date"
+              name="expiryDate"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border" />
+          </div>
+          <div>
+            <label for="heading" class="block mb-1 text-gray-300">Issuer</label>
+            <input [(ngModel)]="certificateObj.issuer"
+              placeholder="Eg. Microsoft"
+              name="issuer"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border" />
+          </div>
+          <div>
+            <label for="heading"
+              class="block mb-1 text-gray-300">certificateUrl</label>
+            <input [(ngModel)]="certificateObj.certificateUrl"
+              name="certificateUrl"
+              placeholder="Certificate Image URL"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border" />
+          </div>
+          <div class="mb-4">
+            <label class="block text-white mb-2">Certificate Type</label>
+            <select
+              [(ngModel)]="certificateObj.type"
+              name="employmentType"
+              [ngClass]="{
+                'text-gray-400': !certificateObj.type,
+                'text-gray-900': certificateObj.type
+              }"
+              class="placeholder-gray-400 w-full mb-3 p-2 rounded bg-white/10 border border-white text-white">
+              <option value disabled
+                [selected]="!certificateObj.type">
+                Select certificate type
+              </option>
+              <option class="bg-white/10 text-black"
+                *ngFor="let type of certificateTypes" [value]="type">
+                {{ type }}
+              </option>
+            </select>
+          </div>
+
+        </ng-container>
+
+        <!-- Skill Section -->
+        <ng-container *ngIf="sectionType === 'skill'">
+          <div>
+            <label class="block mb-1 text-sm text-gray-300">Skill(s)</label>
+            <input [(ngModel)]="skillObj.skills"
+              class="w-full p-3 rounded-lg bg-white/10 border border-purple-500 placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="e.g. Angular, .NET, Python" />
+          </div>
+
+          <div>
+            <label class="block mb-1 text-sm text-gray-300">Proficiency
+              (0–100)</label>
+            <input type="number" [(ngModel)]="skillObj.proficiency" min="0"
+              max="100"
+              class="w-full p-3 rounded-lg bg-white/10 border border-purple-500 placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="Enter proficiency percentage" />
+          </div>
+        </ng-container>
+
+        <!-- Contact Section -->
+        <ng-container *ngIf="sectionType === 'contact'">
+          <div>
+            <label class="block mb-1 text-sm text-gray-300">Address</label>
+            <input [(ngModel)]="contactObj.address" name="address"
+              placeholder="Enter your address"
+              class="w-full p-3 rounded-lg bg-white/10 border border-purple-500 placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 mb-4" />
+          </div>
+
+          <div>
+            <label class="block mb-1 text-sm text-gray-300">LinkedIn URL</label>
+            <input [(ngModel)]="contactObj.linkedInUrl" name="linkedInUrl"
+              placeholder="https://linkedin.com/in/username"
+              class="w-full p-3 rounded-lg bg-white/10 border border-purple-500 placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 mb-4" />
+          </div>
+
+          <div>
+            <label class="block mb-1 text-sm text-gray-300">GitHub URL</label>
+            <input [(ngModel)]="contactObj.gitHubUrl" name="gitHubUrl"
+              placeholder="https://github.com/username"
+              class="w-full p-3 rounded-lg bg-white/10 border border-purple-500 placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 mb-4" />
+          </div>
+
+          <div>
+            <label class="block mb-1 text-sm text-gray-300">Twitter URL</label>
+            <input [(ngModel)]="contactObj.twitterUrl" name="twitterUrl"
+              placeholder="https://twitter.com/username"
+              class="w-full p-3 rounded-lg bg-white/10 border border-purple-500 placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 mb-4" />
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- Footer: Action -->
+      <div
+        class="px-6 py-4 border-t border-purple-600 bg-black/20 flex justify-end gap-4">
+        <button (click)="closeModal()"
+          class="px-5 py-2 rounded-lg border border-gray-400 text-gray-300 hover:bg-white/10 transition">
+          Cancel
+        </button>
+        <button (click)="saveEntry()"
+          class="px-5 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 transition font-semibold">
+          Save
+        </button>
+      </div>
+
+    </div>
+  </div>
+
 </div>

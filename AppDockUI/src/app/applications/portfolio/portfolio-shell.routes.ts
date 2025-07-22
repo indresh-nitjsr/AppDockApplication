@@ -8,6 +8,6 @@ import { Profile } from './pages/profile/profile';
 export const PORTFOLIO_ROUTES: Routes = [
   { path: '', component: Preview },
   { path: 'create', canActivate: [AuthGuard], component: Portfolio },
-  { path: 'portfolio-details', component: PortfolioDetails },
+  { path: 'portfolio-details/:portfolioId', component: PortfolioDetails },
   { path: 'profile', component: Profile },
 ];

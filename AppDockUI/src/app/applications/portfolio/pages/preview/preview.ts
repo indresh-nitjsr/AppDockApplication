@@ -23,13 +23,15 @@ export class Preview {
 
     if (user) {
       const userId = JSON.parse(user).userId;
-      this.portfolioService.getUserPortfolio(userId).subscribe(
+      this.portfolioService.getUserPortfolioByUserId(userId).subscribe(
         (portfolio) => {
           this.portfolioDetails = PortfolioDetails.fromJson(portfolio);
           console.log('Portfolio details:', this.portfolioDetails);
 
           if (this.portfolioDetails && this.portfolioDetails.id) {
-            this.router.navigate(['services/portfolio/portfolio-details']);
+            this.router.navigate([
+              `services/portfolio/portfolio-details/${this.portfolioDetails.id}`,
+            ]);
           } else if (token && user) {
             this.router.navigate(['services/portfolio/create']);
           } else {

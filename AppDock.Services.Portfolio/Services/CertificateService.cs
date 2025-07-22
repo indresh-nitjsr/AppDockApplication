@@ -68,7 +68,8 @@ namespace AppDock.Services.PortfolioAPI.Services
                 IssueDate = certificate.IssueDate,
                 ExpiryDate = certificate.ExpiryDate,
                 Description = certificate.Description,
-                CertificateUrl = certificate.CertificateUrl
+                CertificateUrl = certificate.CertificateUrl,
+                type = certificate.type
             };
 
             return dto;
@@ -109,6 +110,7 @@ namespace AppDock.Services.PortfolioAPI.Services
             certificate.ExpiryDate = certificateDto.ExpiryDate;
             certificate.Description = certificateDto.Description;
             certificate.CertificateUrl = certificateDto.CertificateUrl;
+            certificate.type = certificateDto.type;
 
             _context.certificates.Update(certificate);
             await _context.SaveChangesAsync();

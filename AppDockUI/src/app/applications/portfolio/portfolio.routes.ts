@@ -7,5 +7,5 @@ import { AuthGuard } from '../../core/gaurds/auth-guard';
 export const PORTFOLIO_ROUTES: Routes = [
   { path: '', component: Preview },
   { path: 'create', canActivate: [AuthGuard], component: Portfolio },
-  { path: 'portfolio-details', component: PortfolioDetails },
+  { path: 'portfolio-details/:portfolioId', component: PortfolioDetails },
 ];

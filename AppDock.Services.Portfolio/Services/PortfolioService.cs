@@ -54,19 +54,6 @@ namespace AppDock.Services.PortfolioAPI.Services
                 return "Failed : User not found or user ID missing.";
             }
 
-            // Check if user already exists in users table
-            var existingUser = await _context.users.FindAsync(user.userId);
-            if (existingUser == null)
-            {
-                await _context.users.AddAsync(new User
-                {
-                    userId = user.userId,
-                    Email = user.Email,
-                    Name = user.Name,
-                    PhoneNumber = user.PhoneNumber
-                });
-            }
-
             // Check if portfolio already exists for user
             var existingPortfolio = await _context.portfolios
                 .FirstOrDefaultAsync(p => p.UserId == user.userId);
@@ -95,6 +82,20 @@ namespace AppDock.Services.PortfolioAPI.Services
                 Role = portfolioDto.Role,
                 DOB = portfolioDto.DOB,
             };
+
+            // Check if user already exists in users table
+            var existingUser = await _context.users.FindAsync(user.userId);
+            if (existingUser == null)
+            {
+                await _context.users.AddAsync(new User
+                {
+                    userId = user.userId,
+                    Email = user.Email,
+                    Name = user.Name,
+                    PhoneNumber = user.PhoneNumber,
+                    PortfolioId = userPortfolio.Id
+                });
+            }
 
             try
             {
@@ -137,27 +138,26 @@ namespace AppDock.Services.PortfolioAPI.Services
             }
         }
 
-        public async Task<PortfolioDetailsDto> GetPortfolioDetailsAsync(string userId)
+        public async Task<PortfolioDetailsDto> GetPortfolioDetailsAsync(string portfolioId)
         {
-            //var user = await _authService.GetUserByEmailAsync(email);
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrEmpty(portfolioId))
                 return null;
 
-            UserDto user = GetUserById(userId);
+            UserDto user = GetUserByPortfolioId(portfolioId);
             if (user == null)
                 return null;
 
-            // Find the portfolio by user email (UserId)
-            UserPortfolio portfolio = await _context.portfolios.FirstOrDefaultAsync(u => u.UserId == userId);
+            // Find the user portfolio by portfolioId
+            UserPortfolio portfolio = await _context.portfolios.FirstOrDefaultAsync(u => u.Id == portfolioId);
             if (portfolio == null)
                 return null;
 
-            var about = await _aboutService.GetAboutAsync(user.userId);
+            var about = await _aboutService.GetAboutAsync(portfolio.Id);
             var projects = await _projectService.GetAllProjectsAsync(portfolio.Id);
             var certificates = await _certificateService.GetCertificatesAsync(portfolio.Id);
             var skills = await _skillService.GetAllSkillAsync(portfolio.Id);
             var experiences = await _experienceService.GetAllExperienceAsync(portfolio.Id);
-            var contact = await _contactService.GetContactAsync(user.userId);
+            var contact = await _contactService.GetContactAsync(portfolio.Id);
 
             PortfolioDetailsDto portfolioDetails = new PortfolioDetailsDto();
             portfolioDetails.Id = portfolio.Id;
@@ -173,7 +173,59 @@ namespace AppDock.Services.PortfolioAPI.Services
             return portfolioDetails;
         }
 
-        public UserDto GetUserById(string userId)
+        public async Task<PortfolioDetailsDto> GetUserPortfolioDetailsAsync(string userId)
+        {
+            if (string.IsNullOrEmpty(userId))
+                return null;
+
+            UserDto user = GetUserByUserId(userId);
+            if (user == null)
+                return null;
+
+            // Find the user portfolio by portfolioId
+            UserPortfolio portfolio = await _context.portfolios.FirstOrDefaultAsync(u => u.UserId == userId);
+            if (portfolio == null)
+                return null;
+
+            var about = await _aboutService.GetAboutAsync(portfolio.Id);
+            var projects = await _projectService.GetAllProjectsAsync(portfolio.Id);
+            var certificates = await _certificateService.GetCertificatesAsync(portfolio.Id);
+            var skills = await _skillService.GetAllSkillAsync(portfolio.Id);
+            var experiences = await _experienceService.GetAllExperienceAsync(portfolio.Id);
+            var contact = await _contactService.GetContactAsync(portfolio.Id);
+
+            PortfolioDetailsDto portfolioDetails = new PortfolioDetailsDto();
+            portfolioDetails.Id = portfolio.Id;
+            portfolioDetails.user = user;
+            portfolioDetails.Role = portfolio.Role;
+            portfolioDetails.DOB = portfolio.DOB;
+            portfolioDetails.About = about;
+            portfolioDetails.Projects = projects;
+            portfolioDetails.Certificates = certificates;
+            portfolioDetails.Skills = skills;
+            portfolioDetails.Experiences = experiences;
+            portfolioDetails.Contact = contact;
+            return portfolioDetails;
+        }
+
+        public UserDto GetUserByPortfolioId(string portfolioId)
+        {
+            User user = _context.users.FirstOrDefault(u => u.PortfolioId == portfolioId);
+            if (user == null)
+            {
+                return null; // or throw an exception if preferred
+            }
+            UserDto userDto = new UserDto
+            {
+                userId = user.userId,
+                Email = user.Email,
+                Name = user.Name,
+                PhoneNumber = user.PhoneNumber
+            };
+            return userDto;
+        }
+
+        public UserDto GetUserByUserId(string userId)
         {
             User user = _context.users.FirstOrDefault(u => u.userId == userId);
             if (user == null)

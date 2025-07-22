@@ -67,16 +67,16 @@ namespace AppDock.Services.PortfolioAPI.Services
             }
         }
 
-        public async Task<ContactDto> GetContactAsync(string userId)
+        public async Task<ContactDto> GetContactAsync(string portfolioId)
         {
-            if (string.IsNullOrWhiteSpace(userId))
+            if (string.IsNullOrWhiteSpace(portfolioId))
             {
-                throw new ArgumentException("UserId ID cannot be null or empty.", nameof(userId));
+                throw new ArgumentException("Portfolio ID cannot be null or empty.", nameof(portfolioId));
             }
             try
             {
                 var contact = await _context.contact
-                .FirstOrDefaultAsync(a => a.UserId == userId);
+                .FirstOrDefaultAsync(a => a.PortfolioId == portfolioId);
 
                 if (contact == null)
                     return null;

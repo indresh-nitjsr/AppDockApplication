@@ -8,7 +8,7 @@ export class PortfolioDetails {
   certificates?: Certificates[];
   experiences: Experience[];
   skills: Skill[];
-  contact : Contact;
+  contact: Contact;
 
   constructor() {
     this.id = '';
@@ -132,11 +132,13 @@ export class Skill {
   skillId: string;
   portfolioId: string;
   skills: string;
+  proficiency: number;
 
   constructor() {
     this.skillId = '';
     this.portfolioId = '';
     this.skills = '';
+    this.proficiency = 0;
   }
 }
 
@@ -153,9 +155,9 @@ export class Contact {
     this.id = '';
     this.portfolioId = '';
     this.userId = '';
-    this.address= '';
-    this.linkedInUrl= '';
-    this.gitHubUrl= '';
-    this.twitterUrl= '';
+    this.address = '';
+    this.linkedInUrl = '';
+    this.gitHubUrl = '';
+    this.twitterUrl = '';
   }
 }

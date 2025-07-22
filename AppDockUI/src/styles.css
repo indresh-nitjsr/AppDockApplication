@@ -1,2 +1,7 @@
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 @import "tailwindcss";
+
+html {
+  scroll-behavior: auto; /* we’re handling smooth scroll manually now */
+}
+
