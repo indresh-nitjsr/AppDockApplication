@@ -39,7 +39,9 @@ export class Preview {
           }
         },
         (error) => {
-          console.error('Error fetching user portfolio:', error);
+          if (error.status !== 404) {
+            console.error('Unexpected error fetching portfolio:', error);
+          }
 
           // If error or not found, redirect accordingly
           if (token && user) {
