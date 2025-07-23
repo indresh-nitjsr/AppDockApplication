@@ -1,5 +1,5 @@
 <div *ngIf="portfolioDetails && portfolioDetails.user.userId; else loading"
-  class="font-sans mt-16">
+  class="mt-16 relative overflow-hidden bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full min-h-screen">
   <!-- About Section -->
   <section id="home"
     class="relative overflow-hidden bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
@@ -25,34 +25,44 @@
       <img
         [src]="portfolioDetails.about.profileImageUrl || 'images/profile_img_male.png'"
         alt="Profile"
-        class="w-44 h-44 rounded-full object-cover border-4 border-white shadow-2xl mb-4 hover:scale-105 transition duration-500" />
+        class="w-44 h-44 rounded-full object-cover border-4 border-white shadow-2xl mb-2 hover:scale-105 transition duration-500" />
 
       <!-- Name / Email / Contact Row -->
+      <h2
+        class="relative text-2xl md:text-3xl font-bold text-amber-100 mb-5 z-10">
+        {{ portfolioDetails.user.name }}
+      </h2>
+
+      <!-- Role -->
+      <h2 class="relative text-2xl md:text-3xl font-bold text-white mb-5 z-10">
+        I'm <span class="text-yellow-400">{{ portfolioDetails.role }}</span>
+      </h2>
       <div
         class=" flex flex-wrap justify-center gap-6 text-blue-200 font-medium mb-6 text-xl sm:text-xl">
         <div class="flex items-center gap-2">
           <i class="fas fa-user text-blue-400"></i>
-          {{ portfolioDetails.user.name || 'Your Name' }}
+          {{ portfolioDetails.user.name }}
         </div>
-        <div *ngIf="portfolioDetails.user.email"
+        <a href="mailto:{{ portfolioDetails.user.email }}"
+          *ngIf="portfolioDetails.user.email"
           class="flex items-center gap-2">
           <i class="fas fa-envelope text-blue-400"></i>
           {{ portfolioDetails.user.email }}
-        </div>
+        </a>
         <div *ngIf="portfolioDetails.user.phoneNumber"
           class="flex items-center gap-2">
           <i class="fas fa-phone text-blue-400"></i>
           +91 {{ portfolioDetails.user.phoneNumber }}
         </div>
-        <div *ngIf="portfolioDetails.user.phoneNumber"
+        <div *ngIf="portfolioDetails.contact.address"
           class="flex items-center gap-2">
           <i class="fa-solid fa-location-dot text-blue-400"></i>
           {{ portfolioDetails.contact.address }}
         </div>
       </div>
 
-      <!-- Expertise Title -->
-      <p class="text-xl md:text-2xl text-purple-200 font-medium mb-8">
+      <!-- about user -->
+      <p class="text-sm md:text-xl text-purple-200 max-w-5xl font-medium mb-8">
         {{ portfolioDetails.about.description }}
       </p>
 
@@ -71,6 +81,7 @@
 
   <!-- Work Experience -->
   <section id="experience"
+    *ngIf="portfolioDetails.experiences.length > 0"
     class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full"
     [ngClass]="{'text-yellow-400': activeSection === 'experience'}">
     <!-- Section Separator -->
@@ -138,20 +149,35 @@
 
   <!-- Skills Section -->
   <section id="skill"
-    class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] py-16 px-4 text-white relative overflow-hidden">
+    *ngIf="portfolioDetails.skills.length > 0"
+    class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] px-4 text-white relative overflow-hidden">
 
-    <!-- Section Title -->
-    <div class="text-center mb-12 relative z-10">
-      <h2 class="text-4xl font-bold flex items-center justify-center gap-2">
-        🚀 <span>Skills</span>
-      </h2>
+    <!-- Section Separator -->
+    <div
+      class="relative flex flex-col items-center justify-center py-16 overflow-hidden">
+      <!-- Blurred glow background behind text -->
       <div
-        class="w-24 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 mx-auto mt-2 rounded-full"></div>
+        class="absolute w-72 h-72 bg-purple-600 opacity-20 rounded-full blur-3xl"></div>
+      <div
+        class="absolute w-60 h-60 bg-pink-600 opacity-20 rounded-full blur-3xl"></div>
+
+      <!-- Section Title -->
+      <h2 class="relative text-4xl md:text-5xl font-bold text-white mb-5 z-10">
+        🚀 Skills
+      </h2>
+
+      <!-- Gradient underline -->
+      <div
+        class="w-32 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 rounded-full mb-4"></div>
+      <p class="text-gray-400 text-center max-w-md px-4 z-10">
+        Discover my journey and impactful milestones in various companies and
+        roles.
+      </p>
     </div>
 
     <!-- Skills Grid -->
     <div
-      class="relative z-10 max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
+      class="relative z-10 max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-20 px-4">
       <div *ngFor="let skill of portfolioDetails.skills"
         class="bg-white/5 backdrop-blur-sm border border-white/10 shadow-lg rounded-xl p-4 hover:scale-105 transition-transform duration-300 space-y-2">
 
@@ -179,6 +205,7 @@
 
   <!-- My Projects Section -->
   <section id="project"
+    *ngIf="portfolioDetails.projects.length > 0"
     class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
     <!-- Section Title -->
     <div
@@ -195,7 +222,7 @@
     </div>
 
     <!-- Project Cards -->
-    <div class="max-w-7xl mx-auto px-4 pb-20">
+    <div class="max-w-7xl mx-auto px-4 pb-20 py-20">
       <div
         class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
         <div *ngFor="let project of portfolioDetails.projects"
@@ -240,6 +267,7 @@
 
   <!-- Certificates / Achievements -->
   <section id="certificate"
+    *ngIf="portfolioDetails.certificates.length > 0"
     class="bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] w-full">
     <!-- Section Header -->
     <div
@@ -323,6 +351,7 @@
 
   <!-- Contact Section -->
   <section id="contact"
+    *ngIf="portfolioDetails.contact.address !== ''"
     class="relative bg-gradient-to-br from-[#12022f] via-[#1c0647] to-[#2d0b68] text-white py-20 px-4 sm:px-10 md:px-16 lg:px-32 overflow-hidden">
 
     <!-- Glowing Blobs -->
@@ -352,7 +381,7 @@
 
         <!-- Profile Image -->
         <img
-          [src]="portfolioDetails.about.profileImageUrl || 'https://avatars.githubusercontent.com/u/67064476?v=4'"
+          [src]="portfolioDetails.about.profileImageUrl || 'images/profile_img_male.png'"
           alt="profile"
           class="w-32 h-32 rounded-full border-4 border-pink-500 shadow-xl hover:scale-105 transition-transform duration-300" />
 
@@ -374,8 +403,9 @@
         <div class="flex gap-5 justify-center items-center mt-4">
           <!-- GitHub -->
           <div class="group relative">
-            <a [href]="portfolioDetails.contact.gitHubUrl" target="_blank"
-              class="text-gray-400 hover:text-white text-5xl transition duration-300">
+            <a *ngIf="portfolioDetails.contact.gitHubUrl"
+              [href]="portfolioDetails.contact.gitHubUrl" target="_blank"
+              class="text-gray-400 hover:text-white text-4xl transition duration-300">
               <i class="fab fa-github"></i>
             </a>
             <div
@@ -388,8 +418,9 @@
 
           <!-- Twitter -->
           <div class="group relative">
-            <a [href]="portfolioDetails.contact.twitterUrl" target="_blank"
-              class="text-gray-400 hover:text-white text-5xl transition duration-300">
+            <a *ngIf="portfolioDetails.contact.twitterUrl"
+              [href]="portfolioDetails.contact.twitterUrl" target="_blank"
+              class="text-gray-400 hover:text-white text-4xl transition duration-300">
               <i class="fab fa-twitter"></i>
             </a>
             <div
@@ -402,8 +433,9 @@
 
           <!-- LinkedIn -->
           <div class="group relative">
-            <a [href]="portfolioDetails.contact.linkedInUrl" target="_blank"
-              class="text-gray-400 hover:text-white text-5xl transition duration-300">
+            <a *ngIf="portfolioDetails.contact.linkedInUrl"
+              [href]="portfolioDetails.contact.linkedInUrl" target="_blank"
+              class="text-gray-400 hover:text-white text-4xl transition duration-300">
               <i class="fab fa-linkedin"></i>
             </a>
             <div

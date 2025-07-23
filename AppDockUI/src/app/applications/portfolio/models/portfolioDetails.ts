@@ -4,8 +4,8 @@ export class PortfolioDetails {
   dob: Date;
   user: User;
   about: About;
-  projects?: Projects[];
-  certificates?: Certificates[];
+  projects: Projects[];
+  certificates: Certificates[];
   skills: Skills[];
   experiences: Experience[];
   contact: Contact;

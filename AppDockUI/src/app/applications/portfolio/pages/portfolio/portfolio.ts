@@ -43,7 +43,7 @@ export class Portfolio implements OnInit {
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.getPortfolioDetails();
@@ -51,7 +51,7 @@ export class Portfolio implements OnInit {
 
   getPortfolioDetails() {
     const user = localStorage.getItem('user');
-    console.log("user: ", user)
+    console.log('user: ', user);
     if (user) {
       const userId = JSON.parse(user).userId;
       if (userId) {
@@ -59,7 +59,6 @@ export class Portfolio implements OnInit {
           (portfolio) => {
             this.portfolioDetails = PortfolioDetailsModel.fromJson(portfolio);
             console.log('Portfolio Details: ', this.portfolioDetails);
-
             this.decideNextStep();
             this.cdr.detectChanges();
           },
@@ -94,7 +93,6 @@ export class Portfolio implements OnInit {
     this.aboutObj.portfolioId = this.portfolioDetails.id;
     this.aboutObj.userId = this.portfolioDetails.user.userId;
     this.aboutObj.heading = `Hi I'm ${this.portfolioDetails.user.name}`;
-    console.log('aboutObj: ', this.aboutObj);
 
     if (!this.aboutObj.profileImageUrl) {
       // If no URL given, assign default image before saving
@@ -103,7 +101,6 @@ export class Portfolio implements OnInit {
 
     this.portfolioService.createUpdateAbout(this.aboutObj).subscribe(
       (res: About) => {
-        console.log('About Create successfully: ', res);
         this.ngZone.run(() => {
           this.nextStep();
         });
@@ -185,7 +182,6 @@ export class Portfolio implements OnInit {
   }
 
   createPortfolioContact() {
-
     this.contactObj.portfolioId = this.portfolioDetails.id;
     this.contactObj.userId = this.portfolioDetails.user.userId;
     this.portfolioService.createContact(this.contactObj).subscribe(
@@ -201,7 +197,10 @@ export class Portfolio implements OnInit {
     );
   }
   submitPortfolio() {
-    this.router.navigate(['/services/portfolio', 'portfolio-details']);
+    this.router.navigate([
+      '/services/portfolio/portfolio-details',
+      this.portfolioDetails.id,
+    ]);
   }
 
   onCheckboxChange() {
@@ -213,14 +212,8 @@ export class Portfolio implements OnInit {
   currentStep = 1;
 
   nextStep() {
-    console.log('before steps: ', this.currentStep);
-    this.currentStep++;
     this.cdr.detectChanges();
-    console.log('after steps: ', this.currentStep);
-  }
-
-  prevStep() {
-    this.currentStep--;
+    this.currentStep++;
   }
 
   decideNextStep() {
@@ -230,30 +223,12 @@ export class Portfolio implements OnInit {
     ) {
       this.currentStep = 2; // About
     } else if (
-      !this.portfolioDetails.experiences ||
-      this.portfolioDetails.experiences.length === 0
+      !this.portfolioDetails.contact ||
+      this.portfolioDetails.contact.address === ''
     ) {
-      this.currentStep = 3; // Experience
-    } else if (
-      !this.portfolioDetails.skills ||
-      this.portfolioDetails.skills.length === 0
-    ) {
-      this.currentStep = 4; // Skills
-    } else if (
-      !this.portfolioDetails.projects ||
-      this.portfolioDetails.projects.length === 0
-    ) {
-      this.currentStep = 5; // Projects
-    } else if (
-      !this.portfolioDetails.certificates ||
-      this.portfolioDetails.certificates.length === 0
-    ) {
-      this.currentStep = 6; // Certificates
-    } else if (!this.portfolioDetails.contact ||
-      this.portfolioDetails.contact.address === '') {
-      this.currentStep = 7;
+      this.currentStep = 3;
     } else {
-      this.currentStep = 8; // All done
+      this.currentStep = 4; // All done
     }
   }
 }
