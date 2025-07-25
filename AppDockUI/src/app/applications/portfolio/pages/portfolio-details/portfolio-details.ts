@@ -16,6 +16,7 @@ import {
 } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PortfolioIdService } from '../../services/portfolio-id.service';
+import { ToastService } from '../../../../core/services/toast-service';
 
 @Component({
   selector: 'app-portfolio-details',
@@ -38,7 +39,8 @@ export class PortfolioDetails implements OnInit {
     private renderer: Renderer2,
     private router: Router,
     private route: ActivatedRoute,
-    private portfolioIdService: PortfolioIdService
+    private portfolioIdService: PortfolioIdService,
+    private toastService: ToastService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
@@ -46,8 +48,6 @@ export class PortfolioDetails implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((params: any) => {
       const portfolioId = params.get('portfolioId');
-      console.log('portfolio id: ', portfolioId);
-
       if (portfolioId) {
         this.getPortfolioDetails(portfolioId);
       }
@@ -81,7 +81,7 @@ export class PortfolioDetails implements OnInit {
     );
   }
 
-  formatDate(date?: string | Date): string {
+  formatDate(date?: string | Date | null): string {
     if (!date) return ''; // If undefined or null, return empty string
     const d = typeof date === 'string' ? new Date(date) : date;
     const options: Intl.DateTimeFormatOptions = {
@@ -100,18 +100,21 @@ export class PortfolioDetails implements OnInit {
         .subscribe(
           (portfolio) => {
             this.portfolioDetails = PortfolioDetailsModel.fromJson(portfolio);
-            console.log('Portfolio details loaded:', this.portfolioDetails);
             if (this.portfolioDetails.id) {
               this.portfolioIdService.setPortfolioId(this.portfolioDetails.id);
             }
             this.cdr.detectChanges();
           },
           (error) => {
-            console.error('Error fetching portfolio details:', error);
+            this.toastService.show(
+              `Error fetching portfolio details: ${error}`,
+              'error',
+              4000
+            );
           }
         );
     } else {
-      console.error('User ID not found in local storage');
+      this.toastService.show(`Portfolio not found.`, 'error', 4000);
     }
   }
 
@@ -192,13 +195,13 @@ export class PortfolioDetails implements OnInit {
       this.contactData.message
     ) {
       // You can replace this with actual HTTP POST to backend
-      console.log('Sending message:', this.contactData);
+      this.toastService.show(`Sending message...`, 'warning', 4000);
 
       // Reset the form
       this.contactData = { name: '', email: '', message: '' };
-      alert('Message sent successfully!');
+      this.toastService.show(`Message sent successfully!`, 'success', 4000);
     } else {
-      alert('Please fill in all fields.');
+      this.toastService.show(`Please fill in all fields.`, 'error', 4000);
     }
   }
 }

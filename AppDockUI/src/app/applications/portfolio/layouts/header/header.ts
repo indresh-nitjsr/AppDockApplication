@@ -63,7 +63,6 @@ export class Header {
       const id = params.get('portfolioId');
       if (id) {
         this.portfolioIdService.setPortfolioId(id);
-        console.log('Saved portfolioId:', id);
       }
     });
 
@@ -76,7 +75,6 @@ export class Header {
     const paramPortfolioId = child.snapshot.paramMap.get('portfolioId');
     if (paramPortfolioId) {
       this.portfolioId = paramPortfolioId;
-      console.log('Detected portfolioId in route:', this.portfolioId);
     } else {
       // Fallback: get from localStorage
       const user = localStorage.getItem('user');
@@ -84,7 +82,6 @@ export class Header {
         try {
           const parsedUser = JSON.parse(user);
           this.portfolioId = parsedUser?.portfolioId || null;
-          console.log('Using portfolioId from localStorage:', this.portfolioId);
         } catch (err) {
           console.error('Error parsing user from localStorage', err);
         }
@@ -125,7 +122,6 @@ export class Header {
     const portfolioId = this.portfolioIdService.getPortfolioId();
 
     if (!portfolioId) {
-      console.error('Portfolio ID not found');
       return;
     }
 
@@ -134,24 +130,4 @@ export class Header {
       { fragment: fragment }
     );
   }
-
-  // smoothScrollTo(targetY: number, duration = 600) {
-  //   const startY = window.scrollY;
-  //   const diff = targetY - startY;
-  //   let startTime: number;
-
-  //   function step(timestamp: number) {
-  //     if (!startTime) startTime = timestamp;
-  //     const progress = timestamp - startTime;
-  //     const percent = Math.min(progress / duration, 1);
-  //     window.scrollTo(0, startY + diff * easeInOutQuad(percent));
-  //     if (percent < 1) requestAnimationFrame(step);
-  //   }
-
-  //   function easeInOutQuad(t: number) {
-  //     return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-  //   }
-
-  //   requestAnimationFrame(step);
-  // }
 }

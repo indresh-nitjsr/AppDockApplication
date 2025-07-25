@@ -11,7 +11,7 @@ namespace AppDock.Services.PortfolioAPI.Models
         public string CompanyName { get; set; } = "";
         public bool IsCurrentlyWorking { get; set; } = false;
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public string Description { get; set; } = "";
 
         // Navigation

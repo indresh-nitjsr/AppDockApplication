@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PortfolioService } from '../../services/portfolioService';
 import { PortfolioDetails } from '../../models/portfolioDetails';
+import { ToastService } from '../../../../core/services/toast-service';
 
 @Component({
   selector: 'app-preview',
@@ -13,7 +14,8 @@ export class Preview {
   portfolioDetails: PortfolioDetails = new PortfolioDetails();
   constructor(
     private router: Router,
-    private portfolioService: PortfolioService
+    private portfolioService: PortfolioService,
+    private toastService: ToastService
   ) {}
 
   handleGetStarted() {
@@ -26,8 +28,6 @@ export class Preview {
       this.portfolioService.getUserPortfolioByUserId(userId).subscribe(
         (portfolio) => {
           this.portfolioDetails = PortfolioDetails.fromJson(portfolio);
-          console.log('Portfolio details:', this.portfolioDetails);
-
           if (this.portfolioDetails && this.portfolioDetails.id) {
             this.router.navigate([
               `services/portfolio/portfolio-details/${this.portfolioDetails.id}`,
@@ -40,7 +40,11 @@ export class Preview {
         },
         (error) => {
           if (error.status !== 404) {
-            console.error('Unexpected error fetching portfolio:', error);
+            this.toastService.show(
+              `Unexpected error fetching portfolio: ${error}`,
+              'error',
+              4000
+            );
           }
 
           // If error or not found, redirect accordingly

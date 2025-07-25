@@ -152,8 +152,9 @@
 
               <h4 class="text-xl font-semibold text-purple-200">{{ exp.title
                 }}</h4>
-              <p class="text-purple-300 text-sm italic">{{ exp.startDate }} – {{
-                exp.endDate }}</p>
+              <p class="text-purple-300 text-sm italic">{{
+                formatDateForInput(exp.startDate) }} <span *ngIf="exp.endDate">–
+                  {{formatDateForInput(exp.endDate) }}</span></p>
               <p class="text-purple-100 mt-3 leading-relaxed">{{ exp.description
                 }}</p>
             </div>
@@ -191,7 +192,8 @@
             proj.techStack }}</p>
           <p class="text-sm text-gray-400"><span
               class="font-medium text-purple-400">Duration:</span> {{
-            proj.startDate }} – {{ proj.endDate }}</p>
+            formatDateForInput(proj.startDate) }} <span *ngIf="proj.endDate">–
+              {{formatDateForInput(proj.endDate) }}</span></p>
         </div>
       </div>
     </section>
@@ -222,7 +224,10 @@
             <p class="text-sm text-purple-400">{{ cert.description }}</p>
             <p class="text-sm text-purple-500 font-medium">Issuer: {{
               cert.issuer }}</p>
-            <p class="text-xs text-purple-600 italic">{{ cert.issueDate }}</p>
+            <p class="text-xs text-purple-600 italic">{{
+              formatDateForInput(cert.issueDate) }}
+              <span *ngIf="cert.expiryDate">-
+                {{formatDateForInput(cert.expiryDate)}}</span></p>
             <a [href]="cert.certificateUrl" target="_blank"
               class="inline-flex items-center gap-2 mt-3 text-yellow-300 border border-yellow-300 hover:border-white hover:text-white px-4 py-2 rounded-full font-medium transition duration-300 hover:scale-105 shadow-sm">
               <i class="fas fa-external-link-alt"></i> View Certificate
@@ -351,12 +356,13 @@
       <div class="overflow-y-auto px-6 py-4 space-y-1">
         <!-- About Section -->
         <ng-container *ngIf="sectionType === 'about'">
-          <!-- <div>
-            <label class="block mb-1 text-sm text-gray-300">Heading</label>
+          <div>
+            <label class="block mb-1 text-sm text-gray-300">Proficient
+              Role</label>
             <input [(ngModel)]="aboutObj.heading"
               class="w-full p-3 rounded-lg bg-white/10 border border-purple-500 placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-              placeholder="Expert in .NET, Angular, etc." />
-          </div> -->
+              placeholder="Expert in eg. Full Stack Developer | Frontend Developer | Backend developer " />
+          </div>
 
           <div>
             <label class="block mb-1 text-sm text-gray-300">Profile Image

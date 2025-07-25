@@ -70,7 +70,8 @@ namespace AppDock.Services.PortfolioAPI.Services
                 StartDate = e.StartDate,
                 EndDate = e.EndDate,
                 Description = e.Description,
-                EmployementType = e.EmployementType
+                EmployementType = e.EmployementType,
+                IsCurrentlyWorking = e.IsCurrentlyWorking
             }).ToList();
 
             return dtos;
@@ -91,7 +92,8 @@ namespace AppDock.Services.PortfolioAPI.Services
                 CompanyName = experience.CompanyName,
                 StartDate = experience.StartDate,
                 EndDate = experience.EndDate,
-                Description = experience.Description
+                Description = experience.Description,
+                IsCurrentlyWorking = experience.IsCurrentlyWorking
             };
 
             return dto;
@@ -112,6 +114,7 @@ namespace AppDock.Services.PortfolioAPI.Services
             existing.StartDate = experienceDto.StartDate;
             existing.EndDate = experienceDto.EndDate;
             existing.Description = experienceDto.Description;
+            existing.IsCurrentlyWorking = experienceDto.IsCurrentlyWorking;
 
             _context.experiences.Update(existing);
             await _context.SaveChangesAsync();

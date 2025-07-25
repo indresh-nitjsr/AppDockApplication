@@ -7,6 +7,8 @@ namespace AppDock.Services.AuthAPI.Models
     {
         [Required]
         public string Name { get; set; }
-       
+        public bool IsEmailVerified { get; set; }
+        public string EmailVerificationToken { get; set; }
+
     }
 }

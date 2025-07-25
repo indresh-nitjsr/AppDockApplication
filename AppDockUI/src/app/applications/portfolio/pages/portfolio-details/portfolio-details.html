@@ -35,7 +35,8 @@
 
       <!-- Role -->
       <h2 class="relative text-2xl md:text-3xl font-bold text-white mb-5 z-10">
-        I'm <span class="text-yellow-400">{{ portfolioDetails.role }}</span>
+        I'm <span *ngIf="portfolioDetails.about.heading"
+          class="text-yellow-400">{{ portfolioDetails.about.heading }}</span>
       </h2>
       <div
         class=" flex flex-wrap justify-center gap-6 text-blue-200 font-medium mb-6 text-xl sm:text-xl">
@@ -123,8 +124,8 @@
 
             <div
               class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 mt-2">
-              <h4 class="text-xl font-bold text-white">{{ exp.title }}</h4>
-              <span class="text-gray-400 text-sm">
+              <h4 class="text-xl font-bold text-yellow-300">{{ exp.title }}</h4>
+              <span class="text-gray-400 text-sm italic">
                 {{ formatDate(exp.startDate) }} -
                 <span
                   [ngClass]="{'text-green-400 font-semibold': exp.isCurrentlyWorking}">
@@ -139,7 +140,7 @@
             </p>
             <div *ngIf="exp.employementType"
               class="text-xs text-gray-400 italic mt-2">
-              Type: {{ exp.employementType }}
+              Employee Type: {{ exp.employementType }}
             </div>
           </div>
         </div>
@@ -243,7 +244,8 @@
           <div class="text-xs text-gray-400 space-y-1">
             <p><strong>🛠 Tech Stack:</strong> {{ project.techStack }}</p>
             <p><strong>⏳ Duration:</strong> {{ formatDate(project.startDate) }}
-              - {{ formatDate(project.endDate) }}</p>
+              <span *ngIf="project.endDate">- {{ formatDate(project.endDate)
+                }}</span></p>
           </div>
 
           <!-- Buttons -->

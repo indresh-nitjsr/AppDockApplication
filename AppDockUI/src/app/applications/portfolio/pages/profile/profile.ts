@@ -15,6 +15,7 @@ import {
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, Observable } from 'rxjs';
 import { PortfolioIdService } from '../../services/portfolio-id.service';
+import { ToastService } from '../../../../core/services/toast-service';
 
 @Component({
   selector: 'app-profile',
@@ -63,7 +64,8 @@ export class Profile implements OnInit {
     private renderer: Renderer2,
     private router: Router,
     private route: ActivatedRoute,
-    private portfolioIdService: PortfolioIdService
+    private portfolioIdService: PortfolioIdService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -111,20 +113,23 @@ export class Profile implements OnInit {
           (portfolio) => {
             this.portfolioDetails = PortfolioDetailsModel.fromJson(portfolio);
             this.cdr.detectChanges();
-            console.log('portfolioDetails: ', this.portfolioDetails);
             if (this.portfolioDetails.id) {
               this.portfolioIdService.setPortfolioId(this.portfolioDetails.id);
             }
           },
           (error) => {
-            console.error('Error fetching portfolio details:', error);
+            this.toastService.show(
+              `Error fetching portfolio details: ${error}`,
+              'error',
+              4000
+            );
           }
         );
       } else {
-        console.error('User ID not found in local storage');
+        this.toastService.show(`User not authenticated.`, 'error', 4000);
       }
     } else {
-      console.error('User not found in local storage');
+      this.toastService.show(`User not authenticated.`, 'error', 4000);
     }
   }
 
@@ -152,7 +157,6 @@ export class Profile implements OnInit {
       const userDetails = JSON.parse(user);
       if (section === 'about') {
         this.aboutObj = item ? { ...item } : new About();
-        console.log('about data: ', this.aboutObj);
       }
 
       if (section === 'experience') {
@@ -163,7 +167,6 @@ export class Profile implements OnInit {
               endDate: this.formatDateForInput(item.endDate),
             }
           : new Experience();
-        console.log('experience data: ', this.experienceObj);
       }
 
       if (section === 'project') {
@@ -174,7 +177,6 @@ export class Profile implements OnInit {
               endDate: this.formatDateForInput(item.endDate),
             }
           : new Projects();
-        console.log('project data: ', this.experienceObj);
       }
 
       if (section === 'certificate') {
@@ -185,7 +187,6 @@ export class Profile implements OnInit {
               expiryDate: this.formatDateForInput(item.expiryDate),
             }
           : new Certificates();
-        console.log('certificate data: ', this.certificateObj);
       }
 
       if (section === 'skill') {
@@ -194,7 +195,6 @@ export class Profile implements OnInit {
               ...item,
             }
           : new Skill();
-        console.log('skill data: ', this.skillObj);
       }
 
       if (section === 'contact') {
@@ -203,15 +203,18 @@ export class Profile implements OnInit {
               ...item,
             }
           : new Skill();
-        console.log('contact data: ', this.contactObj);
       }
     }
   }
 
-  formatDateForInput(dateStr: string): string {
-    if (!dateStr) return '';
-    const date = new Date(dateStr);
-    return date.toISOString().split('T')[0]; // Returns 'YYYY-MM-DD'
+  formatDateForInput(date?: string | Date | null): string {
+    if (!date) return ''; // If undefined or null, return empty string
+    const d = typeof date === 'string' ? new Date(date) : date;
+    const options: Intl.DateTimeFormatOptions = {
+      month: 'short',
+      year: 'numeric',
+    };
+    return d.toLocaleDateString('en-US', options);
   }
 
   closeModal() {
@@ -220,121 +223,6 @@ export class Profile implements OnInit {
     this.formData = {};
   }
 
-  // saveEntry() {
-  //   if (this.sectionType === 'about') {
-  //     this.portfolioService.createUpdateAbout(this.aboutObj).subscribe({
-  //       next: () => {
-  //         this.loadPortfolio();
-  //         this.cdr.detectChanges();
-  //         this.closeModal();
-  //       },
-  //       error: (err) => console.error('Error updating about:', err),
-  //     });
-  //   }
-  //   if (this.sectionType === 'experience') {
-  //     this.experienceObj.portfolioId = this.portfolioDetails.id;
-
-  //     // convert date string to Date (optional)
-  //     this.experienceObj.startDate = new Date(this.experienceObj.startDate);
-  //     this.experienceObj.endDate = this.experienceObj.isCurrentlyWorking
-  //       ? undefined
-  //       : this.experienceObj.endDate
-  //       ? new Date(this.experienceObj.endDate)
-  //       : undefined;
-  //     console.log('experience Id: ', this.experienceObj.id);
-
-  //     if (this.experienceObj.id) {
-  //       this.portfolioService
-  //         .updateExperience(this.experienceObj)
-  //         .subscribe(() => {
-  //           this.closeModal();
-  //           this.loadPortfolio();
-  //         });
-  //     } else {
-  //       this.portfolioService
-  //         .createExperience(this.experienceObj)
-  //         .subscribe(() => {
-  //           this.closeModal();
-  //           this.loadPortfolio();
-  //         });
-  //     }
-  //   }
-  //   if (this.sectionType === 'project') {
-  //     this.projectObj.portfolioId = this.portfolioDetails.id;
-
-  //     // convert date string to Date (optional)
-  //     this.projectObj.startDate = new Date(this.experienceObj.startDate);
-  //     this.projectObj.endDate = new Date(this.projectObj.endDate || new Date());
-
-  //     if (this.projectObj.projectId) {
-  //       this.portfolioService.updateProject(this.projectObj).subscribe(() => {
-  //         this.closeModal();
-  //         this.loadPortfolio();
-  //       });
-  //     } else {
-  //       this.portfolioService.createProject(this.projectObj).subscribe(() => {
-  //         this.closeModal();
-  //         this.loadPortfolio();
-  //       });
-  //     }
-  //   }
-  //   if (this.sectionType === 'certificate') {
-  //     this.certificateObj.portfolioId = this.portfolioDetails.id;
-
-  //     // convert date string to Date (optional)
-  //     this.certificateObj.issueDate = new Date(this.certificateObj.issueDate);
-  //     this.certificateObj.expiryDate = new Date(
-  //       this.certificateObj.expiryDate || new Date()
-  //     );
-
-  //     if (this.certificateObj.id) {
-  //       this.portfolioService
-  //         .updateCertificate(this.certificateObj.id, this.certificateObj)
-  //         .subscribe(() => {
-  //           this.closeModal();
-  //           this.loadPortfolio();
-  //         });
-  //     } else {
-  //       this.portfolioService
-  //         .createCertificate(this.certificateObj)
-  //         .subscribe(() => {
-  //           this.closeModal();
-  //           this.loadPortfolio();
-  //         });
-  //     }
-  //   }
-  //   if (this.sectionType === 'skill') {
-  //     this.skillObj.portfolioId = this.portfolioDetails.id;
-
-  //     if (this.skillObj.skillId) {
-  //       this.portfolioService.updateSkill(this.skillObj).subscribe(() => {
-  //         this.closeModal();
-  //         this.loadPortfolio();
-  //       });
-  //     } else {
-  //       this.portfolioService.createSkill(this.skillObj).subscribe(() => {
-  //         this.closeModal();
-  //         this.loadPortfolio();
-  //       });
-  //     }
-  //   }
-  //   if (this.sectionType === 'contact') {
-  //     this.contactObj.portfolioId = this.portfolioDetails.id;
-
-  //     if (this.contactObj.id) {
-  //       this.portfolioService.updateContact(this.contactObj).subscribe(() => {
-  //         this.closeModal();
-  //         this.loadPortfolio();
-  //       });
-  //     } else {
-  //       this.portfolioService.createContact(this.contactObj).subscribe(() => {
-  //         this.closeModal();
-  //         this.loadPortfolio();
-  //       });
-  //     }
-  //   }
-  // }
-
   saveEntry() {
     const portfolioId = this.portfolioDetails.id;
     let saveOperation: Observable<any> | null = null;
@@ -342,30 +230,36 @@ export class Profile implements OnInit {
     if (this.sectionType === 'about') {
       saveOperation = this.portfolioService.createUpdateAbout(this.aboutObj);
     } else if (this.sectionType === 'experience') {
+      console.log('exp request: ', this.experienceObj);
+
       this.experienceObj.portfolioId = portfolioId;
-      this.experienceObj.startDate = new Date(this.experienceObj.startDate);
+      this.experienceObj.startDate = this.safeParseDate(
+        this.experienceObj.startDate
+      );
       this.experienceObj.endDate = this.experienceObj.isCurrentlyWorking
-        ? undefined
+        ? null
         : this.experienceObj.endDate
-        ? new Date(this.experienceObj.endDate)
-        : undefined;
+        ? this.safeParseDate(this.experienceObj.endDate)
+        : null;
 
       saveOperation = this.experienceObj.id
         ? this.portfolioService.updateExperience(this.experienceObj)
         : this.portfolioService.createExperience(this.experienceObj);
     } else if (this.sectionType === 'project') {
       this.projectObj.portfolioId = portfolioId;
-      this.projectObj.startDate = new Date(this.projectObj.startDate);
-      this.projectObj.endDate = new Date(this.projectObj.endDate || new Date());
+      this.projectObj.startDate = this.safeParseDate(this.projectObj.startDate);
+      this.projectObj.endDate = this.safeParseDate(this.projectObj.endDate);
 
       saveOperation = this.projectObj.projectId
         ? this.portfolioService.updateProject(this.projectObj)
         : this.portfolioService.createProject(this.projectObj);
     } else if (this.sectionType === 'certificate') {
       this.certificateObj.portfolioId = portfolioId;
-      this.certificateObj.issueDate = new Date(this.certificateObj.issueDate);
-      this.certificateObj.expiryDate = new Date(
-        this.certificateObj.expiryDate || new Date()
+      this.certificateObj.issueDate = this.safeParseDate(
+        this.certificateObj.issueDate
+      );
+      this.certificateObj.expiryDate = this.safeParseDate(
+        this.certificateObj.expiryDate
       );
 
       saveOperation = this.certificateObj.id
@@ -396,12 +290,21 @@ export class Profile implements OnInit {
           this.closeModal();
           this.cdr.detectChanges();
         },
-        error: (err) => console.error(`Error saving ${this.sectionType}:`, err),
+        error: (err) =>
+          this.toastService.show(
+            `Error saving ${this.sectionType}: ${err}`,
+            'error',
+            4000
+          ),
       });
     }
   }
 
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  safeParseDate(input?: string | Date | null): Date | null {
+    return input ? new Date(input) : null;
   }
 }

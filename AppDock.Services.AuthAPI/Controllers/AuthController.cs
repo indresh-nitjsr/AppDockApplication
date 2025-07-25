@@ -1,7 +1,10 @@
-﻿using AppDock.Services.AuthAPI.Models.Dto;
+﻿using AppDock.Services.AuthAPI.Models;
+using AppDock.Services.AuthAPI.Models.Dto;
 using AppDock.Services.AuthAPI.Services.IServices;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace AppDock.Services.AuthAPI.Controllers
 {
@@ -11,26 +14,31 @@ namespace AppDock.Services.AuthAPI.Controllers
     {
 
         private readonly IAuthService _authService;
+        private readonly IEMailService _emailService;
+        private readonly IUserService _userService;
+        private readonly UserManager<AppDockUser> _userManager;
         protected ResponseDto _responseDto;
 
-        public AuthController(IAuthService authService)
+        public AuthController(
+            IAuthService authService, 
+            IEMailService emailService, 
+            IUserService userService, 
+            UserManager<AppDockUser> userManager)
         {
             _authService = authService;
             _responseDto = new ResponseDto();
+            _emailService = emailService;
+            _userService = userService;
+            _userManager = userManager;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegistrationRequestDto model)
         {
             var message = await _authService.Register(model);
-            if (message != "Registration successful.")
-            {
-                _responseDto.isSuccess = false;
-                _responseDto.Message = message;
-                return BadRequest(_responseDto);
-            }
             _responseDto.Message = message;
-            return Ok(_responseDto);
+            _responseDto.isSuccess = message.StartsWith("Registration successful");
+            return _responseDto.isSuccess ? Ok(_responseDto) : BadRequest(_responseDto);
         }
 
         [HttpPost("login")]
@@ -41,11 +49,11 @@ namespace AppDock.Services.AuthAPI.Controllers
             {
 
                 _responseDto.isSuccess = false;
-                _responseDto.Message = "Username or Password is incorrect";
+                _responseDto.Message = loginResponse.Message;
                 return BadRequest(_responseDto);    
             }
             _responseDto.Results = loginResponse;
-            _responseDto.Message = "Login Successful";
+            _responseDto.Message = loginResponse.Message;
             return Ok(_responseDto);
         }
 
@@ -64,5 +72,34 @@ namespace AppDock.Services.AuthAPI.Controllers
             _responseDto.Message = "Assigned Role Successful";
             return Ok(_responseDto);
         }
+
+        [HttpGet("verify-email")]
+        public async Task<IActionResult> VerifyEmail(string userId, string token)
+        {
+            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(token))
+                return BadRequest("Invalid request.");
+
+            var decodedToken = WebUtility.UrlDecode(token).Replace(" ", "+"); // ✅ Use proper URL decoding
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return BadRequest("User not found");
+
+            // ✅ Check if already verified
+            if (user.EmailConfirmed)
+                return Ok("Email is already verified.");
+
+            var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
+
+            if (!result.Succeeded)
+                return BadRequest("Invalid or expired token");
+
+            // Optional: update custom flag
+            user.IsEmailVerified = true;
+            await _userManager.UpdateAsync(user);
+
+            return Ok("Email verified successfully!");
+        }
+
     }
 }

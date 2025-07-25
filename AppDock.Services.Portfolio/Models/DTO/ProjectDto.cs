@@ -11,7 +11,7 @@ namespace AppDock.Services.PortfolioAPI.Models.DTO
         public string Title { get; set; } = "";
         public string Description { get; set; } = "";
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public string TechStack { get; set; } // e.g., "Angular, .NET, Tailwind"
         public string Role { get; set; }
         public string LiveLink { get; set; }

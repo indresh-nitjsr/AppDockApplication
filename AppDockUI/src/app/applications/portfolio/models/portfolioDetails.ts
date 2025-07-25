@@ -89,8 +89,8 @@ export class Projects {
   portfolioId: string;
   title: string;
   description: string;
-  startDate: Date;
-  endDate: Date;
+  startDate?: Date | null;
+  endDate?: Date | null;
   techStack: string[];
   role: string;
   liveLink: string;
@@ -101,8 +101,8 @@ export class Projects {
     this.title = '';
     this.portfolioId = '';
     this.description = '';
-    this.startDate = new Date();
-    this.endDate = new Date();
+    this.startDate = null;
+    this.endDate = null;
     this.techStack = [];
     this.role = '';
     this.liveLink = '';
@@ -115,8 +115,8 @@ export class Certificates {
   portfolioId: string;
   title: string;
   description: string;
-  issueDate: Date;
-  expiryDate?: Date;
+  issueDate?: Date | null;
+  expiryDate?: Date | null;
   issuer: string;
   certificateUrl: string;
   type: string;
@@ -126,8 +126,8 @@ export class Certificates {
     this.portfolioId = '';
     this.title = '';
     this.description = '';
-    this.issueDate = new Date();
-    this.expiryDate = undefined;
+    this.issueDate = null;
+    this.expiryDate = null;
     this.issuer = '';
     this.certificateUrl = '';
     this.type = '';
@@ -155,8 +155,8 @@ export class Experience {
   employementType: string;
   companyName: string;
   isCurrentlyWorking: boolean;
-  startDate: Date;
-  endDate?: Date;
+  startDate?: Date | null;
+  endDate?: Date | null;
   description: string;
 
   constructor() {
@@ -166,8 +166,8 @@ export class Experience {
     this.employementType = '';
     this.companyName = '';
     this.isCurrentlyWorking = false;
-    this.startDate = new Date();
-    this.endDate = new Date();
+    this.startDate = null;
+    this.endDate = null;
     this.description = '';
   }
 }

@@ -4,6 +4,7 @@ import { LoginModel, User } from '../../core/models/user.model';
 import { AuthService } from '../../core/services/auth-service';
 import { FormsModule } from '@angular/forms';
 import { RedirectCommand, Router } from '@angular/router';
+import { ToastService } from '../../core/services/toast-service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class Login {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private toastService: ToastService
   ) {}
 
   //toggle register and login forms
@@ -32,13 +34,18 @@ export class Login {
     // Logic for registering a user
     this.authService.registerUser(this.registerObj).subscribe({
       next: (response) => {
+        this.toastService.show(
+          'Registration Successful, Verification link sent. Please verify your email',
+          'success',
+          4000
+        );
         this.toggleForm();
         this.cdr.detectChanges();
       },
       error: (error) => {
-        alert(
-          'Registration failed: ' + (error.error.message || 'Unknown error')
-        );
+        const message =
+          error?.error?.message || 'Registration failed. Please try again.';
+        this.toastService.show(message, 'error', 4000);
       },
     });
   }
@@ -46,28 +53,33 @@ export class Login {
   userLogin() {
     this.authService.loginUser(this.loginObj).subscribe({
       next: (response: any) => {
-        // Store token and user information in local storage
-        if (
-          !response.results ||
-          !response.results.token ||
-          !response.results.user
-        ) {
-          alert('Login failed: Invalid response');
+        const token = response.results?.token;
+        const user = response.results?.user;
+
+        if (!token || !user) {
           return;
         }
-        const token = response.results.token;
-        const user = response.results.user;
+        if (!user.isEmailVerified) {
+          this.toastService.show(
+            'Email Not verified, Please Verify you email',
+            'warning',
+            3000
+          );
+          return;
+        }
+        this.toastService.show('Logged in Successfully', 'success', 3000);
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(user));
 
-        //set current endpoint to local storage to navigate after login
         const returnUrl = localStorage.getItem('returnUrl') || '/';
         localStorage.removeItem('returnUrl');
         this.router.navigate([returnUrl]);
         this.cdr.detectChanges();
       },
       error: (error) => {
-        alert('Login failed: ' + (error.error.message || 'Unknown error'));
+        const backendMsg =
+          error?.error?.message || error?.error || 'Login failed. Try again.';
+        this.toastService.show(backendMsg, 'error', 4000);
       },
     });
   }

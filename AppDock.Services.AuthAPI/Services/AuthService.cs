@@ -4,6 +4,7 @@ using AppDock.Services.AuthAPI.Models.Dto;
 using AppDock.Services.AuthAPI.Services.IServices;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
+using System.Net;
 
 namespace AppDock.Services.AuthAPI.Services
 {
@@ -13,16 +14,24 @@ namespace AppDock.Services.AuthAPI.Services
         private readonly UserManager<AppDockUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
+        private readonly IEMailService _emailService;
+        private readonly IConfiguration _configuration;
 
-        public AuthService(AuthApplicationDbContext context, 
+        public AuthService(
+            AuthApplicationDbContext context, 
             UserManager<AppDockUser> userManager, 
-            RoleManager<IdentityRole> roleManager,
-            IJwtTokenGenerator jwtTokenGenerator )
+            RoleManager<IdentityRole> roleManager, 
+            IJwtTokenGenerator jwtTokenGenerator, 
+            IEMailService emailService,
+            IConfiguration config
+            )
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
             _jwtTokenGenerator = jwtTokenGenerator;
+            _emailService = emailService;
+            _configuration = config;
         }
 
         public async Task<bool> AssignRole(string email, string roleName)
@@ -49,14 +58,14 @@ namespace AppDock.Services.AuthAPI.Services
             // Check if user exists first
             if (user == null)
             {
-                return new LoginResponseDto { User = null, Token = "" };
+                return new LoginResponseDto { User = null, Token = "", Message = "Invalid Credencials" };
             }
 
             // Validate password
             var isValid = await _userManager.CheckPasswordAsync(user, loginRequestDto.Password);
             if (!isValid)
             {
-                return new LoginResponseDto { User = null, Token = "" };
+                return new LoginResponseDto { User = null, Token = "", Message = "Email or Password Incorrect" };
             }
 
             // Prepare user DTO
@@ -65,7 +74,8 @@ namespace AppDock.Services.AuthAPI.Services
                 Email = user.Email,
                 userId = user.Id,
                 Name = user.Name,
-                PhoneNumber = user.PhoneNumber
+                PhoneNumber = user.PhoneNumber,
+                IsEmailVerified = user.IsEmailVerified
             };
 
             // Generate JWT token here
@@ -75,7 +85,8 @@ namespace AppDock.Services.AuthAPI.Services
             var loginResponseDto = new LoginResponseDto
             {
                 User = userDto,
-                Token = token
+                Token = token,
+                Message = "User Logged in Successful"
             };
 
             return loginResponseDto;
@@ -89,28 +100,57 @@ namespace AppDock.Services.AuthAPI.Services
                 Email = registrationRequestDto.Email,
                 NormalizedEmail = registrationRequestDto.Email.ToUpper(),
                 Name = registrationRequestDto.UserName,
-                PhoneNumber = registrationRequestDto.PhoneNumber                       
+                PhoneNumber = registrationRequestDto.PhoneNumber,
+                IsEmailVerified = false,
+                EmailVerificationToken = Guid.NewGuid().ToString() // ✅ Set heres
             };
+
+            if (user == null)
+            {
+                throw new Exception("User object is null during registration.");
+            }
+
+            if (string.IsNullOrWhiteSpace(user.Email))
+            {
+                throw new Exception("User email is null or empty during registration.");
+            }
+
+            var result = await _userManager.CreateAsync(user, registrationRequestDto.Password);
+            if (!result.Succeeded)
+            {
+                return result.Errors.FirstOrDefault()?.Description ?? "Registration failed.";
+            }
+
+            // Assign role
+            //if (!await _roleManager.RoleExistsAsync(registrationRequestDto.Role))
+            //    await _roleManager.CreateAsync(new IdentityRole(registrationRequestDto.Role));
+
+            //await _userManager.AddToRoleAsync(user, registrationRequestDto.Role);
+
+            // Generate and send email confirmation link
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var encodedToken = WebUtility.UrlEncode(token);
+            var frontendUrl = _configuration["ApplicationUrls:emailVerificationUrl"];
+            if (string.IsNullOrWhiteSpace(frontendUrl))
+            {
+                throw new Exception("Frontend email verification URL is not configured.");
+            }
+
+            var verifyUrl = $"{frontendUrl}?userId={user.Id}&token={encodedToken}";
 
             try
             {
-                var result = await _userManager.CreateAsync(user, registrationRequestDto.Password);
-
-                if (result.Succeeded)
-                {
-                    return "Registration successful.";
-                }
-                else
-                {
-                    // Return first error message
-                    var errorDescription = result.Errors.FirstOrDefault()?.Description ?? "Unknown error";
-                    return $"Registration failed: {errorDescription}";
-                }
+                await _emailService.SendVerificationEmail(user.Email, verifyUrl);
             }
             catch (Exception ex)
             {
-                return $"An error occurred: {ex.Message}";
+                await _userManager.DeleteAsync(user);
+                // Log or rethrow with more context
+                throw new Exception("Failed to send verification email", ex);
             }
+
+
+            return "Registration successful. Please check your email to verify your account.";
         }
 
     }
